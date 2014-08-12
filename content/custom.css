@@ -1,0 +1,133 @@
+﻿body {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    width:100%;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*----------bootstrap-datetimepicker-widget------------*/
+.bootstrap-datetimepicker-widget.dropdown-menu{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: none;
+}
+
+.bootstrap-datetimepicker-widget .btn{
+    background: white;
+    padding: 6px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.bootstrap-datetimepicker-widget .btn-primary{
+    color: #fff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+}
+
+.bootstrap-datetimepicker-widget .btn-primary:hover{
+    color: #fff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+}
+
+.bootstrap-datetimepicker-widget td span {
+    width: 47px !important;
+}
+
+.bootstrap-datetimepicker-widget .separator {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 4px;
+    border: none !important;
+}
+
+.bootstrap-datetimepicker-widget .timepicker-hour, .bootstrap-datetimepicker-widget .timepicker-minute, .bootstrap-datetimepicker-widget .timepicker-second {
+    width: 100% !important;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.dataTables_processing{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+    color: black;
+    padding-top: 10px;
+}
+
+.div-responsive {
+    width: 100%; 
+    margin-bottom: 15px; 
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-style:
+    -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+}
+
+.jumptarget {
+  content:"";
+  display:block;
+  height:80px; /* fixed header height*/
+  margin:-80px 0 0; /* negative fixed header height */
+  z-index: 0;
+  float: right;
+}
+
+#customer-header-table tr td:first-child {
+    font-weight: bold;
+}
+
+.address {
+    padding-right:0;
+    border-right:none;
+}
+
+.address input[type="text"]{
+    border: none;
+    max-width: 130px;
+}
+
+.address select{
+    float: right;
+    margin: -7px 0;
+    padding: 5px 3px;
+}
