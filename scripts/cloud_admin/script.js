@@ -4,6 +4,10 @@ var App = function () {
     var responsiveFunctions = []; //responsive function holder
     var collapsed = false;
 
+    var defaultOptions = {
+        sidebarFullCollpase: false
+    }
+
     /*-----------------------------------------------------------------------------------*/
     /*	Runs callback functions set by App.addResponsiveFunction()
 	/*-----------------------------------------------------------------------------------*/
@@ -130,7 +134,10 @@ var App = function () {
         jQuery('.navbar-brand').addClass("mini-menu");
         /* For sidebar */
         jQuery('#sidebar').addClass("mini-menu");
-        jQuery('#main-content').addClass("margin-left-50");
+        if (App.sidebarFullCollpase)
+            jQuery('#main-content').addClass("margin-left-0");
+        else
+            jQuery('#main-content').addClass("margin-left-50");
         jQuery('.sidebar-collapse i').removeClass(iconLeft);
         jQuery('.sidebar-collapse i').addClass(iconRight);
         /* Remove placeholder from Search Bar */
@@ -145,7 +152,10 @@ var App = function () {
         if (!isMobile() && localStorage['mini_sidebar'] == '1') {
             jQuery('.navbar-brand').addClass("mini-menu");
             jQuery('#sidebar').addClass("mini-menu");
-            jQuery('#main-content').addClass("margin-left-50");
+            if (App.sidebarFullCollpase)
+                jQuery('#main-content').addClass("margin-left-0");
+            else
+                jQuery('#main-content').addClass("margin-left-50");
         } else {
             jQuery('.navbar-brand').removeClass("mini-menu");
             jQuery('#sidebar').removeClass("mini-menu");
@@ -166,7 +176,8 @@ var App = function () {
             jQuery('#sidebar').addClass("sidebar-fixed");
             jQuery('#header').addClass("navbar-fixed-top");
 
-            jQuery('#main-content').removeClass("margin-left-0");
+            if (!App.sidebarFullCollpase || (App.sidebarFullCollpase && localStorage['mini_sidebar'] == '0'))
+                jQuery('#main-content').removeClass("margin-left-0");
             var menu = $('.sidebar');
             if (menu.parent('.slimScrollDiv').size() === 1) { // destroy existing instance before resizing
                 menu.slimScroll({
@@ -210,7 +221,10 @@ var App = function () {
                     jQuery('.navbar-brand').removeClass("mini-menu");
                     /* For sidebar */
                     jQuery('#sidebar').removeClass("mini-menu");
-                    jQuery('#main-content').removeClass("margin-left-50");
+                    if (App.sidebarFullCollpase)
+                        jQuery('#main-content').removeClass("margin-left-0");
+                    else
+                        jQuery('#main-content').removeClass("margin-left-50");
                     jQuery('.sidebar-collapse i').removeClass(iconRight);
                     jQuery('.sidebar-collapse i').addClass(iconLeft);
                     /* Add placeholder from Search Bar */
@@ -222,7 +236,10 @@ var App = function () {
                     jQuery('.navbar-brand').addClass("mini-menu");
                     /* For sidebar */
                     jQuery('#sidebar').addClass("mini-menu");
-                    jQuery('#main-content').addClass("margin-left-50");
+                    if (App.sidebarFullCollpase)
+                        jQuery('#main-content').addClass("margin-left-0");
+                    else
+                        jQuery('#main-content').addClass("margin-left-50");
                     jQuery('.sidebar-collapse i').removeClass(iconLeft);
                     jQuery('.sidebar-collapse i').addClass(iconRight);
                     /* Remove placeholder from Search Bar */
@@ -322,77 +339,6 @@ var App = function () {
             }
         }
     }
-    /*-----------------------------------------------------------------------------------*/
-    /*	Team View
-	/*-----------------------------------------------------------------------------------*/
-    var handleTeamView = function () {
-        var is_mobile = isMobile();
-        c();
-        $(".team-status-toggle").click(function (y) {
-            y.preventDefault();
-            w(this);
-            $(this).parent().toggleClass("open");
-            var z = x(this);
-            $(z).slideToggle(200, function () {
-                $(this).toggleClass("open")
-            })
-        });
-        $("body").click(function (z) {
-            var y = z.target.className.split(" ");
-            if ($.inArray("team-status", y) == -1 && $.inArray("team-status-toggle", y) == -1 && $(z.target).parents().index($(".team-status")) == -1 && $(z.target).parents(".team-status-toggle").length == 0) {
-                w()
-            }
-        });
-        $(".team-status #teamslider").each(function () {
-            if (!is_mobile) {
-                $(this).slimScrollHorizontal({
-                    width: "100%",
-                    alwaysVisible: true,
-                    color: "#fff",
-                    opacity: "0.5",
-                    size: "5px"
-                })
-            }
-        });
-        var w = function (y) {
-            $(".team-status").each(function () {
-                var z = $(this);
-                if (z.is(":visible")) {
-                    var A = x(y);
-                    if (A != ("#" + z.attr("id"))) {
-                        $(this).slideUp(200, function () {
-                            $(this).toggleClass("open");
-                            $(".team-status-toggle").each(function () {
-                                var B = x(this);
-                                if (B == ("#" + z.attr("id"))) {
-                                    $(this).parent().removeClass("open")
-                                }
-                            })
-                        })
-                    }
-                }
-            })
-        };
-        var x = function (y) {
-            var z = $(y).data("teamStatus");
-            if (typeof z == "undefined") {
-                z = "#team-status"
-            }
-            return z
-        }
-    }
-    var c = function () {
-        $(".team-status").each(function () {
-            var x = $(this);
-            x.css("position", "absolute").css("margin-top", "-1000px").show();
-            var w = 0;
-            $("ul li", this).each(function () {
-                w += $(this).outerWidth(true) + 15
-            });
-            x.css("position", "relative").css("margin-top", "0").hide();
-            $("ul", this).width(w)
-        })
-    };
     /*-----------------------------------------------------------------------------------*/
     /*	Homepage tooltips
 	/*-----------------------------------------------------------------------------------*/
@@ -619,13 +565,16 @@ var App = function () {
 
     return {
         //Initialise theme pages
-        init: function () {
+        init: function (options) {
+
+            for (var option in defaultOptions)
+                this[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
+
             handleSidebarName();
             handleSidebar(); //Function to display the sidebar
             handleSidebarCollapse(); //Function to hide or show sidebar
             handleSidebarAndContentHeight();  //Function to hide sidebar and main content height
             responsiveSidebar();		//Function to handle sidebar responsively
-            handleTeamView(); //Function to toggle team view
             handleHomePageTooltips(); //Function to handle tooltips
             handleBoxTools(); //Function to handle box tools
             handleSlimScrolls(); //Function to handle slim scrolls

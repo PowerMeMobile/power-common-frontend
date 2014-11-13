@@ -60,5 +60,6 @@ if (typeof ko != 'undefined') {
         },
         message: 'The field must equal {0}'
     };
+
     ko.validation.registerExtenders();
 }

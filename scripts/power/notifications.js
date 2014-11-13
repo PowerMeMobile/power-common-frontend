@@ -67,6 +67,7 @@
         var self = this;
         $.ajax({
             url: self.urlToLoad,
+            cache: false,
             success: function (data, s) {
                 if (data) {
                     $.each(data, function (i, el) {

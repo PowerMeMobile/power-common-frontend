@@ -22,11 +22,20 @@
                 valueAccessor()(new moment(value));
             //initialize datepicker with some optional options
             var options = allBindingsAccessor().datetimepickerOptions || {};
-            $(element).datetimepicker(options).on("change.dp", function (ev) {
+            $(element).datetimepicker(options).on("dp.change", function (ev) {
                 var observable = valueAccessor();
-                if (typeof ev.date != 'undefined')
-                    observable(ev.date);
+                if (typeof ev.date != 'undefined') {
+
+                    observable($(element).data("DateTimePicker").unset ? null : ev.date);
+                }
             });
+            $(element).datetimepicker(options).on("dp.error", function (ev) {
+                var observable = valueAccessor();
+                observable(null);
+            });
+            if (options && options.disabled) {
+                $(element).data("DateTimePicker").disable();
+            }
         },
         update: function (element, valueAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor());
@@ -80,6 +89,10 @@
                 }));
             }
 
+            if (obj.events)
+                for (var event in obj.events)
+                    $(element).on(event, obj.events[event]);
+
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
                 $(element).select2('destroy');
             });
@@ -98,17 +111,14 @@
         },
         update: function (element, valueAccessor) {
             var binding = ko.utils.unwrapObservable(valueAccessor());
+            if (binding) {
+                if (!binding.data) {
+                    binding = { data: valueAccessor() }
+                }
 
-            // If the binding isn't an object, turn it into one. 
-            if (!binding.data) {
-                binding = { data: valueAccessor() }
+                $(element).dataTable().fnClearTable();
+                $(element).dataTable().fnAddData(binding.data());
             }
-
-            // Clear table
-            $(element).dataTable().fnClearTable();
-
-            // Rebuild table from data source specified in binding
-            $(element).dataTable().fnAddData(binding.data());
         }
     };
 
@@ -128,4 +138,103 @@
         },
         update: ko.bindingHandlers.value.update
     };
+
+    ko.bindingHandlers.select2placeholder = {
+        after: ['select2'],
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            if (value)
+                $(element).attr('placeholder', value);
+        },
+        update: function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            if (value) {
+                $(element).attr('placeholder', value);
+                $(element).select2("val", "");
+            }
+        }
+    };
+
+    ko.bindingHandlers.easyPieChart = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var options = allBindingsAccessor().options || {};
+            options.lineWidth = options.lineWidth || 5;
+            options.barColor = options.barColor || '#cf1e25';
+            $(element).easyPieChart(options);
+        },
+        update: function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            $(element).data('easyPieChart').update(value);
+        }
+    };
+
+    ko.bindingHandlers.xcharts = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var data = ko.utils.unwrapObservable(valueAccessor());
+            var options = allBindingsAccessor().optionsFunction() || {};
+            var type = allBindingsAccessor().chartType;
+            var chart = new xChart(type, data, '#' + element.id, options);
+            $(element).data('float-chart', chart);
+        },
+        update: function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            var chart = $(element).data('float-chart');
+            chart.setData(value);
+        }
+    };
+
+    ko.bindingHandlers.chart = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var data = ko.utils.unwrapObservable(valueAccessor());
+            var options = allBindingsAccessor().chartOptions || {};
+            var ctx = element.getContext("2d");
+            var chart = new Chart(ctx).Pie(data, options);
+            $(element).data('chart.js-chart', chart);
+            $(element).data('chart.js-data', data);
+        },
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            var data = ko.utils.unwrapObservable(valueAccessor());
+            if (data != $(element).data('chart.js-data')) {
+                var chart = $(element).data('chart.js-chart');
+                var dSeg = [];
+                chart.segments.forEach(function (v, i) {
+                    var ns = data.filter(function (el) { return el.label == v.label })[0];
+                    if (!ns)
+                        dSeg.push(v);
+                    else
+                        v.value = ns.value;
+                }, this);
+
+                chart.update();
+
+                dSeg.forEach(function (v) {
+                    chart.removeData(chart.segments.indexOf(v));
+                });
+
+                data.forEach(function (v) {
+                    var ns = chart.segments.filter(function (el) {  return el.label == v.label })[0];
+                    if (!ns)
+                        chart.addData(v);
+                }, this);
+            }
+        }
+    };
+
+    ko.bindingHandlers.toggle = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var options = allBindingsAccessor().toggleOptions || {};
+            $(element).bootstrapToggle(options);
+            $(element).change(function () {
+                valueAccessor()($(this).prop('checked'));
+            });
+        },
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var vStatus = $(element).prop('checked');
+            var vmStatus = ko.utils.unwrapObservable(valueAccessor());
+            if (vStatus != vmStatus) {
+                $(element).bootstrapToggle(vmStatus ? 'on' : 'off');
+            }
+        }
+    };
+
 }

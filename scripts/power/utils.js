@@ -44,3 +44,14 @@ function GuidUtils() {
 }
 
 var Guid = new GuidUtils();
+
+function setNull(obj ,filter) {
+    if (typeof filter == 'string') {
+        var properties = filter.split(',');
+        properties.forEach(function (prop) {
+            obj[prop] = null;
+        });
+
+        return obj;
+    }
+}
