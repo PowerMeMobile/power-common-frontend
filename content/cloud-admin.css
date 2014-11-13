@@ -2267,11 +2267,6 @@ input[type="button"].btn-block {
     -o-transition: height 0.35s ease;
     transition: height 0.35s ease;
 }
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../../fonts/glyphicons-halflings-regular.eot');
-  src: url('../../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-}
 
 .glyphicon {
   position: relative;
@@ -6446,7 +6441,7 @@ fieldset[disabled] .btn-yellow.active {
   background: none repeat scroll 0 0 #FFFFFF;
   border-bottom-color: #cdd2d2;
   color: #000000;
-  margin: 0 -15px 30px;
+  margin: 0 -14px 30px;
   overflow: hidden;
   padding: 0 20px;
   position: relative;
@@ -8531,7 +8526,6 @@ div[data-role="editor-toolbar"] {
 }
 .invoice-header {
   display: block;
-  margin-bottom: 20px;
 }
 .invoice-header h3 {
   font-weight: 400;

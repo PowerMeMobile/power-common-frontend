@@ -1,7 +1,7 @@
 ﻿body {
     -ms-word-wrap: break-word;
     word-wrap: break-word;
-    width:100%;
+    width: 100%;
 }
 
 
@@ -30,12 +30,12 @@
 }
 
 /*----------bootstrap-datetimepicker-widget------------*/
-.bootstrap-datetimepicker-widget.dropdown-menu{
+.bootstrap-datetimepicker-widget.dropdown-menu {
     background: none repeat scroll 0 0 #FFFFFF;
     border: none;
 }
 
-.bootstrap-datetimepicker-widget .btn{
+.bootstrap-datetimepicker-widget .btn {
     background: white;
     padding: 6px;
     display: inline-block;
@@ -51,17 +51,17 @@
     border-radius: 4px;
 }
 
-.bootstrap-datetimepicker-widget .btn-primary{
+.bootstrap-datetimepicker-widget .btn-primary {
     color: #fff;
     background-color: #3276b1;
     border-color: #285e8e;
 }
 
-.bootstrap-datetimepicker-widget .btn-primary:hover{
-    color: #fff;
-    background-color: #3276b1;
-    border-color: #285e8e;
-}
+    .bootstrap-datetimepicker-widget .btn-primary:hover {
+        color: #fff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+    }
 
 .bootstrap-datetimepicker-widget td span {
     width: 47px !important;
@@ -81,7 +81,7 @@
     font-size: 1.2em;
 }
 
-.dataTables_processing{
+.dataTables_processing {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -94,22 +94,21 @@
 }
 
 .div-responsive {
-    width: 100%; 
-    margin-bottom: 15px; 
+    width: 100%;
+    margin-bottom: 15px;
     overflow-x: scroll;
     overflow-y: hidden;
-    -ms-overflow-style:
-    -ms-autohiding-scrollbar;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch;
 }
 
 .jumptarget {
-  content:"";
-  display:block;
-  height:80px; /* fixed header height*/
-  margin:-80px 0 0; /* negative fixed header height */
-  z-index: 0;
-  float: right;
+    content: "";
+    display: block;
+    height: 80px; /* fixed header height*/
+    margin: -80px 0 0; /* negative fixed header height */
+    z-index: 0;
+    float: right;
 }
 
 #customer-header-table tr td:first-child {
@@ -117,17 +116,59 @@
 }
 
 .address {
-    padding-right:0;
-    border-right:none;
+    padding-right: 0;
+    border-right: none;
 }
 
-.address input[type="text"]{
-    border: none;
-    max-width: 130px;
+    .address input[type="text"] {
+        border: none;
+        max-width: 130px;
+    }
+
+    .address select {
+        float: right;
+        margin: -7px 0;
+        padding: 5px 3px;
+    }
+
+.box > .box-body.inline {
+    padding-bottom: 0;
 }
 
-.address select{
-    float: right;
-    margin: -7px 0;
-    padding: 5px 3px;
+.form-group.boxed {
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+    .form-group.boxed > input {
+        width: 270px;
+    }
+
+    .form-group.boxed > .date {
+        width: 270px;
+    }
+
+@media (max-width: 768px) {
+    .form-group.boxed > input {
+        width: 100%;
+    }
+
+    .form-group.boxed > .date {
+        width: 100%;
+    }
+}
+
+.box .toolbox-tabbed {
+    position: relative;
+    margin: -10px;
+    top: -27px;
+    border-bottom: 1px solid #C4C4C4;
+    padding: 5px;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
+
+.box-title-button {
+    margin-bottom: 5px; 
+    margin-right: 10px;
 }
