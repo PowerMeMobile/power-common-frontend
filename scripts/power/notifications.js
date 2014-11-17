@@ -1,13 +1,65 @@
-﻿function NotificationsModule(options) {
+﻿function NotificationViewModel(model) {
+    var self = this;
+
+    this.Id = model.Id;
+    this.AdminId = model.AdminId;
+    this.Type = model.Type;
+    this.Message = model.Message;
+    this.CallbackUrl = model.CallbackUrl;
+    this.Date = model.Date;
+    this.dateText = ko.computed(function () {
+        return moment(this.Date).from(notificationsViewModel.now());
+    }, this);
+    this.IsReaded = ko.observable(model.IsReaded);
+
+    this.callBack = function () {
+        $.ajax({
+            url: notificationsModule.urlToRead,
+            method: "POST",
+            data: { messageId: self.Id },
+            success: function () {
+                self.IsReaded(true);
+                notificationsViewModel.notifications.remove(function (el) { return el.Id == self.Id });
+            }
+        });
+        if (self.CallbackUrl) {
+            document.location.href = self.CallbackUrl;
+        }
+    }
+}
+
+function NotificationsViewModel() {
+    var self = this;
+
+    this.notifications = ko.observableArray();
+    this.lastActiveNotifications = ko.pureComputed(function () {
+        return self.notifications().slice(0, backendModule.backend.Notifications ? backendModule.backend.Notifications.ActiveNotificationsCount : 7);
+    });
+
+    this.totalNotificationsCount = ko.pureComputed(function () {
+        return self.notifications().length;
+    });
+    this.isLoading = ko.observable(true);
+    this.errorMessage = ko.observable();
+    this.now = ko.observable(new Date());
+
+    setInterval(function () { self.now(new Date()); }, 60 * 1000);
+}
+
+var notificationsViewModel = new NotificationsViewModel();
+
+function NotificationsModule(options) {
+
+    var self = this;
 
     var defaultOptions = {
-        activeNotificationsCount: 7,
         invalidRequestMaxCount: 5,
         invalidRequestSleepsMaxCount: 3,
         defaultTimeout: 3000,
         defaultLongTimeout: 15000,
         urlToWait: null,
-        urlToLoad: null
+        urlToLoad: null,
+        urlToRead: null
     }
 
     for (var option in defaultOptions)
@@ -17,30 +69,22 @@
         invalidRequestSleepsCount = 0;
 
     this.addNotification = function (notification) {
-        notification.dateText = ko.computed(function () {
-            return moment(notification.Date).from(notificationsViewModel.now());
-        });
-        notificationsViewModel.activeNotifications.unshift(notification);
-        if (notificationsViewModel.activeNotifications().length > this.activeNotificationsCount)
-            notificationsViewModel.activeNotifications.pop()
-        notificationsViewModel.totalNotificationsCount(notificationsViewModel.totalNotificationsCount() + 1);
+        notificationsViewModel.notifications.unshift(notification);
     }
 
     this.connect = function () {
-        var self = this;
-
         $.ajax({
             url: self.urlToWait,
             cache: false,
             success: function (data, s) {
-                    if (data) {
-                        self.addNotification(data);
-                    }
+                if (data) {
+                    notificationsViewModel.notifications.unshift(new NotificationViewModel(data));
+                }
 
-                    invalidRequestCount = 0;
-                    invalidRequestSleepsCount = 0;
+                invalidRequestCount = 0;
+                invalidRequestSleepsCount = 0;
 
-                    self.connect();
+                self.connect();
             },
             error: function (jqXHR, textStatus) {
                 if (!authModule.IsUnauthorizeResponse(jqXHR)) {
@@ -51,29 +95,47 @@
                         if (invalidRequestSleepsCount < self.invalidRequestSleepsMaxCount) {
                             invalidRequestSleepsCount++;
                             invalidRequestCount = 0;
-                            setTimeout(function () { self.connect(); }, self.defaultTimeout);
+                            setTimeout(self.connect, self.defaultTimeout);
                         } else {
-                            setTimeout(function () { self.connect(); }, self.defaultLongTimeout);
+                            setTimeout(self.connect, self.defaultLongTimeout);
                         }
                     }
                 } else {
-                    setTimeout(function () { self.connect(); }, self.defaultLongTimeout * 2);
+                    setTimeout(self.connect, self.defaultLongTimeout * 2);
                 }
             }
         });
     }
 
     this.loadLastNotifications = function () {
-        var self = this;
         $.ajax({
             url: self.urlToLoad,
             cache: false,
             success: function (data, s) {
                 if (data) {
-                    $.each(data, function (i, el) {
-                        if (el.id)
-                            self.addNotification(el);
-                    });
+                    ko.utils.arrayPushAll(notificationsViewModel.notifications, data.map(function (el) {
+                        return new NotificationViewModel(el);
+                    }));
+                }
+            },
+            error: function (jqXHR, textStatus) {
+                notificationsViewModel.errorMessage("Error loading data from server");
+            },
+            complete: function () {
+                notificationsViewModel.isLoading(false);
+            }
+        });
+    }
+
+    this.reload = function () {
+        $.ajax({
+            url: self.urlToLoad,
+            cache: false,
+            success: function (data, s) {
+                if (data) {
+                    notificationsViewModel.notifications(data.map(function (el) {
+                        return new NotificationViewModel(el);
+                    }));
                 }
             },
             error: function (jqXHR, textStatus) {

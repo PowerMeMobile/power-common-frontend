@@ -1,7 +1,7 @@
 ﻿function BackendModule(options) {
 
     var defaultOptions = {
-        urlToChechHash: null,
+        urlToCheckHash: null,
         urlToLoad: null,
         urlGetEditView: null
     }
@@ -18,7 +18,7 @@
             self.checkHash(hash)
         } else {
             $.ajax({
-                url: self.urlToChechHash,
+                url: self.urlToCheckHash,
                 success: function (data) {
                     self.checkHash(data);
                 },
@@ -41,7 +41,7 @@
 
     this.updateBackend = function (hash) {
         var self = this;
-        $.get(self.urlToChechHash, null, function (data) {
+        $.get(self.urlToCheckHash, null, function (data) {
             if (data) {
                 localStorage.setItem("backendHash", data);
                 $.getJSON(self.urlToLoad, null, function (data) {
