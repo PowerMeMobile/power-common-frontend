@@ -78,6 +78,7 @@ function NotificationsModule(options) {
             cache: false,
             success: function (data, s) {
                 if (data) {
+                    notificationsViewModel.now(new Date());
                     notificationsViewModel.notifications.unshift(new NotificationViewModel(data));
                 }
 
