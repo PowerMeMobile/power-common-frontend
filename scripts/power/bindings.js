@@ -1,4 +1,10 @@
 ﻿if (typeof ko != 'undefined') {
+    ko.observableArray.fn.setAt = function (index, value) {
+        this.valueWillMutate();
+        this()[index] = value;
+        this.valueHasMutated();
+    }
+
     ko.bindingHandlers.hidden = {
         update: function (element, valueAccessor) {
             ko.bindingHandlers.visible.update(element, function () {
@@ -97,8 +103,16 @@
                 $(element).select2('destroy');
             });
         },
-        update: function (element) {
-            $(element).trigger('change');
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            var obj = valueAccessor(),
+                allBindings = allBindingsAccessor(),
+                value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
+            if (obj.query) {
+                $(element).trigger('change');
+            }
+            else if (value) {
+                $(element).select2('val', value);
+            }
         }
     };
 
@@ -146,11 +160,13 @@
             if (value)
                 $(element).attr('placeholder', value);
         },
-        update: function (element, valueAccessor) {
+        update: function (element, valueAccessor, allBindingsAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor());
             if (value) {
                 $(element).attr('placeholder', value);
-                $(element).select2("val", "");
+                var newValues = ko.utils.unwrapObservable(allBindingsAccessor().selectedOptions);
+                if (newValues && newValues.length == 0)
+                    $(element).select2("val", "");
             }
         }
     };
@@ -212,7 +228,7 @@
                 });
 
                 data.forEach(function (v) {
-                    var ns = chart.segments.filter(function (el) {  return el.label == v.label })[0];
+                    var ns = chart.segments.filter(function (el) { return el.label == v.label })[0];
                     if (!ns)
                         chart.addData(v);
                 }, this);
@@ -234,6 +250,20 @@
             if (vStatus != vmStatus) {
                 $(element).bootstrapToggle(vmStatus ? 'on' : 'off');
             }
+        }
+    };
+
+    ko.bindingHandlers.typeahead = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var $element = $(element);
+            var allBindings = allBindingsAccessor();
+            var typeaheadOpts = { source: ko.utils.unwrapObservable(valueAccessor()) };
+            if (allBindings.typeaheadOptions) {
+                $.each(allBindings.typeaheadOptions, function (optionName, optionValue) {
+                    typeaheadOpts[optionName] = ko.utils.unwrapObservable(optionValue);
+                });
+            }
+            $element.attr("autocomplete", "off").typeahead(typeaheadOpts);
         }
     };
 
