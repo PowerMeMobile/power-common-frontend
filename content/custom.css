@@ -176,3 +176,8 @@
 .margin-bottom-1{
     margin-bottom: 1px;
 }
+
+/*Correct span displaying in IE*/ 
+.dropdown-menu.notification .label {
+    float: left;
+}
