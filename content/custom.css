@@ -178,7 +178,7 @@
 }
 
 /*Correct span displaying in IE*/ 
-.dropdown-menu.notification .label {
+.dropdown-menu.notification .label.label-info {
     float: left;
 }
 
