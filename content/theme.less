@@ -13,6 +13,8 @@
 @badge-red: #DD5A43;
 @color-light: #F4F4F4;
 @content-color: #F5F6F6;
+@validation-error: #f00;
+@validation-error-background: #fee;
 @color-green: @brand-success;
 /* Primary colors */
 @brand-primary: #5E87B0;
@@ -1018,4 +1020,28 @@ li.loading {
         margin-top: 5px;
         min-width: 200px;
     }
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: @validation-error;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid @validation-error;
+    background-color: @validation-error-background;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: @validation-error;
+}
+
+.validation-summary-valid {
+    display: none;
 }
