@@ -507,7 +507,7 @@ li.loading img {
 }
 .sidebar-menu #search-bar .search {
   background: none repeat scroll 0 0 #ffffff;
-  border: 0 none;
+  border: 1px solid #e7e7e7;
   border-radius: 4px;
   color: #555555;
   padding: 8px 10px;
