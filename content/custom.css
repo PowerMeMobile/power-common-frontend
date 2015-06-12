@@ -4,32 +4,7 @@
     width: 100%;
 }
 
-
-/* Styles for validation helpers
------------------------------------------------------------*/
-.field-validation-error {
-    color: #f00;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-.input-validation-error {
-    border: 1px solid #f00;
-    background-color: #fee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-/*----------bootstrap-datetimepicker-widget------------*/
+/*----------START bootstrap-datetimepicker-widget------------*/
 .bootstrap-datetimepicker-widget.dropdown-menu {
     background: none repeat scroll 0 0 #FFFFFF;
     border: none;
@@ -80,6 +55,8 @@
     font-weight: bold;
     font-size: 1.2em;
 }
+
+/*----------END bootstrap-datetimepicker-widget------------*/
 
 .dataTables_processing {
     width: 100%;

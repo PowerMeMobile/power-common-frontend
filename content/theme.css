@@ -507,7 +507,7 @@ li.loading img {
 }
 .sidebar-menu #search-bar .search {
   background: none repeat scroll 0 0 #ffffff;
-  border: 0 none;
+  border: 1px solid #e7e7e7;
   border-radius: 4px;
   color: #555555;
   padding: 8px 10px;
@@ -845,5 +845,24 @@ li.loading img {
   margin-bottom: 5px;
   margin-top: 5px;
   min-width: 200px;
+}
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+  color: #ff0000;
+}
+.field-validation-valid {
+  display: none;
+}
+.input-validation-error {
+  border: 1px solid #ff0000;
+  background-color: #ffeeee;
+}
+.validation-summary-errors {
+  font-weight: bold;
+  color: #ff0000;
+}
+.validation-summary-valid {
+  display: none;
 }
 /*# sourceMappingURL=theme.css.map */
