@@ -49,6 +49,22 @@
         }
     };
 
+    ko.bindingHandlers.datepickerMinDate = {
+        after: ['datetimepicker'],
+        update: function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor()),
+            current = $(element).data("DateTimePicker").setMinDate(value);
+        }
+    };
+
+    ko.bindingHandlers.datepickerMaxDate = {
+        after: ['datetimepicker'],
+        update: function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor()),
+            current = $(element).data("DateTimePicker").setMaxDate(value);
+        }
+    };
+
     ko.bindingHandlers.jstree = {
         init: function (element, valueAccessor, allBindingsAccessor) {
             var options = allBindingsAccessor().optionsFunction() || {};
