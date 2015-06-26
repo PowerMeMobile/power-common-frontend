@@ -848,22 +848,16 @@ li.loading img {
 }
 /* Styles for validation helpers
 -----------------------------------------------------------*/
-.field-validation-error {
+.validationMessage {
   color: #ff0000;
 }
-.field-validation-valid {
-  display: none;
+.input-group .validationMessage {
+  display: table-caption;
+  caption-side: bottom;
 }
-.input-validation-error {
+.validationElement {
   border: 1px solid #ff0000;
   background-color: #ffeeee;
-}
-.validation-summary-errors {
-  font-weight: bold;
-  color: #ff0000;
-}
-.validation-summary-valid {
-  display: none;
 }
 .btn-file {
   position: relative;

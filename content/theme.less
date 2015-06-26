@@ -1024,26 +1024,18 @@ li.loading {
 
 /* Styles for validation helpers
 -----------------------------------------------------------*/
-.field-validation-error {
+.validationMessage {
     color: @validation-error;
 }
 
-.field-validation-valid {
-    display: none;
+.input-group .validationMessage {
+    display: table-caption;
+    caption-side: bottom;
 }
 
-.input-validation-error {
+.validationElement {
     border: 1px solid @validation-error;
     background-color: @validation-error-background;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: @validation-error;
-}
-
-.validation-summary-valid {
-    display: none;
 }
 
 .btn-file {
