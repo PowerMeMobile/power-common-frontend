@@ -146,8 +146,9 @@
                     binding = { data: valueAccessor() }
                 }
 
-                $(element).dataTable().fnClearTable();
-                $(element).dataTable().fnAddData(binding.data());
+                $(element).dataTable().fnClearTable(false);
+                $(element).dataTable().fnAddData(binding.data(), false);
+                $(element).dataTable().fnDraw();
             }
         }
     };
