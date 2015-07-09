@@ -878,4 +878,37 @@ li.loading img {
   cursor: inherit;
   display: block;
 }
+.msisdn {
+  /*border-right: none;*/
+  display: table;
+  border-collapse: separate;
+  padding: 6px 0 2px 12px;
+}
+.msisdn .msisdn-input {
+  display: table-cell;
+}
+.msisdn .msisdn-input input[type="text"] {
+  border: none;
+  width: 100%;
+}
+.msisdn .msisdn-input .validationMessage {
+  position: absolute;
+  left: 30px;
+  top: 31px;
+}
+.msisdn .msisdn-selectors {
+  width: 264px;
+  display: table-cell;
+}
+.msisdn .msisdn-selectors select {
+  float: right;
+  margin: -7px 0;
+  padding: 5px 3px;
+}
+.msisdn .msisdn-selectors .npi {
+  width: auto;
+}
+.msisdn .msisdn-selectors .ton {
+  width: 147px;
+}
 /*# sourceMappingURL=theme.css.map */
