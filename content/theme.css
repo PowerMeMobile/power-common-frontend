@@ -878,4 +878,42 @@ li.loading img {
   cursor: inherit;
   display: block;
 }
+@media (max-width: 767px), (min-width: 768px) and (max-width: 991px), (min-width: 992px) and (max-width: 1199px), (min-width: 1200px) {
+  .padding-right-0-xs {
+    padding-right: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px), (min-width: 992px) and (max-width: 1199px), (min-width: 1200px) {
+  .padding-right-0-sm {
+    padding-right: 0;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px), (min-width: 1200px) {
+  .padding-right-0-md {
+    padding-right: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .padding-right-0-lg {
+    padding-right: 0;
+  }
+}
+.box.box-search {
+  margin-bottom: 5px;
+}
+.box.box-search .box-title {
+  background-color: #e7e7e7;
+  border-radius: 4px 4px 0 0;
+  padding: 5px;
+}
+.box.box-search .box-body {
+  padding: 0 0 5px 0;
+  overflow-y: auto;
+  height: 250px;
+}
+.box.box-search .box-footer {
+  border-top: 1px solid #cdd2d2;
+  padding: 5px 10px;
+  background-color: #e7e7e7;
+}
 /*# sourceMappingURL=theme.css.map */

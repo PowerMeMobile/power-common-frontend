@@ -1058,3 +1058,48 @@ li.loading {
     cursor: inherit;
     display: block;
 }
+
+@xs: ~"(max-width: 767px)";
+@sm: ~"(min-width: 768px) and (max-width: 991px)";
+@md: ~"(min-width: 992px) and (max-width: 1199px)";
+@lg: ~"(min-width: 1200px)";
+
+@screens-xs: @xs, @sm, @md, @lg;
+@screens-sm: @sm, @md, @lg;
+@screens-md: @md, @lg;
+@screens-lg: @lg;
+
+.generate-padding-0(@n, @screens) {
+    .padding-right-0-@{n} {
+        @media @screens {
+            padding-right: 0;
+        }
+    }
+}
+
+.generate-padding-0(xs, @screens-xs);
+.generate-padding-0(sm, @screens-sm);
+.generate-padding-0(md, @screens-md);
+.generate-padding-0(lg, @screens-lg);
+
+.box.box-search {
+    margin-bottom: 5px;
+
+    .box-title {
+        background-color: @sidebar-border-top;
+        border-radius: 4px 4px 0 0;
+        padding: 5px;
+    }
+
+    .box-body {
+        padding: 0 0 5px 0;
+        overflow-y: auto;
+        height: 250px;
+    }
+
+    .box-footer {
+        border-top: 1px solid @item-border;
+        padding: 5px 10px;
+        background-color: @sidebar-border-top;
+    }
+}
