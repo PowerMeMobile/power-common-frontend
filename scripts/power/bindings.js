@@ -284,4 +284,15 @@
         }
     };
 
+    ko.bindingHandlers.fadeVisible = {
+        init: function (element, valueAccessor) {
+            var shouldDisplay = ko.utils.unwrapObservable(valueAccessor());
+            $(element).toggle(shouldDisplay);
+        },
+        update: function (element, valueAccessor) {
+            var shouldDisplay = ko.utils.unwrapObservable(valueAccessor());
+            shouldDisplay ? $(element).fadeIn() : $(element).fadeOut();
+        }
+    };
+
 }
