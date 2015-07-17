@@ -92,22 +92,6 @@
     font-weight: bold;
 }
 
-.address {
-    padding-right: 0;
-    border-right: none;
-}
-
-    .address input[type="text"] {
-        border: none;
-        max-width: 130px;
-    }
-
-    .address select {
-        float: right;
-        margin: -7px 0;
-        padding: 5px 3px;
-    }
-
 .box > .box-body.inline {
     padding-bottom: 0;
 }
@@ -146,15 +130,15 @@
 }
 
 .box-title-button {
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
     margin-right: 10px;
 }
 
-.margin-bottom-1{
+.margin-bottom-1 {
     margin-bottom: 1px;
 }
 
-/*Correct span displaying in IE*/ 
+/*Correct span displaying in IE*/
 .dropdown-menu.notification .label.label-info {
     float: left;
 }
@@ -169,5 +153,5 @@
 }
 
 .tooltip {
-    white-space:normal !important
+    white-space: normal !important;
 }
