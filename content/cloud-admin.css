@@ -1887,6 +1887,7 @@ textarea.input-lg {
   }
 }
 .btn {
+  height: 34px;
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
