@@ -47,9 +47,9 @@
         this.Message = ko.observable(model.Message);
         this.MessageType = ko.observable(model.MessageType);
         this.MessageCssClass = ko.pureComputed(function () {
-            if (self.MessageType() === 0)
+            if (self.MessageType() === 0 || self.MessageType() === "success")
                 return "alert alert-block alert-success"
-            else if (self.MessageType() === 1)
+            else if (self.MessageType() === 1 || self.MessageType() === "danger")
                 return "alert alert-block alert-danger"
         });
 
