@@ -18,8 +18,7 @@
                         $('body').append(data);
                         openModal();
                         setTimeout(function () {
-                            ko.applyBindings(loginViewModel, document.getElementById("login"))
-                            ko.applyBindings(forgotViewModel, document.getElementById("forgot"))
+                            applyLoginPageBindings();
                         }, 50);
                     });
             } else {
