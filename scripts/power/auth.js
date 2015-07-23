@@ -93,6 +93,11 @@
             self.ShowCapsWarning(show);
             return true;
         }
+
+        this.checkPassFocus = function (item, event) {
+            self.ShowCapsWarning(false);
+        }
+
         this.ShowCapsWarning = ko.observable(false);
     }
 
