@@ -81,4 +81,21 @@
 
     globals.BaseAccountViewModel = BaseAccountViewModel;
 
+    function BaseLoginViewModel(model) {
+        var self = this;
+
+        this.Password = ko.observable(model.Password).extend({ required: true });
+        this.RememberMe = ko.observable(model.RememberMe);
+
+        this.checkCaps = function (item, event) {
+            var s = String.fromCharCode(event.which);
+            var show = s.toUpperCase() === s && s.toLowerCase() !== s && !event.shiftKey;
+            self.ShowCapsWarning(show);
+            return true;
+        }
+        this.ShowCapsWarning = ko.observable(false);
+    }
+
+    globals.BaseLoginViewModel = BaseLoginViewModel;
+
 }(this));
