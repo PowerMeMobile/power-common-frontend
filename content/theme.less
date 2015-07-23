@@ -1103,3 +1103,32 @@ li.loading {
         background-color: @sidebar-border-top;
     }
 }
+
+.caps-warning{
+    position: absolute;
+    float: right;
+    right: 50px;
+    margin: 7px;
+    padding: 4px;
+    z-index: 99;
+}
+
+.animated-appearance {
+    animation:swing 0.4s 1 ease-out;
+}
+
+@rotation-angle: 3deg;
+
+@keyframes swing {
+    0% {
+        transform: rotate(-@rotation-angle);
+    }
+
+    50% {
+        transform: rotate(@rotation-angle);
+    }
+
+    100% {
+        transform: rotate(-@rotation-angle);
+    }
+}

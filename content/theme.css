@@ -916,4 +916,26 @@ li.loading img {
   padding: 5px 10px;
   background-color: #e7e7e7;
 }
+.caps-warning {
+  position: absolute;
+  float: right;
+  right: 50px;
+  margin: 7px;
+  padding: 4px;
+  z-index: 99;
+}
+.animated-appearance {
+  animation: swing 0.4s 1 ease-out;
+}
+@keyframes swing {
+  0% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(-3deg);
+  }
+}
 /*# sourceMappingURL=theme.css.map */
