@@ -295,4 +295,40 @@
         }
     };
 
+    ko.bindingHandlers.leafletmap = {
+        init: function(element, valueAccessor, allBindings) {
+            var $element = $(element),
+                mapOptions = allBindings.get('mapOptions') || {},
+                saveCallback = allBindings.get('saveZone'),
+                zoom = mapOptions.zoom || 5,
+                center = mapOptions.center || [26.940, 43.614],
+                urlTemplate = mapOptions.urlTemplate || 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                tileLayerOptions = {
+                    attribution: mapOptions.attribution || '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                    maxZoom: mapOptions.maxZoom || 18
+                },
+                map = L.map(element).setView(center, zoom),
+                plugin = new L.Control.DrawSetShapes({
+                    onSave: saveCallback
+                });
+
+            L.tileLayer(urlTemplate, tileLayerOptions).addTo(map);
+
+            plugin.addTo(map);
+
+            // Save plugin to data in element for future using on update
+            $element.data('map-plugin', plugin);
+        },
+        update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var $element = $(element),
+                plugin = $element.data('map-plugin'),
+                zone = ko.unwrap(valueAccessor());
+
+            if (zone && zone.GeoJsonMaps) {
+                plugin.loadData(JSON.parse(zone.GeoJsonMaps));
+            } else {
+                plugin.clearData();
+            }
+        }
+    };
 }
