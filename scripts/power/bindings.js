@@ -312,7 +312,7 @@
                     attribution: mapOptions.attribution || '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                     maxZoom: mapOptions.maxZoom || 18
                 },
-                map = L.map(element).setView(center, zoom),
+                map = L.map(element,{ fullscreenControl: true }).setView(center, zoom),
                 plugin = new L.Control.DrawSetShapes({
                     onSave: saveCallback
                 });
