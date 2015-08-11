@@ -99,13 +99,14 @@
     };
 
     ko.bindingHandlers.select2 = {
+        after: ['options', 'foreach'],
         init: function (element, valueAccessor, allBindingsAccessor) {
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor(),
                 lookupKey = allBindings.lookupKey;
 
             if (obj.allowClear) {
-                $(element).prepend('<option value="" selected="selected"></option>');
+                $(element).prepend('<option></option>');
             };
 
             $(element).select2(obj);
