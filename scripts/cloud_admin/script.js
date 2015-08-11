@@ -586,6 +586,8 @@ var App = function () {
             handleSearchBox();
         },
 
+        backend: _backend,
+
         //Set page
         setPage: function (name) {
             currentPage = name;
