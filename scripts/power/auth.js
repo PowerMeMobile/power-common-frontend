@@ -1,7 +1,7 @@
 ﻿(function (globals) {
     'use strict';
 
-    function AuthModule(options) {
+    function AuthModule(options, user) {
 
         var defaultOptions = {
             urlToLoadDialog: null
@@ -9,6 +9,8 @@
 
         for (var option in defaultOptions)
             this[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
+
+        this.User = user;
 
         this.loadInlineLogin = function (response) {
             var self = this;
@@ -68,6 +70,9 @@
                             }
                             if (data.success && !(data.obj && data.obj.MessageType === 0/*success*/)) {
                                 $('#inline-login-page').modal('hide');
+                                if (data.obj.Admin && authModule.User.Id != data.obj.Admin.Id) {
+                                    document.location.reload(true);
+                                }
                             }
                         }
                     });
