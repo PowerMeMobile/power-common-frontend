@@ -125,12 +125,14 @@
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor(),
                 value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
+
             if (obj.query) {
                 $(element).trigger('change');
-            }
-            else if (value) {
-                $(element).select2('val', value);
-            }
+            } else {
+                if (typeof (value) !== 'undefined') {
+                    $(element).select2('val', value);
+                };
+            };
         }
     };
 
