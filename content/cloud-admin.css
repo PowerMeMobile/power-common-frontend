@@ -6424,6 +6424,7 @@ fieldset[disabled] .btn-yellow.active {
 /* Content */
 #main-content {
   margin-left: 250px;
+  position: relative;
 }
 /* Content */
 #content {
