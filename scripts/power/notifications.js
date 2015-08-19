@@ -88,7 +88,7 @@ function NotificationsModule(options) {
                 self.connect();
             },
             error: function (jqXHR, textStatus) {
-                if (!authModule.IsUnauthorizeResponse(jqXHR)) {
+                if (!App.auth.isUnauthorizeResponse(jqXHR)) {
                     if (invalidRequestCount < self.invalidRequestMaxCount) {
                         invalidRequestCount++;
                         self.connect();

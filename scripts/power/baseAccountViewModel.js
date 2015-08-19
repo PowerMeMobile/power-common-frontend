@@ -1,46 +1,5 @@
-﻿(function (globals) {
+﻿(function (globals, App, jQuery) {
     'use strict';
-
-    function AuthModule(options, user) {
-
-        var defaultOptions = {
-            urlToLoadDialog: null
-        }
-
-        for (var option in defaultOptions)
-            this[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
-
-        this.User = user;
-
-        this.loadInlineLogin = function (response) {
-            var self = this;
-            if (!$('#inline-login-page').length) {
-                $.get(self.urlToLoadDialog, null,
-                    function (data) {
-                        $('body').append(data);
-                        openModal();
-                        setTimeout(function () {
-                            applyLoginPageBindings();
-                        }, 50);
-                    });
-            } else {
-                if (!$('#inline-login-page').hasClass('in')) {
-                    openModal();
-                }
-            }
-        }
-
-        var openModal = function () {
-            $('#inline-login-page').modal('show');
-        };
-
-        this.IsUnauthorizeResponse = function (xhr) {
-            return xhr.status == 403 || xhr.status == 401;
-        }
-    }
-
-    globals.AuthModule = AuthModule;
-
     function BaseAccountViewModel(model) {
         var self = this;
 
@@ -59,18 +18,18 @@
             vm.errors.showAllMessages();
             if (self.isAjax) {
                 if (vm.isValid()) {
-                    $.ajax({
+                    jQuery.ajax({
                         type: "POST",
-                        url: $(form).attr('action'),
-                        data: $(form).serialize(),
+                        url: jQuery(form).attr('action'),
+                        data: jQuery(form).serialize(),
                         success: function (data) {
                             if (data.obj) {
                                 self.Message(data.obj.Message);
                                 self.MessageType(data.obj.MessageType);
                             }
                             if (data.success && !(data.obj && data.obj.MessageType === 0/*success*/)) {
-                                $('#inline-login-page').modal('hide');
-                                if (data.obj.Admin && authModule.User.Id != data.obj.Admin.Id) {
+                                jQuery('#inline-login-page').modal('hide');
+                                if (data.obj.Admin && App.auth.User.Id != data.obj.Admin.Id) {
                                     document.location.reload(true);
                                 }
                             }
@@ -108,4 +67,4 @@
 
     globals.BaseLoginViewModel = BaseLoginViewModel;
 
-}(this));
+}(this, App, jQuery));
