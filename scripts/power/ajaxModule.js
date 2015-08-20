@@ -15,6 +15,38 @@
             setupAuthAjaxHook();
         }
 
+        this.Save = function (url, vm, callback) {
+            if (vm.isValid()) {
+                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
+            } else {
+                vm.errors.showAllMessages();
+            }
+        }
+
+        this.Delete = function (url, vm, callback) {
+            AjaxInternal(url, vm, callback, 'DELETE');
+        }
+
+        function AjaxInternal(url, vm, callback, type, data) {
+            vm.BlockingStatus(new BlockingStatus(true));
+            $.ajax({
+                url: url,
+                data: data,
+                contentType: "application/json",
+                type: type,
+                success: function (data) {
+                    vm.Alert(new AlertStatus(data.success, data.message));
+                    vm.BlockingStatus(new BlockingStatus(false, data.success));
+                    if (data.success) {
+                        if (callback) callback.call(vm, data);
+                    }
+                },
+                error: function () {
+                    vm.BlockingStatus(new BlockingStatus(false, false));
+                }
+            });
+        }
+
         function setupAuthAjaxHook() {
             jQuery(globals.document).ajaxError(function (event, xhr, settings, thrownError) {
                 if (App.auth.isUnauthorizeResponse(xhr)) {
@@ -28,7 +60,7 @@
             });
         }
     }
-    
+
     App.ajax = new AjaxModule();
 
 }(this, App, jQuery));
