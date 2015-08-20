@@ -5,7 +5,8 @@ var App = function () {
     var collapsed = false;
 
     var defaultOptions = {
-        sidebarFullCollpase: false
+        sidebarFullCollpase: false,
+        spinnerImagePath: null
     }
 
     /*-----------------------------------------------------------------------------------*/
@@ -340,6 +341,61 @@ var App = function () {
         }
     }
     /*-----------------------------------------------------------------------------------*/
+    /*Jquery blockUI
+    /*-----------------------------------------------------------------------------------*/
+    var setBlockUiDefaults = function () {
+        jQuery.blockUI.defaults.css = {
+            border: 'none',
+            padding: '2px',
+            backgroundColor: 'none'
+
+        }
+        jQuery.blockUI.defaults.message = '<img src="' + App.spinnerImagePath + '")" align="absmiddle">'
+        jQuery.blockUI.defaults.overlayCSS = {
+            backgroundColor: '#000',
+            opacity: 0.05,
+            cursor: 'wait'
+        }
+    }
+
+    var blockUIWithStatus = function (el, status) {
+        var message;
+        if (status) {          
+            message = '<img src="' + App.successImagePath.replace("dummy", Math.random()) + '" align="absmiddle">'
+        } else {
+            message = '<img src="' + App.errorImagePath + '" align="absmiddle">'
+        }
+
+        jQuery(el).block({
+            message: message,
+            overlayCSS: {
+                backgroundColor: 'none',
+                cursor: 'initial',
+                'pointer-events': 'none'
+            },
+            timeout: 1020,
+            fadeIn: 0,
+            fadeOut: 0
+        });
+    }
+
+    var setupBlockStatus = function () {
+        var reg = new RegExp(/url\(\"?(.*?)\"?\)/)
+
+        var success = jQuery('<p class="status-mark-success"></p>').hide().appendTo("body");
+        var imgSrcS = success.css("content");
+        App.successImagePath = reg.exec(imgSrcS)[1];
+
+        var error = jQuery('<p class="status-mark-error"></p>').hide().appendTo("body");
+        var imgSrcE = error.css("content");
+        App.errorImagePath = reg.exec(imgSrcE)[1];
+    }
+
+    var setupBlockUI = function () {
+        setBlockUiDefaults();
+        setupBlockStatus();
+    }
+    /*-----------------------------------------------------------------------------------*/
     /*	Homepage tooltips
 	/*-----------------------------------------------------------------------------------*/
     var handleHomePageTooltips = function () {
@@ -584,6 +640,7 @@ var App = function () {
             handleGoToTop(); 	//Funtion to handle goto top buttons
             handleNavbarFixedTop();		//Function to check & handle if navbar is fixed top
             handleSearchBox();
+            setupBlockUI();
         },
 
         backend: _backend,
@@ -610,30 +667,15 @@ var App = function () {
         scrollTop: function () {
             App.scrollTo();
         },
+        blockUIWithStatus: blockUIWithStatus,
         // wrapper function to  block element(indicate loading)
         blockUI: function (el, loaderOnTop) {
             lastBlockedUI = el;
-            jQuery(el).block({
-                message: blockUIStandardMessage,
-                css: {
-                    border: 'none',
-                    padding: '2px',
-                    backgroundColor: 'none'
-                },
-                overlayCSS: {
-                    backgroundColor: '#000',
-                    opacity: 0.05,
-                    cursor: 'wait'
-                }
-            });
+            jQuery(el).block();
         },
         // wrapper function to  un-block element(finish loading)
         unblockUI: function (el) {
-            jQuery(el).unblock({
-                onUnblock: function () {
-                    jQuery(el).removeAttr("style");
-                }
-            });
+            jQuery(el).unblock();
         },
         reloadToolbox: handleBoxTools
     };
