@@ -298,4 +298,43 @@
             shouldDisplay ? $(element).fadeIn() : $(element).fadeOut();
         }
     };
+
+    ko.bindingHandlers.block = {
+        init: function (element, valueAccessor) { },
+        update: function (element, valueAccessor) {
+            var updatingStatus = ko.utils.unwrapObservable(valueAccessor());
+            if (typeof updatingStatus == 'object') {
+                if (updatingStatus.isUpdating) {
+                    $(element).block();
+                } else {
+                    $(element).unblock();
+                    setTimeout(function () {
+                        App.blockUIWithStatus(element, updatingStatus.success);
+                    }, 0);
+                }
+            }
+        }
+    };
+
+    ko.bindingHandlers.alert = {
+        init: function (element, valueAccessor) {
+            $(element).append('<p></p>');
+        },
+        update: function (element, valueAccessor) {
+            var alert = ko.utils.unwrapObservable(valueAccessor());
+            if (alert && alert.message) {
+                $(element).show();
+                if (alert.success) {
+                    $(element).removeClass('alert-danger');
+                    $(element).addClass('alert-success');
+                } else {
+                    $(element).addClass('alert-danger');
+                    $(element).removeClass('alert-success');
+                }
+                $(element).find('p').text(alert.message);
+            } else if (alert && alert.success) {
+                $(element).hide();
+            }
+        }
+    };
 }
