@@ -939,4 +939,22 @@ li.loading img {
     transform: rotate(-3deg);
   }
 }
+.btn-danger-animated {
+  animation: to_danger 1.1s cubic-bezier(0.12, 0.69, 0.37, 0.99);
+}
+.btn-success-animated {
+  animation: to_sucess 1.1s cubic-bezier(0.12, 0.69, 0.37, 0.99);
+}
+@keyframes to_sucess {
+  to {
+    background-color: #829c49;
+    border-color: #9db36a;
+  }
+}
+@keyframes to_danger {
+  to {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+  }
+}
 /*# sourceMappingURL=theme.css.map */
