@@ -14,6 +14,21 @@
         this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
     }
 
+    function BaseBoxViewModel() {
+        var self = this;
+
+        this.isCollapsed = ko.observable(false);
+
+        this.collapseToggle = function () {
+            self.isCollapsed(!self.isCollapsed());
+            return false;
+        }
+
+        if (this.ignoreOnSave) {
+            this.ignoreOnSave = this.ignoreOnSave.concat(['isCollapsed']);
+        }
+    }
+
     function BaseValidatableViewModel() {
         var self = this;
 
@@ -43,5 +58,6 @@
     globals.AlertStatus = AlertStatus;
     globals.BaseEditViewModel = BaseEditViewModel;
     globals.BaseValidatableViewModel = BaseValidatableViewModel;
+    globals.BaseBoxViewModel = BaseBoxViewModel;
 
 }(this, App, jQuery, ko));

@@ -299,6 +299,17 @@
         }
     };
 
+    ko.bindingHandlers.collapseBox = {
+        init: function (element, valueAccessor) {
+            var isCollapsed = ko.utils.unwrapObservable(valueAccessor());
+            App.collapseBox(isCollapsed, element);
+        },
+        update: function (element, valueAccessor) {
+            var isCollapsed = ko.utils.unwrapObservable(valueAccessor());
+            App.collapseBox(isCollapsed, element);
+        }
+    };
+
     ko.bindingHandlers.block = {
         init: function (element, valueAccessor) { },
         update: function (element, valueAccessor) {

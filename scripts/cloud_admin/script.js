@@ -425,6 +425,19 @@ var App = function () {
     /*-----------------------------------------------------------------------------------*/
     /* Box tools
 	/*-----------------------------------------------------------------------------------*/
+    var collapseBox = function (collapse, box) {
+        var body = jQuery(box).eq(0).children(".box-body");
+        if (collapse) {
+            var i = jQuery(box).find(".box-title .tools .collapse-btn").children("i");
+            i.removeClass("fa fa-chevron-up").addClass("fa fa-chevron-down");
+            body.slideUp(200);
+        } else {
+            var i = jQuery(box).find(".box-title .tools .collapse-btn").children("i");
+            i.removeClass("fa fa-chevron-down").addClass("fa fa-chevron-up");
+            body.slideDown(200);
+        }
+    }
+
     var handleBoxTools = function () {
         //Collapse
         jQuery('.box .tools .collapse, .box .tools .expand').unbind().click(function () {
@@ -679,7 +692,8 @@ var App = function () {
         unblockUI: function (el) {
             jQuery(el).unblock();
         },
-        reloadToolbox: handleBoxTools
+        reloadToolbox: handleBoxTools,
+        collapseBox: collapseBox
     };
 }();
 (function (a, b) {
