@@ -341,6 +341,20 @@ var App = function () {
         }
     }
     /*-----------------------------------------------------------------------------------*/
+    /*Jquery Colorful Buttons
+    /*-----------------------------------------------------------------------------------*/
+    var handleButtonColor = function (button, success) {
+        if (success) {
+            $(button).addClass('btn-success-animated');
+            setTimeout(function () { $(button).removeClass('btn-success-animated').addClass('btn-primary'); }, 1020);
+        } else {
+            $(button).addClass('btn-danger-animated');
+            setTimeout(function () { $(button).removeClass('btn-danger-animated').addClass('btn-primary'); }, 1020);
+        }
+    }
+
+
+    /*-----------------------------------------------------------------------------------*/
     /*Jquery blockUI
     /*-----------------------------------------------------------------------------------*/
     var setBlockUiDefaults = function () {
@@ -693,7 +707,8 @@ var App = function () {
             jQuery(el).unblock();
         },
         reloadToolbox: handleBoxTools,
-        collapseBox: collapseBox
+        collapseBox: collapseBox,
+        handleButtonColor: handleButtonColor
     };
 }();
 (function (a, b) {

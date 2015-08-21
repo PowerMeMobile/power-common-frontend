@@ -348,4 +348,14 @@
             }
         }
     };
+
+    ko.bindingHandlers.colorButtonStatus = {
+        init: function (element, valueAccessor) { },
+        update: function (element, valueAccessor) {
+            var updatingStatus = ko.utils.unwrapObservable(valueAccessor());
+            if (typeof updatingStatus == 'object' && typeof updatingStatus.success == 'boolean') {
+                App.handleButtonColor(element, updatingStatus.success);
+            }
+        }
+    };
 }
