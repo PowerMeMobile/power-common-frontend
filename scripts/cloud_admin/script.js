@@ -359,24 +359,26 @@ var App = function () {
     }
 
     var blockUIWithStatus = function (el, status) {
-        var message;
-        if (status) {          
-            message = '<img src="' + App.successImagePath.replace("dummy", Math.random()) + '" align="absmiddle">'
-        } else {
-            message = '<img src="' + App.errorImagePath + '" align="absmiddle">'
-        }
+        if (typeof status === 'boolean') {
+            var message;
+            if (status) {
+                message = '<img src="' + App.successImagePath.replace("dummy", Math.random()) + '" align="absmiddle">'
+            } else {
+                message = '<img src="' + App.errorImagePath + '" align="absmiddle">'
+            }
 
-        jQuery(el).block({
-            message: message,
-            overlayCSS: {
-                backgroundColor: 'none',
-                cursor: 'initial',
-                'pointer-events': 'none'
-            },
-            timeout: 1020,
-            fadeIn: 0,
-            fadeOut: 0
-        });
+            jQuery(el).block({
+                message: message,
+                overlayCSS: {
+                    backgroundColor: 'none',
+                    cursor: 'initial',
+                    'pointer-events': 'none'
+                },
+                timeout: 1020,
+                fadeIn: 0,
+                fadeOut: 0
+            });
+        }
     }
 
     var setupBlockStatus = function () {
