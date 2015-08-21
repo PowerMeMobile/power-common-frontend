@@ -15,9 +15,13 @@
             setupAuthAjaxHook();
         }
 
-        this.Save = function (url, vm, callback) {
+        this.Get = function (url, vm, callback) {
+            AjaxInternal(url, vm, callback, 'POST', null, true);
+        }
+
+        this.Save = function (url, vm, callback, skipStatus) {
             if (vm.isValid()) {
-                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
+                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave(), skipStatus);
             } else {
                 vm.errors.showAllMessages();
             }
@@ -27,7 +31,7 @@
             AjaxInternal(url, vm, callback, 'DELETE');
         }
 
-        function AjaxInternal(url, vm, callback, type, data) {
+        function AjaxInternal(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new BlockingStatus(true));
             $.ajax({
                 url: url,
@@ -36,7 +40,7 @@
                 type: type,
                 success: function (data) {
                     vm.Alert(new AlertStatus(data.success, data.message));
-                    vm.BlockingStatus(new BlockingStatus(false, data.success));
+                    vm.BlockingStatus(new BlockingStatus(false, skipStatus ? null : data.success));
                     if (data.success) {
                         if (callback) callback.call(vm, data);
                     }
