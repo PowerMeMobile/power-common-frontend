@@ -52,16 +52,25 @@
     ko.bindingHandlers.datepickerMinDate = {
         after: ['datetimepicker'],
         update: function (element, valueAccessor) {
+            var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMinDate(value);
+            if (currentDate < value) {
+                $(element).data("DateTimePicker").setDate(value);
+            }
         }
     };
 
     ko.bindingHandlers.datepickerMaxDate = {
         after: ['datetimepicker'],
         update: function (element, valueAccessor) {
+            var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMaxDate(value);
+            if (currentDate > value) {
+                $(element).data("DateTimePicker").setDate(value);
+            }
+
         }
     };
 
@@ -99,12 +108,10 @@
     };
 
     ko.bindingHandlers.select2 = {
-        after: ['options', 'foreach'],
         init: function (element, valueAccessor, allBindingsAccessor) {
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor(),
                 lookupKey = allBindings.lookupKey;
-
             $(element).select2(obj);
             if (lookupKey) {
                 var value = ko.utils.unwrapObservable(allBindings.value);
@@ -125,14 +132,12 @@
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor(),
                 value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
-
             if (obj.query) {
                 $(element).trigger('change');
-            } else {
-                if (typeof (value) !== 'undefined') {
-                    $(element).select2('val', value);
-                };
-            };
+            }
+            else if (value) {
+                $(element).select2('val', value);
+            }
         }
     };
 
@@ -150,9 +155,8 @@
                     binding = { data: valueAccessor() }
                 }
 
-                $(element).dataTable().fnClearTable(false);
-                $(element).dataTable().fnAddData(binding.data(), false);
-                $(element).dataTable().fnDraw();
+                $(element).dataTable().fnClearTable();
+                $(element).dataTable().fnAddData(binding.data());
             }
         }
     };
@@ -288,74 +292,4 @@
         }
     };
 
-    ko.bindingHandlers.fadeVisible = {
-        init: function (element, valueAccessor) {
-            var shouldDisplay = ko.utils.unwrapObservable(valueAccessor());
-            $(element).toggle(shouldDisplay);
-        },
-        update: function (element, valueAccessor) {
-            var shouldDisplay = ko.utils.unwrapObservable(valueAccessor());
-            shouldDisplay ? $(element).fadeIn() : $(element).fadeOut();
-        }
-    };
-
-    ko.bindingHandlers.collapseBox = {
-        init: function (element, valueAccessor) {
-            var isCollapsed = ko.utils.unwrapObservable(valueAccessor());
-            App.collapseBox(isCollapsed, element);
-        },
-        update: function (element, valueAccessor) {
-            var isCollapsed = ko.utils.unwrapObservable(valueAccessor());
-            App.collapseBox(isCollapsed, element);
-        }
-    };
-
-    ko.bindingHandlers.block = {
-        init: function (element, valueAccessor) { },
-        update: function (element, valueAccessor) {
-            var updatingStatus = ko.utils.unwrapObservable(valueAccessor());
-            if (typeof updatingStatus == 'object') {
-                if (updatingStatus.isUpdating) {
-                    $(element).block();
-                } else {
-                    $(element).unblock();
-                    setTimeout(function () {
-                        App.blockUIWithStatus(element, updatingStatus.success);
-                    }, 0);
-                }
-            }
-        }
-    };
-
-    ko.bindingHandlers.alert = {
-        init: function (element, valueAccessor) {
-            $(element).append('<p></p>');
-        },
-        update: function (element, valueAccessor) {
-            var alert = ko.utils.unwrapObservable(valueAccessor());
-            if (alert && alert.message) {
-                $(element).show();
-                if (alert.success) {
-                    $(element).removeClass('alert-danger');
-                    $(element).addClass('alert-success');
-                } else {
-                    $(element).addClass('alert-danger');
-                    $(element).removeClass('alert-success');
-                }
-                $(element).find('p').text(alert.message);
-            } else if (alert && alert.success) {
-                $(element).hide();
-            }
-        }
-    };
-
-    ko.bindingHandlers.colorButtonStatus = {
-        init: function (element, valueAccessor) { },
-        update: function (element, valueAccessor) {
-            var updatingStatus = ko.utils.unwrapObservable(valueAccessor());
-            if (typeof updatingStatus == 'object' && typeof updatingStatus.success == 'boolean') {
-                App.handleButtonColor(element, updatingStatus.success);
-            }
-        }
-    };
 }
