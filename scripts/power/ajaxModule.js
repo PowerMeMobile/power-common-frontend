@@ -32,21 +32,21 @@
         }
 
         function AjaxInternal(url, vm, callback, type, data, skipStatus) {
-            vm.BlockingStatus(new BlockingStatus(true));
+            vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
             $.ajax({
                 url: url,
                 data: data,
                 contentType: "application/json",
                 type: type,
                 success: function (data) {
-                    vm.Alert(new AlertStatus(data.success, data.message));
-                    vm.BlockingStatus(new BlockingStatus(false, skipStatus ? null : data.success));
+                    vm.Alert(new App.vms.Base.AlertStatus(data.success, data.message));
+                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : data.success));
                     if (data.success) {
                         if (callback) callback.call(vm, data);
                     }
                 },
                 error: function () {
-                    vm.BlockingStatus(new BlockingStatus(false, false));
+                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, false));
                 }
             });
         }

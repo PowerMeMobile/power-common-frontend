@@ -1,4 +1,4 @@
-﻿(function (globals, App, jQuery, ko) {
+﻿(function (App, jQuery, ko) {
     'use strict';
 
     function BaseEditViewModel() {
@@ -54,10 +54,10 @@
         }
     }
 
-    globals.BlockingStatus = BlockingStatus;
-    globals.AlertStatus = AlertStatus;
-    globals.BaseEditViewModel = BaseEditViewModel;
-    globals.BaseValidatableViewModel = BaseValidatableViewModel;
-    globals.BaseBoxViewModel = BaseBoxViewModel;
+    App.vms.Base.BlockingStatus = BlockingStatus;
+    App.vms.Base.AlertStatus = AlertStatus;
+    App.vms.Base.BaseEditViewModel = BaseEditViewModel;
+    App.vms.Base.BaseValidatableViewModel = BaseValidatableViewModel;
+    App.vms.Base.BaseBoxViewModel = BaseBoxViewModel;
 
-}(this, App, jQuery, ko));
+}(App, jQuery, ko));

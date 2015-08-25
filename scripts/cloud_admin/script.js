@@ -3,10 +3,13 @@ var App = function () {
     var currentPage = ''; // current page
     var responsiveFunctions = []; //responsive function holder
     var collapsed = false;
+    var vms = { Base: {}};
+    var routers = {};
 
     var defaultOptions = {
         sidebarFullCollpase: false,
-        spinnerImagePath: null
+        spinnerImagePath: null,
+        baseUrl: document.location.origin
     }
 
     /*-----------------------------------------------------------------------------------*/
@@ -708,7 +711,10 @@ var App = function () {
         },
         reloadToolbox: handleBoxTools,
         collapseBox: collapseBox,
-        handleButtonColor: handleButtonColor
+        handleButtonColor: handleButtonColor,
+        baseUrl: this.baseUrl,
+        vms: vms,
+        routers: routers
     };
 }();
 (function (a, b) {
