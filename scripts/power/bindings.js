@@ -48,22 +48,31 @@
             $(element).data("DateTimePicker").setDate(value);
         }
     };
-
     ko.bindingHandlers.datepickerMinDate = {
         after: ['datetimepicker'],
         update: function (element, valueAccessor) {
+            var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMinDate(value);
+            if (currentDate < value) {
+                $(element).data("DateTimePicker").setDate(value);
+            }
         }
     };
 
     ko.bindingHandlers.datepickerMaxDate = {
         after: ['datetimepicker'],
         update: function (element, valueAccessor) {
+            var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMaxDate(value);
+            if (currentDate > value) {
+                $(element).data("DateTimePicker").setDate(value);
+            }
+
         }
     };
+
 
     ko.bindingHandlers.jstree = {
         init: function (element, valueAccessor, allBindingsAccessor) {
