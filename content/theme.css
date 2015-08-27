@@ -957,4 +957,7 @@ li.loading img {
     border-color: #d43f3a;
   }
 }
+.sidebar.sidebar-fixed.mini-menu #search-bar {
+  display: none;
+}
 /*# sourceMappingURL=theme.css.map */
