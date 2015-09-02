@@ -76,6 +76,7 @@ function NotificationsModule(options) {
         $.ajax({
             url: self.urlToWait,
             cache: false,
+            global: false,
             success: function (data, s) {
                 if (data) {
                     notificationsViewModel.now(new Date());
