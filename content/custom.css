@@ -155,3 +155,8 @@
 .tooltip {
     white-space: normal !important;
 }
+
+.disabled-opacity {
+    opacity: 0.4; 
+    filter: alpha(opacity=40);
+}
