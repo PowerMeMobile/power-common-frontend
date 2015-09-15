@@ -94,7 +94,7 @@
             var options = ko.utils.unwrapObservable(allBindingsAccessor().treeOptions) || {};
             $(element).jstree(options).on("changed.jstree", function (e, data) {
                 var observable = valueAccessor();
-                if (typeof data != 'undefined' && data.node.type == "Property")
+                if (data && data.node && data.node.type == "Property")
                     observable(data.selected);
             });
 
@@ -104,8 +104,11 @@
         },
         update: function (element, valueAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor());
-            $(element).jstree(true).deselect_all(true);
-            $(element).jstree(true).select_node(value);
+            var tree = $(element).jstree(true);
+            if (value != tree.get_selected()[0]) {
+                tree.deselect_all(true);
+                tree.select_node(value);
+            }
         }
     };
 

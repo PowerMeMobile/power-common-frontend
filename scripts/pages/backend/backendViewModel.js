@@ -6,7 +6,7 @@
 
         this.SelectedNodeId = ko.observable(model.selectedNodeId);
         this.TreeData = model.treeData;
-        this.SearchText = ko.observable().extend({rateLimit: 200});
+        this.SearchText = ko.observable().extend({ rateLimit: 200 });
 
         this.SearchText.subscribe(function (text) {
             jQuery('#backends_tree').jstree(true).search(text);
@@ -59,14 +59,8 @@
             }
         }
 
-        var preventTwiceFiring = true;
-        this.SelectedNodeId.subscribe(function (newValue) {
-            if (preventTwiceFiring) { preventTwiceFiring = false; return; }
-            self.ReloadBackendTag();
-            preventTwiceFiring = true;
-        });
+        this.SelectedNodeId.subscribe(this.ReloadBackendTag);
     }
-
 
     if (!App.vms.Backend) App.vms.Backend = {};
 
