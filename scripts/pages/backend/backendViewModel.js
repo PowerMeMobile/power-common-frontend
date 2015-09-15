@@ -38,7 +38,7 @@
         };
 
         this.ReloadBackendTag = function () {
-            if (self.SelectedNodeId()) {
+            if (self.SelectedNodeId() && self.SelectedNodeId()[0]) {
                 self.BackendItem.BlockingStatus(new App.vms.Base.BlockingStatus(true));
                 $.ajax({
                     url: App.routers.Backend.EditView(self.SelectedNodeId()[0]),
