@@ -79,8 +79,6 @@
             var options = allBindingsAccessor().optionsFunction() || {};
             $(element).jstree(options).on("changed.jstree", function (e, data) {
                 var observable = valueAccessor();
-                if (typeof data != 'undefined')
-                    debugger;
                 observable(data.selected);
             });
         },
@@ -93,11 +91,15 @@
 
     ko.bindingHandlers.backendJstree = {
         init: function (element, valueAccessor, allBindingsAccessor) {
-            var options = allBindingsAccessor().optionsFunction() || {};
+            var options = ko.utils.unwrapObservable(allBindingsAccessor().treeOptions) || {};
             $(element).jstree(options).on("changed.jstree", function (e, data) {
                 var observable = valueAccessor();
                 if (typeof data != 'undefined' && data.node.type == "Property")
                     observable(data.selected);
+            });
+
+            $(element).bind("select_node.jstree", function (e, data) {
+                return data.instance.toggle_node(data.node);
             });
         },
         update: function (element, valueAccessor) {
