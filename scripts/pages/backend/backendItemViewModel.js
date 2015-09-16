@@ -8,6 +8,10 @@
         this.Id = ko.observable(id);
         this.Value = ko.observable();
 
+        this.MapToSave = function () {
+            return JSON.stringify({id: self.Id(), value: ko.mapping.toJSON(self.Value) });
+        }
+
         this.Save = function () {
             App.ajax.Save(App.routers.Backend.Save(), this);
 
