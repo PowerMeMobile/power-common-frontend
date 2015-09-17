@@ -13,16 +13,6 @@ var App = function () {
     }
 
     /*-----------------------------------------------------------------------------------*/
-    /*	Runs callback functions set by App.addResponsiveFunction()
-	/*-----------------------------------------------------------------------------------*/
-    var runResponsiveFunctions = function () {
-        // reinitialize other subscribed elements
-        for (var i in responsiveFunctions) {
-            var each = responsiveFunctions[i];
-            each.call();
-        }
-    }
-    /*-----------------------------------------------------------------------------------*/
     /*	To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
 	/*-----------------------------------------------------------------------------------*/
     var getViewPort = function () {
@@ -34,24 +24,6 @@ var App = function () {
         return {
             width: e[a + 'Width'],
             height: e[a + 'Height']
-        }
-    }
-    /*-----------------------------------------------------------------------------------*/
-    /*	Sidebar & Main Content size match
-	/*-----------------------------------------------------------------------------------*/
-    var handleSidebarAndContentHeight = function () {
-        var content = $('#content');
-        var sidebar = $('#sidebar');
-        var body = $('body');
-        var height;
-
-        if (body.hasClass('sidebar-fixed')) {
-            height = $(window).height() - $('#header').height() + 1;
-        } else {
-            height = sidebar.height() + 20;
-        }
-        if (height >= content.height()) {
-            content.attr('style', 'min-height:' + height + 'px !important');
         }
     }
     /*-----------------------------------------------------------------------------------*/
@@ -76,7 +48,6 @@ var App = function () {
                     if ($('#sidebar').hasClass('sidebar-fixed') == false) {
                         App.scrollTo(thisElement, slideOffeset);
                     }
-                    handleSidebarAndContentHeight();
                 });
             } else {
                 jQuery('.arrow', jQuery(this)).addClass("open");
@@ -85,7 +56,6 @@ var App = function () {
                     if ($('#sidebar').hasClass('sidebar-fixed') == false) {
                         App.scrollTo(thisElement, slideOffeset);
                     }
-                    handleSidebarAndContentHeight();
                 });
             }
         });
@@ -299,7 +269,6 @@ var App = function () {
         }
 
         if ($('.sidebar-fixed').size() === 0) {
-            handleSidebarAndContentHeight();
             return;
         }
 
@@ -315,7 +284,6 @@ var App = function () {
                 allowPageScroll: false,
                 disableFadeOut: false
             });
-            handleSidebarAndContentHeight();
         }
     }
     /*-----------------------------------------------------------------------------------*/
@@ -323,11 +291,9 @@ var App = function () {
 	/*-----------------------------------------------------------------------------------*/
     jQuery(window).resize(function () {
         setTimeout(function () {
-            handleSidebarAndContentHeight();
             responsiveSidebar();
             handleFixedSidebar();
             handleNavbarFixedTop();
-            runResponsiveFunctions();
             updateTableSize();
         }, 50); // wait 50ms until window resize finishes.
     });
@@ -661,7 +627,6 @@ var App = function () {
             handleSidebarName();
             handleSidebar(); //Function to display the sidebar
             handleSidebarCollapse(); //Function to hide or show sidebar
-            handleSidebarAndContentHeight();  //Function to hide sidebar and main content height
             responsiveSidebar();		//Function to handle sidebar responsively
             handleHomePageTooltips(); //Function to handle tooltips
             handleBoxTools(); //Function to handle box tools
@@ -673,6 +638,7 @@ var App = function () {
             handleNavbarFixedTop();		//Function to check & handle if navbar is fixed top
             handleSearchBox();
             setupBlockUI();
+            handleFixedSidebar();
         },
 
         backend: _backend,
@@ -717,28 +683,8 @@ var App = function () {
         routers: routers
     };
 }();
-(function (a, b) {
-    a.fn.admin_tree = function (d) {
-        var c = {
-            "open-icon": "fa fa-folder-open",
-            "close-icon": "fa fa-folder",
-            selectable: true,
-            "selected-icon": "fa fa-check",
-            "unselected-icon": "tree-dot"
-        };
-        c = a.extend({}, c, d);
-        this.each(function () {
-            var e = a(this);
-            e.html('<div class = "tree-folder" style="display:none;">				<div class="tree-folder-header">					<i class="' + c["close-icon"] + '"></i>					<div class="tree-folder-name"></div>				</div>				<div class="tree-folder-content"></div>				<div class="tree-loader" style="display:none"></div>			</div>			<div class="tree-item" style="display:none;">				' + (c["unselected-icon"] == null ? "" : '<i class="' + c["unselected-icon"] + '"></i>') + '				<div class="tree-item-name"></div>			</div>');
-            e.addClass(c.selectable == true ? "tree-selectable" : "tree-unselectable");
-            e.tree(c)
-        });
-        return this
-    }
-})(window.jQuery);
 
-
-(function () {
+(function () { //TODO refactor in powerads
     this.Theme = (function () {
         function Theme() { }
         Theme.colors = {
@@ -778,11 +724,6 @@ function findBootstrapEnvironment() {
 
 function isMobile() {
     return findBootstrapEnvironment() == 'xs';
-}
-
-function swapScreen(id) {
-    jQuery('.visible').removeClass('visible animated fadeInUp');
-    jQuery('#' + id).addClass('visible animated fadeInUp');
 }
 
 function UpdateQueryString(key, value, url) {
