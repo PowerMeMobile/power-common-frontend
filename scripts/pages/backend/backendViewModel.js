@@ -37,11 +37,16 @@
             ]
         };
 
-        this.ReloadBackendTag = function () {
+        this.RemoteReload = function () {
+            self.ReloadBackendTag(true);
+        }
+
+        this.ReloadBackendTag = function (update) {
             if (self.SelectedNodeId() && self.SelectedNodeId()[0]) {
                 self.BackendItem.BlockingStatus(new App.vms.Base.BlockingStatus(true));
                 $.ajax({
                     url: App.routers.Backend.EditView(self.SelectedNodeId()[0]),
+                    data: { 'remoteReload': typeof update == 'boolean' && update },
                     type: 'POST',
                     success: function (data) {
                         var success = data.indexOf('edit-view') != -1;
