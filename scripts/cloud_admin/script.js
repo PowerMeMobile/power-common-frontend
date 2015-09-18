@@ -324,21 +324,8 @@ var App = function () {
             handleFixedSidebar();
             handleNavbarFixedTop();
             runResponsiveFunctions();
-            updateTableSize();
         }, 50); // wait 50ms until window resize finishes.
     });
-    /*-----------------------------------------------------------------------------------*/
-    /*	oTable Resize
-	/*-----------------------------------------------------------------------------------*/
-    var updateTableSize = function () {
-        var oTable = $('.datatable.table');
-        if (oTable.length) {
-            $(oTable).css({ width: $(oTable).parent().width() });
-            if (oTable.DataTable) {
-                oTable.DataTable().fnAdjustColumnSizing();
-            }
-        }
-    }
     /*-----------------------------------------------------------------------------------*/
     /*	Homepage tooltips
 	/*-----------------------------------------------------------------------------------*/
