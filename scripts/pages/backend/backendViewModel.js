@@ -47,7 +47,9 @@
                         var success = data.indexOf('edit-view') != -1;
                         if (success) {
                             replaceHash('!' + self.SelectedNodeId()[0]);
-                            $('#edit-view').replaceWith(data);
+                            var viewNode = document.getElementById('edit-view');
+                            ko.cleanNode(viewNode);
+                            $(viewNode).replaceWith(data);
                         }
                         self.BackendItem.Alert(new App.vms.Base.AlertStatus(success, success ? null : LocalizationStrings.InternalError));
                         self.BackendItem.BlockingStatus(new App.vms.Base.BlockingStatus(false, null));
