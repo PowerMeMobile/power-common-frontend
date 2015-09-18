@@ -369,11 +369,17 @@ var App = function () {
 
         var success = jQuery('<p class="status-mark-success"></p>').hide().appendTo("body");
         var imgSrcS = success.css("content");
-        App.successImagePath = reg.exec(imgSrcS)[1];
+        var groups = reg.exec(imgSrcS);
+        if (groups) {
+            App.successImagePath = reg.exec(imgSrcS)[1];
+        }
 
         var error = jQuery('<p class="status-mark-error"></p>').hide().appendTo("body");
         var imgSrcE = error.css("content");
-        App.errorImagePath = reg.exec(imgSrcE)[1];
+        var groups = reg.exec(imgSrcE);
+        if (groups) {
+            App.errorImagePath = reg.exec(imgSrcE)[1];
+        }
     }
 
     var setupBlockUI = function () {
