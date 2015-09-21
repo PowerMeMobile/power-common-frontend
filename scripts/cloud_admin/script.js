@@ -10,7 +10,10 @@ var App = function () {
         baseUrl: '/'
     };
     this.block = {
-        spinnerImagePath: '/Content/img/loaders/standard-big.gif'
+        spinnerImagePath: '/Content/img/loaders/standard-big.gif',
+        showSpinner: true,
+        skipSuccess: false,
+        skipError: false
     };
 
     this.sidebar = { fullCollpase: false }
@@ -676,7 +679,8 @@ var App = function () {
         handleButtonColor: handleButtonColor,
         vms: this.vms,
         routers: this.routers,
-        sidebar: this.sidebar
+        sidebar: this.sidebar,
+        block: this.block
     };
 }();
 

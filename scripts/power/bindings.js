@@ -325,16 +325,21 @@
     };
 
     ko.bindingHandlers.block = {
-        init: function (element, valueAccessor) { },
-        update: function (element, valueAccessor) {
+        update: function (element, valueAccessor, allBindingsAccessor) {
+            var options = $.extend({}, App.block, ko.utils.unwrapObservable(allBindingsAccessor().blockOptions));
             var updatingStatus = ko.utils.unwrapObservable(valueAccessor());
             if (typeof updatingStatus == 'object') {
-                if (updatingStatus.isUpdating) {
+                if (updatingStatus.isUpdating && options.showSpinner) {
                     $(element).block();
                 } else {
-                    $(element).unblock();
+                    if(options.showSpinner)
+                        $(element).unblock();
+
                     setTimeout(function () {
-                        App.blockUIWithStatus(element, updatingStatus.success);
+                        if (updatingStatus.success === true && !options.skipSuccess)
+                            App.blockUIWithStatus(element, true);
+                        else if (updatingStatus.success === false && !options.skipError)
+                            App.blockUIWithStatus(element, false);
                     }, 0);
                 }
             }

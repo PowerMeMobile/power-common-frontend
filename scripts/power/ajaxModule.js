@@ -19,9 +19,9 @@
             AjaxInternal(url, vm, callback, 'POST', null, true);
         }
 
-        this.Save = function (url, vm, callback, skipStatus) {
+        this.Save = function (url, vm, callback) {
             if (vm.isValid()) {
-                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave(), skipStatus);
+                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
             } else {
                 vm.errors.showAllMessages();
             }
@@ -31,7 +31,7 @@
             AjaxInternal(url, vm, callback, 'DELETE');
         }
 
-        function AjaxInternal(url, vm, callback, type, data, skipStatus) {
+        function AjaxInternal(url, vm, callback, type, data) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
             $.ajax({
                 url: url,
@@ -40,7 +40,7 @@
                 type: type,
                 success: function (data) {
                     vm.Alert(new App.vms.Base.AlertStatus(data.success, data.message));
-                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : data.success));
+                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, data.success));
                     if (data.success) {
                         if (callback) callback.call(vm, data);
                     }
