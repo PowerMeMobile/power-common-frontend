@@ -3,14 +3,17 @@ var App = function () {
     var currentPage = ''; // current page
     var responsiveFunctions = []; //responsive function holder
     var collapsed = false;
-    var vms = { Base: {}};
-    var routers = {};
+    this.vms = { Base: {} };
+    this.routers = {};
 
-    var defaultOptions = {
-        sidebarFullCollpase: false,
-        spinnerImagePath: null,
-        baseUrl: document.location.origin
-    }
+    this.routers = {
+        baseUrl: '/'
+    };
+    this.block = {
+        spinnerImagePath: '/Content/img/loaders/standard-big.gif'
+    };
+
+    this.sidebar = { fullCollpase: false }
 
     /*-----------------------------------------------------------------------------------*/
     /*	To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
@@ -108,7 +111,7 @@ var App = function () {
         jQuery('.navbar-brand').addClass("mini-menu");
         /* For sidebar */
         jQuery('#sidebar').addClass("mini-menu");
-        if (App.sidebarFullCollpase)
+        if (App.sidebar.fullCollpase)
             jQuery('#main-content').addClass("margin-left-0");
         else
             jQuery('#main-content').addClass("margin-left-50");
@@ -126,7 +129,7 @@ var App = function () {
         if (!isMobile() && localStorage['mini_sidebar'] == '1') {
             jQuery('.navbar-brand').addClass("mini-menu");
             jQuery('#sidebar').addClass("mini-menu");
-            if (App.sidebarFullCollpase)
+            if (App.sidebar.fullCollpase)
                 jQuery('#main-content').addClass("margin-left-0");
             else
                 jQuery('#main-content').addClass("margin-left-50");
@@ -150,7 +153,7 @@ var App = function () {
             jQuery('#sidebar').addClass("sidebar-fixed");
             jQuery('#header').addClass("navbar-fixed-top");
 
-            if (!App.sidebarFullCollpase || (App.sidebarFullCollpase && localStorage['mini_sidebar'] == '0'))
+            if (!App.sidebar.fullCollpase || (App.sidebar.fullCollpase && localStorage['mini_sidebar'] == '0'))
                 jQuery('#main-content').removeClass("margin-left-0");
             var menu = $('.sidebar');
             if (menu.parent('.slimScrollDiv').size() === 1) { // destroy existing instance before resizing
@@ -195,7 +198,7 @@ var App = function () {
                     jQuery('.navbar-brand').removeClass("mini-menu");
                     /* For sidebar */
                     jQuery('#sidebar').removeClass("mini-menu");
-                    if (App.sidebarFullCollpase)
+                    if (App.sidebar.fullCollpase)
                         jQuery('#main-content').removeClass("margin-left-0");
                     else
                         jQuery('#main-content').removeClass("margin-left-50");
@@ -210,7 +213,7 @@ var App = function () {
                     jQuery('.navbar-brand').addClass("mini-menu");
                     /* For sidebar */
                     jQuery('#sidebar').addClass("mini-menu");
-                    if (App.sidebarFullCollpase)
+                    if (App.sidebar.fullCollpase)
                         jQuery('#main-content').addClass("margin-left-0");
                     else
                         jQuery('#main-content').addClass("margin-left-50");
@@ -321,7 +324,7 @@ var App = function () {
             backgroundColor: 'none'
 
         }
-        jQuery.blockUI.defaults.message = '<img src="' + App.spinnerImagePath + '")" align="absmiddle">'
+        jQuery.blockUI.defaults.message = '<img src="' + App.block.spinnerImagePath + '")" align="absmiddle">'
         jQuery.blockUI.defaults.overlayCSS = {
             backgroundColor: '#000',
             opacity: 0.05,
@@ -615,8 +618,7 @@ var App = function () {
         //Initialise theme pages
         init: function (options) {
 
-            for (var option in defaultOptions)
-                this[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
+           $.extend(true, this, options);
 
             handleSidebarName();
             handleSidebar(); //Function to display the sidebar
@@ -672,9 +674,9 @@ var App = function () {
         reloadToolbox: handleBoxTools,
         collapseBox: collapseBox,
         handleButtonColor: handleButtonColor,
-        baseUrl: this.baseUrl,
-        vms: vms,
-        routers: routers
+        vms: this.vms,
+        routers: this.routers,
+        sidebar: this.sidebar
     };
 }();
 

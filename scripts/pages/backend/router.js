@@ -8,6 +8,6 @@
         this.Save = function () { return baseUrl + 'Save/'; };
     }
 
-    App.routers.Backend = new BackendRouter(App.baseUrl);
+    App.routers.Backend = new BackendRouter(App.routers.baseUrl);
 
 }(App));
