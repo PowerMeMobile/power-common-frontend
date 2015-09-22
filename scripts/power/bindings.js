@@ -54,7 +54,7 @@
             var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMinDate(value);
-            if (currentDate != null&&currentDate < value) {
+            if (currentDate != null && currentDate < value) {
                 $(element).data("DateTimePicker").setDate(value);
             }
         }
@@ -66,7 +66,7 @@
             var currentDate = $(element).data("DateTimePicker").getDate();
             var value = ko.utils.unwrapObservable(valueAccessor()),
             current = $(element).data("DateTimePicker").setMaxDate(value);
-            if (currentDate!=null&&currentDate > value) {
+            if (currentDate != null && currentDate > value) {
                 $(element).data("DateTimePicker").setDate(value);
             }
 
@@ -332,7 +332,7 @@
                 if (updatingStatus.isUpdating && options.showSpinner) {
                     $(element).block();
                 } else {
-                    if(options.showSpinner)
+                    if (options.showSpinner)
                         $(element).unblock();
 
                     setTimeout(function () {
@@ -375,6 +375,18 @@
             if (typeof updatingStatus == 'object' && typeof updatingStatus.success == 'boolean') {
                 App.handleButtonColor(element, updatingStatus.success);
             }
+        }
+    };
+
+    ko.bindingHandlers.lazyOptions = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var load = valueAccessor().options.load;
+            var oldValue = ko.utils.unwrapObservable(valueAccessor());
+            load().done(function (data) {
+                valueAccessor().options(data.obj);
+                if (ko.utils.unwrapObservable(valueAccessor()) != oldValue)
+                    valueAccessor()(oldValue);
+            });
         }
     };
 }
