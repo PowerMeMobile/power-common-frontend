@@ -15,8 +15,8 @@
             setupAuthAjaxHook();
         }
 
-        this.Get = function (url, vm, callback) {
-            AjaxInternal(url, vm, callback, 'POST', null, true);
+        this.Get = function (url, vm, callback, data) {
+            return AjaxInternal(url, vm, callback, 'POST', data, true);
         }
 
         this.Save = function (url, vm, callback) {
@@ -31,16 +31,16 @@
             AjaxInternal(url, vm, callback, 'DELETE');
         }
 
-        function AjaxInternal(url, vm, callback, type, data) {
+        function AjaxInternal(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
-            $.ajax({
+            return $.ajax({
                 url: url,
                 data: data,
                 contentType: "application/json",
                 type: type,
                 success: function (data) {
                     vm.Alert(new App.vms.Base.AlertStatus(data.success, data.message));
-                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, data.success));
+                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : data.success));
                     if (data.success) {
                         if (callback) callback.call(vm, data);
                     }
