@@ -621,10 +621,9 @@ var App = function () {
         //Initialise theme pages
         init: function (options) {
 
-           $.extend(true, this, options);
+            $.extend(true, this, options);
 
-            handleSidebarName();
-            handleSidebar(); //Function to display the sidebar
+            handleSidebar();
             handleSidebarCollapse(); //Function to hide or show sidebar
             responsiveSidebar();		//Function to handle sidebar responsively
             handleHomePageTooltips(); //Function to handle tooltips
@@ -638,6 +637,10 @@ var App = function () {
             handleSearchBox();
             setupBlockUI();
             handleFixedSidebar();
+
+            $(document).ready(function () {
+                handleSidebarName();
+            });
         },
 
         backend: _backend,
