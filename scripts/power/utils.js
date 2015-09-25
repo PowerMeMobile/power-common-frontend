@@ -38,9 +38,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 });
 
 function GuidUtils() {
-    this.Empty = function () {
-        return "00000000-0000-0000-0000-000000000000";
-    }
+    this.Empty = "00000000-0000-0000-0000-000000000000";
 }
 
 var Guid = new GuidUtils();
