@@ -39,5 +39,21 @@
         },
         message: 'This field has to be a valid URL'
     };
+
+    ko.validation.rules['validateFileTypeExtensions'] = {
+        validator: function (fileName, validExtensions) {
+            var isValidExtension = false;
+            var extension = fileName.split('.').pop();
+            validExtensions.forEach(function (validExtension) {
+                if (extension == validExtension)
+                    isValidExtension = true;
+            });
+            return isValidExtension;
+        },
+
+
+        message: 'Please chose a file with an acceptable extension ({0}).'
+    };
+
     ko.validation.registerExtenders();
 }
