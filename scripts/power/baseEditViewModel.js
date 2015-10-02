@@ -14,6 +14,16 @@
         this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
     }
 
+    function ServerTableViewModel() {
+        var self = this;
+
+        this.MapToSave = function () {
+            return JSON.parse(ko.mapping.toJSON(self, { ignore: self.ignoreOnSave }));
+        }
+
+        this.ignoreOnSave = ['ignoreOnSave'];
+    }
+
     function BaseBoxViewModel() {
         var self = this;
 
@@ -59,5 +69,6 @@
     App.vms.Base.BaseEditViewModel = BaseEditViewModel;
     App.vms.Base.BaseValidatableViewModel = BaseValidatableViewModel;
     App.vms.Base.BaseBoxViewModel = BaseBoxViewModel;
+    App.vms.Base.ServerTableViewModel = ServerTableViewModel;
 
 }(App, jQuery, ko));
