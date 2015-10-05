@@ -14,6 +14,26 @@
         this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
     }
 
+    function ServerTableViewModel(model) {
+        var self = this;
+
+        this.MapToSave = function () {
+            return JSON.parse(ko.mapping.toJSON(self, { ignore: self.ignoreOnSave }));
+        }
+
+        this.ignoreOnSave = ['ignoreOnSave'];
+
+        $.extend(model, App.routers.getHashData());
+
+        this.Search = function () {
+            ko.postbox.publish('search');
+        }
+
+        ko.postbox.subscribe('search', function () {
+            App.routers.setHashData(self.MapToSave());
+        });
+    }
+
     function BaseBoxViewModel() {
         var self = this;
 
@@ -59,5 +79,6 @@
     App.vms.Base.BaseEditViewModel = BaseEditViewModel;
     App.vms.Base.BaseValidatableViewModel = BaseValidatableViewModel;
     App.vms.Base.BaseBoxViewModel = BaseBoxViewModel;
+    App.vms.Base.ServerTableViewModel = ServerTableViewModel;
 
 }(App, jQuery, ko));

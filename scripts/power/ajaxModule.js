@@ -31,6 +31,23 @@
             AjaxInternal(url, vm, callback, 'DELETE');
         }
 
+        this.Select2Data = function (url, query) {
+            return $.ajax({
+                url: url,
+                data: { startWith: query.term },
+                type: 'POST',
+                success: function (data) {
+                    if (data.success) {
+                        query.callback({
+                            results: data.obj
+                        });
+                    } else {
+                        alert(LocalizationStrings.InternalServerError);
+                    }
+                }
+            });
+        }
+
         function AjaxInternal(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
             return $.ajax({
