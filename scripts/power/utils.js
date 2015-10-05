@@ -53,3 +53,8 @@ function setNull(obj ,filter) {
         return obj;
     }
 }
+
+ko.observable.fn.subscribeToAction = function (callback) {
+    this.subscribe(callback);
+    return this;
+}

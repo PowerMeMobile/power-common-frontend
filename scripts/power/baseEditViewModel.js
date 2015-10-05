@@ -14,7 +14,7 @@
         this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
     }
 
-    function ServerTableViewModel() {
+    function ServerTableViewModel(model) {
         var self = this;
 
         this.MapToSave = function () {
@@ -22,6 +22,16 @@
         }
 
         this.ignoreOnSave = ['ignoreOnSave'];
+
+        $.extend(model, App.routers.getHashData());
+
+        this.Search = function () {
+            ko.postbox.publish('search');
+        }
+
+        ko.postbox.subscribe('search', function () {
+            App.routers.setHashData(self.MapToSave());
+        });
     }
 
     function BaseBoxViewModel() {

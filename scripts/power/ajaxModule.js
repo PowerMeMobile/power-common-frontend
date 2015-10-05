@@ -38,7 +38,6 @@
                 type: 'POST',
                 success: function (data) {
                     if (data.success) {
-                        console.log(query);
                         query.callback({
                             results: data.obj
                         });

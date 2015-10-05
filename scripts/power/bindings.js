@@ -27,7 +27,9 @@
             if (typeof value == 'string')
                 valueAccessor()(new moment(value));
             //initialize datepicker with some optional options
-            var options = allBindingsAccessor().datetimepickerOptions || {};
+            var options = allBindingsAccessor().datetimepickerOptions || {
+                format: App.backend.LocalizationSettings.DatetimePickerFormat
+            };
             $(element).datetimepicker(options).on("dp.change", function (ev) {
                 var observable = valueAccessor();
                 if (typeof ev.date != 'undefined') {
@@ -116,15 +118,24 @@
         after: ['options', 'foreach'],
         init: function (element, valueAccessor, allBindingsAccessor) {
             var obj = valueAccessor(),
-                allBindings = allBindingsAccessor(),
-                lookupKey = allBindings.lookupKey;
+                allBindings = allBindingsAccessor();
 
-            $(element).select2(obj);
-            if (lookupKey) {
-                var value = ko.utils.unwrapObservable(allBindings.value);
-                $(element).select2('data', ko.utils.arrayFirst(obj.data.results, function (item) {
-                    return item[lookupKey] === value;
-                }));
+            if (obj.query && obj.value && obj.value().length) {
+                obj.initSelection = function (element, callback) {
+                    callback(obj.value().map(function(i){ return { id: i, text: i }}));
+                }
+
+                $(element).select2(obj);
+                $(element).select2("val", []);
+            }
+            else {
+                $(element).select2(obj);
+            }
+
+            if (obj.value) {
+                $(element).on('change', function () {
+                    obj.value($(element).select2("val"));
+                });
             }
 
             if (obj.events)
@@ -388,5 +399,33 @@
                     valueAccessor()(oldValue);
             });
         }
+    };
+
+    ko.bindingHandlers.serverDataTable = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var options = ko.utils.unwrapObservable(valueAccessor())();
+            var table = $(element).DataTable(options);
+
+            var lazyEvent = ko.observable().extend({ rateLimit: 100 });
+
+            ko.postbox.subscribe('search', function (data) {
+                lazyEvent({});
+            });
+
+            lazyEvent.subscribe(function () {
+                table.ajax.reload();
+            });
+
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                table.destroy();
+            });
+        },
+    };
+
+    ko.bindingHandlers.replicate = {
+        init: function (element, valueAccessor, allBindingsAccessor) {
+            var id = ko.utils.unwrapObservable(valueAccessor());
+            element.innerHTML = document.getElementById(id).innerHTML;
+        },
     };
 }
