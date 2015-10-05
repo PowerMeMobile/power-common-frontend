@@ -959,4 +959,34 @@ li.loading img {
 .sidebar.sidebar-fixed.mini-menu #search-bar {
   display: none;
 }
+.dataTables_processing {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+  color: black;
+  padding-top: 10px;
+}
+.new-table .dataTables_processing {
+  opacity: 1;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  color: #5e87b0;
+  top: 0;
+  padding: 0 14px 0 7px;
+}
+.new-table .dataTables_processing .blocking {
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 100%;
+}
+.new-table .dataTables_processing .blocking i {
+  position: absolute;
+  top: 50%;
+  margin: -20px 0 0 0;
+}
 /*# sourceMappingURL=theme.css.map */
