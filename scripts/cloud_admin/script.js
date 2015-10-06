@@ -8,6 +8,7 @@ var App = function () {
 
     this.routers = {
         baseUrl: '/',
+        root: '/',
         hash: '#!/'
     };
     this.block = {
