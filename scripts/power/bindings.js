@@ -33,7 +33,6 @@
             $(element).datetimepicker(options).on("dp.change", function (ev) {
                 var observable = valueAccessor();
                 if (typeof ev.date != 'undefined') {
-
                     observable($(element).data("DateTimePicker").unset ? null : ev.date);
                 }
             });
@@ -47,7 +46,9 @@
         },
         update: function (element, valueAccessor) {
             var value = ko.utils.unwrapObservable(valueAccessor());
-            $(element).data("DateTimePicker").setDate(value);
+            if (!($(element).data("DateTimePicker").unset && value === null)) {
+                $(element).data("DateTimePicker").setDate(value);
+            }
         }
     };
     ko.bindingHandlers.datepickerMinDate = {
@@ -120,9 +121,9 @@
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor();
 
-            if (obj.query && obj.value && obj.value().length) {
+            if (obj.query && obj.value && obj.value() && obj.value().length) {
                 obj.initSelection = function (element, callback) {
-                    callback(obj.value().map(function(i){ return { id: i, text: i }}));
+                    callback(obj.value().map(function (i) { return { id: i, text: i } }));
                 }
 
                 $(element).select2(obj);
