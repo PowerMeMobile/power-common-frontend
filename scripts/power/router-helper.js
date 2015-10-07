@@ -4,7 +4,12 @@
     function RouterHelper() {
 
         this.getHashData = function () {
-            return $.deparam(globals.location.hash.substr(App.routers.hash.length));
+            var data = $.deparam(globals.location.hash.substr(App.routers.hash.length), true);
+            for (var i in data) {
+                if (data[i] === "")
+                    data[i] = null; //null -> empty -> null
+            }
+            return data;
         }
 
         this.setHashData = function (data) {
