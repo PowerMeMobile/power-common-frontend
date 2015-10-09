@@ -989,4 +989,30 @@ li.loading img {
   top: 50%;
   margin: -20px 0 0 0;
 }
+.error .error-code {
+  font-size: 128px;
+  font-weight: 300;
+  letter-spacing: -10px;
+  line-height: 128px;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+.error .error-code.error-404 {
+  color: #a8bc7b;
+}
+.error .error-code.error-500 {
+  color: #d9534f;
+}
+.error .error-code.error-403 {
+  color: #d9534f;
+}
+.error .content {
+  display: inline-block;
+  margin-left: 20px;
+  padding-top: 0;
+  text-align: left;
+}
+.error .content h3 {
+  text-transform: uppercase;
+}
 /*# sourceMappingURL=theme.css.map */

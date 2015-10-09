@@ -1199,10 +1199,45 @@ li.loading {
             height: 100%;
 
             i {
-                position:absolute;
+                position: absolute;
                 top: 50%;
                 margin: -20px 0 0 0;
             }
+        }
+    }
+}
+
+.error {
+
+    .error-code {
+        font-size: 128px;
+        font-weight: 300;
+        letter-spacing: -10px;
+        line-height: 128px;
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+
+    .error-code.error-404 {
+        color: @brand-success;
+    }
+
+    .error-code.error-500 {
+        color: @brand-danger;
+    }
+
+    .error-code.error-403 {
+        color: @brand-danger;
+    }
+
+    .content {
+        display: inline-block;
+        margin-left: 20px;
+        padding-top: 0;
+        text-align: left;
+
+        h3 {
+            text-transform: uppercase;
         }
     }
 }
