@@ -1004,7 +1004,7 @@ li.loading img {
   color: #d9534f;
 }
 .error .error-code.error-403 {
-  color: #d9534f;
+  color: #f0ad4e;
 }
 .error .content {
   display: inline-block;
