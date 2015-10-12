@@ -48,7 +48,7 @@
             });
         }
 
-        function AjaxInternal(url, vm, callback, type, data, skipStatus) {
+        this.AjaxInternal = function(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
             return $.ajax({
                 url: url,
