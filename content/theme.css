@@ -1015,4 +1015,16 @@ li.loading img {
 .error .content h3 {
   text-transform: uppercase;
 }
+.details-td {
+  padding: 4px !important;
+  font-size: 20px;
+  text-align: center;
+}
+.details-td i {
+  color: #5e87b0;
+}
+.table-details-loader {
+  text-align: center;
+  color: #5e87b0;
+}
 /*# sourceMappingURL=theme.css.map */
