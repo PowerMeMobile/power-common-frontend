@@ -6557,7 +6557,6 @@ fieldset[disabled] .btn-yellow.active {
 .box .box-title .tools {
   display: inline-block;
   padding: 0;
-  margin-bottom: 7px;
   float: right;
   clear: both;
   min-height: 30px;
@@ -6823,7 +6822,6 @@ fieldset[disabled] .btn-yellow.active {
 .box.solid > .box-title .tools {
   display: inline-block;
   padding: 0;
-  margin-bottom: 7px;
   float: right;
   clear: both;
   min-height: 30px;
