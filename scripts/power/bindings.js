@@ -406,6 +406,7 @@
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var options = ko.utils.unwrapObservable(valueAccessor())();
             var table = $(element).DataTable(options);
+            $(element).data('tableInstance', table);
 
             var lazyEvent = ko.observable().extend({ rateLimit: 100 });
 
