@@ -21,7 +21,9 @@
             return JSON.parse(ko.mapping.toJSON(self, { ignore: self.ignoreOnSave }));
         }
 
-        this.ignoreOnSave = ['ignoreOnSave'];
+        if (!this.ignoreOnSave) {
+            this.ignoreOnSave = ['ignoreOnSave'];
+        }
 
         $.extend(model, App.routers.getHashData());
 
