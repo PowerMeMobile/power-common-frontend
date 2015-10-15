@@ -40,7 +40,7 @@
                         data: 'Date', render: function (data, type, obj) {
                             return App.TablesHelper.linkTo(
                                 router.Details(obj.Id),
-                                App.TablesHelper.timeDate(data)
+                                App.TablesHelper.dateTime(data)
                             );
                         }
                     },
