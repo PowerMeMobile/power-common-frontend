@@ -16,19 +16,19 @@
         }
 
         this.Get = function (url, vm, callback, data) {
-            return AjaxInternal(url, vm, callback, 'POST', data, true);
+            return self.AjaxInternal(url, vm, callback, 'POST', data, true);
         }
 
         this.Save = function (url, vm, callback) {
             if (vm.isValid()) {
-                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
+                self.AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
             } else {
                 vm.errors.showAllMessages();
             }
         }
 
         this.Delete = function (url, vm, callback) {
-            AjaxInternal(url, vm, callback, 'DELETE');
+            self.AjaxInternal(url, vm, callback, 'DELETE');
         }
 
         this.Select2Data = function (url, query) {
