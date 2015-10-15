@@ -4,7 +4,7 @@
     function InternalLogsViewModel(model) {
         var self = this;
 
-        App.vms.Base.ServerTableViewModel.call(this, model);
+        App.vms.base.ServerTable.call(this, model);
 
         this.From = ko.observable(model.From).subscribeToAction(this.Search);
         this.To = ko.observable(model.To).subscribeToAction(this.Search);

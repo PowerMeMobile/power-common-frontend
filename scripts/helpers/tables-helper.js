@@ -40,6 +40,14 @@
                 }))[0].outerHTML;
         }
 
+        this.linkAction = function (func, text, options) {
+            return $("<a />",
+                $.extend(options, {
+                    href: 'javascript:' + func,
+                    text: text
+                }))[0].outerHTML;
+        }
+
         this.dateTime = function (data) {
             return data ? new moment(data).format(App.backend.LocalizationSettings.DefaultDateTimeFormat) : null;
         }
