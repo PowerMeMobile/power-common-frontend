@@ -50,6 +50,11 @@
 
         this.AjaxInternal = function(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
+
+            if (typeof data === 'object') {
+                data = JSON.stringify(data);
+            }
+
             return $.ajax({
                 url: url,
                 data: data,
