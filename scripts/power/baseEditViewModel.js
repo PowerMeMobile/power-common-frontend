@@ -54,10 +54,10 @@
         }
     }
 
-    App.vms.Base.BlockingStatus = BlockingStatus;
-    App.vms.Base.AlertStatus = AlertStatus;
-    App.vms.Base.BaseEditViewModel = BaseEditViewModel;
-    App.vms.Base.BaseValidatableViewModel = BaseValidatableViewModel;
-    App.vms.Base.BaseBoxViewModel = BaseBoxViewModel;
+    App.ns('vms.Base').BlockingStatus = BlockingStatus;
+    App.ns('vms.Base').AlertStatus = AlertStatus;
+    App.ns('vms.Base').BaseEditViewModel = BaseEditViewModel;
+    App.ns('vms.Base').BaseValidatableViewModel = BaseValidatableViewModel;
+    App.ns('vms.Base').BaseBoxViewModel = BaseBoxViewModel;
 
 }(App, jQuery, ko));
