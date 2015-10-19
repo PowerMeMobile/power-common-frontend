@@ -1027,4 +1027,7 @@ li.loading img {
   text-align: center;
   color: #5e87b0;
 }
+.datatable th {
+  font-weight: 600;
+}
 /*# sourceMappingURL=theme.css.map */
