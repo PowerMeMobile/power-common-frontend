@@ -153,3 +153,7 @@
     opacity: 0.4;
     filter: alpha(opacity=40);
 }
+
+input.select2-input {
+    font-size: 14px !important;
+}
