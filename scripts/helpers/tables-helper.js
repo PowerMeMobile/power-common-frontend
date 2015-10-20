@@ -32,6 +32,12 @@
             return options;
         }
 
+        this.composeClientOptions = function (options) {
+            var options = $.extend(true, {}, baseOptions, options)
+
+            return options;
+        }
+
         this.linkTo = function (url, text, options) {
             return $("<a />",
                 $.extend(options, {
@@ -55,8 +61,17 @@
         this.timeDate = function (data) {
             return data ? new moment(data).format(App.backend.LocalizationSettings.TimeDateFormat) : null;
         }
-    }
 
+        $.fn.dataTableExt.afnSortData['obsevable'] = function (oSettings, iColumn) {
+            var query = oSettings.aoColumns[iColumn].data;
+            var data = oSettings.oApi._fnGetDataMaster(oSettings);
+
+            return $.map(data, function (item, i) {
+                var expr = new Function('item', 'return item.' + query);
+                return ko.unwrap(expr(item));
+            });
+        }
+    }
 
     App.TablesHelper = new TablesHelper();
 
