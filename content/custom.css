@@ -84,6 +84,10 @@
     padding-bottom: 0;
 }
 
+.toolbox .form-inline {
+    margin-bottom: -15px;
+}
+
 .form-group.boxed {
     margin-bottom: 15px;
     margin-right: 10px;
