@@ -430,4 +430,33 @@
             element.innerHTML = document.getElementById(id).innerHTML;
         },
     };
+
+    ko.bindingHandlers.clientDataTable = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var options = allBindingsAccessor().optionsFunction();
+            var data = ko.utils.unwrapObservable(valueAccessor());
+            options.data = data;
+            options.createdRow = function (row, data, index) {
+                ko.cleanNode(row);
+                ko.applyBindingsToDescendants(bindingContext.createChildContext(data), row);
+            };
+            setTimeout(function () {
+                var table = $(element).DataTable(options);
+                $(element).data('tableInstance', table);
+            }, 10);
+
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                table.destroy();
+            });
+        },
+        update: function (element, valueAccessor) {
+            var table = $(element).data('tableInstance');
+            var data = ko.utils.unwrapObservable(valueAccessor());
+            if (table) {
+                table.clear();
+                table.rows.add(data);
+                table.draw();
+            }
+        }
+    }
 }
