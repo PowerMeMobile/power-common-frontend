@@ -37,19 +37,19 @@
                 order: [[0, 'desc']],
                 columns: [
                     {
-                        data: 'Date', render: function (data, type, obj) {
+                        data: 'date', render: function (data, type, obj) {
                             return App.TablesHelper.linkTo(
                                 router.Details(obj.Id),
                                 App.TablesHelper.dateTime(data)
                             );
-                        }
+                        }, name: 'Date'
                     },
-                    { data: 'Server' },
-                    { data: 'ThreadId' },
-                    { data: 'LogLevel' },
-                    { data: 'Admin' },
-                    { data: 'Logger' },
-                    { data: 'Message' }
+                    { data: 'server', name: 'Server' },
+                    { data: 'threadId', name: 'ThreadId' },
+                    { data: 'logLevel', name: 'LogLevel' },
+                    { data: 'admin', name: 'Admin' },
+                    { data: 'logger', name: 'Logger' },
+                    { data: 'message', name: 'Message' }
                 ]
             }, self);
         }

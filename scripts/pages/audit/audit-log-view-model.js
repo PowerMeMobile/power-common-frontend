@@ -36,19 +36,19 @@
                 order: [[0, 'desc']],
                 columns: [
                     {
-                        data: 'Date', render: App.TablesHelper.timeDate
+                        data: 'date', render: App.TablesHelper.timeDate, name: 'Date'
                     },
-                    { data: 'Action' },
+                    { data: 'action', name: 'Action' },
                     {
-                        data: 'ItemType', render: function (data, type, obj) {
+                        data: 'itemType', render: function (data, type, obj) {
                             return App.TablesHelper.linkTo(obj.Url, data);
-                        }
+                        }, name: 'ItemType'
                     },
-                    { data: 'Property' },
-                    { data: 'Admin', name: 'Admin.Name' },
-                    { data: 'OldValue' },
-                    { data: 'NewValue' },
-                    { data: 'DescriptionPart', name: 'Description' }
+                    { data: 'property', name: 'Property' },
+                    { data: 'admin', name: 'Admin.Name' },
+                    { data: 'oldValue', name: 'OldValue' },
+                    { data: 'newValue', name: 'NewValue' },
+                    { data: 'descriptionPart', name: 'Description' }
                 ]
             }, self);
         }
