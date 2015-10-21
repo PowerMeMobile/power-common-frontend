@@ -32,7 +32,7 @@
     function BaseValidatableViewModel() {
         var self = this;
 
-        this.errors = ko.validation.group(this, { deep: true });
+        this.errors = ko.validation.group(this, { deep: true, live: true });
         this.isValid = ko.pureComputed(function () { return self.errors().length === 0 });
 
         if (this.ignoreOnSave) {
