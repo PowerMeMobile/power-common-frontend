@@ -41,7 +41,7 @@
                     { data: 'action', name: 'Action' },
                     {
                         data: 'itemType', render: function (data, type, obj) {
-                            return App.TablesHelper.linkTo(obj.Url, data);
+                            return App.TablesHelper.linkTo(obj.url, data);
                         }, name: 'ItemType'
                     },
                     { data: 'property', name: 'Property' },

@@ -39,7 +39,7 @@
                     {
                         data: 'date', render: function (data, type, obj) {
                             return App.TablesHelper.linkTo(
-                                router.Details(obj.Id),
+                                router.Details(obj.id),
                                 App.TablesHelper.dateTime(data)
                             );
                         }, name: 'Date'
