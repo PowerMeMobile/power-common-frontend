@@ -6,40 +6,40 @@
 
         App.vms.base.ServerTable.call(this, model);
 
-        this.From = ko.observable(model.From).subscribeToAction(this.Search);
-        this.To = ko.observable(model.To).subscribeToAction(this.Search);
-        this.Message = ko.observable(model.Message).extend({ rateLimit: 700 }).subscribeToAction(this.Search);
-        this.Levels = ko.observableArray(model.Levels).subscribeToAction(this.Search);
-        this.Levels.options = ko.observableArray(model.AvailableLevels);
-        this.Loggers = ko.observableArray(model.Loggers).subscribeToAction(this.Search);
-        this.Servers = ko.observableArray(model.Servers).subscribeToAction(this.Search);
-        this.Admins = ko.observableArray(model.Admins).subscribeToAction(this.Search);
+        this.from = ko.observable(model.from).subscribeToAction(this.Search);
+        this.to = ko.observable(model.to).subscribeToAction(this.Search);
+        this.message = ko.observable(model.message).extend({ rateLimit: 700 }).subscribeToAction(this.Search);
+        this.levels = ko.observableArray(model.levels).subscribeToAction(this.Search);
+        this.levels.options = ko.observableArray(model.availableLevels);
+        this.loggers = ko.observableArray(model.loggers).subscribeToAction(this.Search);
+        this.servers = ko.observableArray(model.servers).subscribeToAction(this.Search);
+        this.admins = ko.observableArray(model.admins).subscribeToAction(this.Search);
 
-        var router = App.routers.Administration.InternalLogs;
+        var router = App.routers.internalLogs;
 
         this.loadLoggers = function (query) {
-            App.ajax.Select2Data(router.Loggers(), query);
+            App.ajax.Select2Data(router.loggers(), query);
         }
 
         this.loadServers = function (query) {
-            App.ajax.Select2Data(router.Servers(), query);
+            App.ajax.Select2Data(router.servers(), query);
         }
 
         this.loadAdmins = function (query) {
-            App.ajax.Select2Data(router.Admins(), query);
+            App.ajax.Select2Data(router.admins(), query);
         }
 
         this.tableOptions = function () {
             return App.TablesHelper.composeServerOptions({
                 ajax: {
-                    url: router.Data(),
+                    url: router.data(),
                 },
                 order: [[0, 'desc']],
                 columns: [
                     {
                         data: 'date', render: function (data, type, obj) {
                             return App.TablesHelper.linkTo(
-                                router.Details(obj.id),
+                                router.details(obj.id),
                                 App.TablesHelper.dateTime(data)
                             );
                         }, name: 'Date'
@@ -56,6 +56,6 @@
     }
 
 
-    App.ns('vms.Administration.Logs').InternalLogsViewModel = InternalLogsViewModel;
+    App.ns('vms.logs').InternalLogsPage = InternalLogsViewModel;
 
 }(App, ko, jQuery));

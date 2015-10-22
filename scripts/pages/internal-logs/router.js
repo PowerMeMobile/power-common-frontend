@@ -4,14 +4,14 @@
     function InternalLogsRouter(url) {
         var baseUrl = url + 'Logs/';
 
-        this.Data = function () { return baseUrl + 'GetData'; }
-        this.Details = function (id) { return baseUrl + 'Details/' + id; }
-        this.Loggers = function () { return baseUrl + 'GetLoggers'; }
-        this.Servers = function () { return baseUrl + 'GetServers'; }
-        this.Admins = function () { return baseUrl + 'GetAdmins'; }
+        this.data = function () { return baseUrl + 'GetData'; }
+        this.details = function (id) { return baseUrl + 'Details/' + id; }
+        this.loggers = function () { return baseUrl + 'GetLoggers'; }
+        this.servers = function () { return baseUrl + 'GetServers'; }
+        this.admins = function () { return baseUrl + 'GetAdmins'; }
     }
 
 
-    App.ns('routers.Administration').InternalLogs = new InternalLogsRouter(App.routers.baseUrl);
+    App.ns('routers').internalLogs = new InternalLogsRouter(App.routers.baseUrl);
 
 }(App, ko, jQuery));
