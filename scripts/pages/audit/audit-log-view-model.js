@@ -6,32 +6,32 @@
 
         App.vms.base.ServerTable.call(this, model);
 
-        this.From = ko.observable(model.From).subscribeToAction(this.Search);
-        this.To = ko.observable(model.To).subscribeToAction(this.Search);
-        this.Actions = ko.observableArray(model.Actions).subscribeToAction(this.Search);
-        this.Types = ko.observableArray(model.Types).subscribeToAction(this.Search);
-        this.Properties = ko.observableArray(model.Properties).subscribeToAction(this.Search);
-        this.Admins = ko.observableArray(model.Admins).subscribeToAction(this.Search);
-        this.Text = ko.observable(model.Text).extend({ rateLimit: 700 }).subscribeToAction(this.Search);
+        this.from = ko.observable(model.from).subscribeToAction(this.Search);
+        this.to = ko.observable(model.to).subscribeToAction(this.Search);
+        this.actions = ko.observableArray(model.actions).subscribeToAction(this.Search);
+        this.types = ko.observableArray(model.types).subscribeToAction(this.Search);
+        this.properties = ko.observableArray(model.properties).subscribeToAction(this.Search);
+        this.admins = ko.observableArray(model.admins).subscribeToAction(this.Search);
+        this.text = ko.observable(model.text).extend({ rateLimit: 700 }).subscribeToAction(this.Search);
 
-        var router = App.routers.Administration.AuditLog
+        var router = App.routers.auditLog
 
         this.loadTypes = function (query) {
-            App.ajax.Select2Data(router.ItemTypes(), query);
+            App.ajax.Select2Data(router.itemTypes(), query);
         }
 
         this.loadProperties = function (query) {
-            App.ajax.Select2Data(router.Properties(), query);
+            App.ajax.Select2Data(router.properties(), query);
         }
 
         this.loadAdmins = function (query) {
-            App.ajax.Select2Data(router.Admins(), query);
+            App.ajax.Select2Data(router.admins(), query);
         }
 
         this.tableOptions = function () {
             return App.TablesHelper.composeServerOptions({
                 ajax: {
-                    url: router.Data(),
+                    url: router.data(),
                 },
                 order: [[0, 'desc']],
                 columns: [
@@ -54,6 +54,6 @@
         }
     }
 
-    App.ns('vms.Administration.Logs').AuditLogViewModel = AuditLogViewModel;
+    App.ns('vms.logs').AuditLogPage = AuditLogViewModel;
 
 }(App, ko, jQuery));
