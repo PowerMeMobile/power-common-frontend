@@ -10,7 +10,7 @@
                 processing: '<div class="blocking"><i class="fa fa-spinner fa-spin fa-3x"></i></div>'
             },
             autoWidth: false,
-            dom: '<"row"<"col-sm-6"l>><"row"<"col-xs-12"<"table-responsive"t><"new-table"r>>><"row"<"col-sm-6"><"col-sm-6"p>>'
+            dom: '<"row"<"col-sm-6"l><"col-sm-6"<"pull-right"B>>><"row"<"col-xs-12"<"table-responsive"t><"new-table"r>>><"row"<"col-sm-6"><"col-sm-6"p>>'
         }
 
         var serverOptions = {
@@ -23,20 +23,40 @@
             }
         }
 
-        this.composeServerOptions = function (options, vm) {
-            var options = $.extend(true, {}, baseOptions, serverOptions, options);
+        this.composeServerOptions = function (custom, vm) {
+            var options = $.extend(true, {}, baseOptions, serverOptions);
             options.ajax.data = function (data, settings) {
                 var filter = vm.MapToSave();
                 return JSON.stringify({ data: data, filter: filter });
             }
 
-            return options;
+            self.addExport(options, vm);
+
+            return $.extend(true, options, custom);
         }
 
         this.composeClientOptions = function (options) {
             var options = $.extend(true, {}, baseOptions, options)
 
             return options;
+        }
+
+        this.addExport = function (options, vm) {
+            options.buttons = [{
+                text: 'Export',
+                extend: 'collection',
+                buttons: [{
+                    text: 'Csv',
+                    action: function (e, dt, node, config) {
+                        vm.exportData('Csv');
+                    }
+                }, {
+                    text: 'Excel',
+                    action: function (e, dt, node, config) {
+                        vm.exportData('Xlsx');
+                    }
+                }]
+            }];
         }
 
         this.linkTo = function (url, text, options) {
