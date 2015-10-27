@@ -25,4 +25,16 @@
 
     App.ns('vms.base').ServerTable = ServerTableViewModel;
 
+    function ServerExportViewModel(router) {
+        var self = this;
+
+        this.exportData = function (format) {
+            App.ajax.Get(router.export(), self, function (data) {
+                App.downloadsHelper.downloads(data.obj);
+            }, { filter: self.MapToSave(), format: format });
+        }
+    }
+
+    App.ns('vms.base').ServerExport = ServerExportViewModel;
+
 }(App, ko, jQuery));
