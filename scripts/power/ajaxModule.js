@@ -16,23 +16,45 @@
         }
 
         this.Get = function (url, vm, callback, data) {
-            return AjaxInternal(url, vm, callback, 'POST', data, true);
+            return self.AjaxInternal(url, vm, callback, 'POST', data, true);
         }
 
         this.Save = function (url, vm, callback) {
             if (vm.isValid()) {
-                AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
+                self.AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
             } else {
                 vm.errors.showAllMessages();
             }
         }
 
         this.Delete = function (url, vm, callback) {
-            AjaxInternal(url, vm, callback, 'DELETE');
+            self.AjaxInternal(url, vm, callback, 'DELETE');
         }
 
-        function AjaxInternal(url, vm, callback, type, data, skipStatus) {
+        this.Select2Data = function (url, query) {
+            return $.ajax({
+                url: url,
+                data: { startWith: query.term },
+                type: 'POST',
+                success: function (data) {
+                    if (data.success) {
+                        query.callback({
+                            results: data.obj
+                        });
+                    } else {
+                        alert(LocalizationStrings.InternalServerError);
+                    }
+                }
+            });
+        }
+
+        this.AjaxInternal = function(url, vm, callback, type, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
+
+            if (typeof data === 'object') {
+                data = JSON.stringify(data);
+            }
+
             return $.ajax({
                 url: url,
                 data: data,

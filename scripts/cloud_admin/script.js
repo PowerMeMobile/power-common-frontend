@@ -7,7 +7,9 @@ var App = function () {
     this.routers = {};
 
     this.routers = {
-        baseUrl: '/'
+        baseUrl: '/',
+        root: '/',
+        hash: '#!/'
     };
     this.block = {
         spinnerImagePath: '/Content/img/loaders/standard-big.gif',
