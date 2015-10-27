@@ -51,7 +51,7 @@
                     success: function (data) {
                         var success = data.indexOf('edit-view') != -1;
                         if (success) {
-                            replaceHash('!' + self.SelectedNodeId()[0]);
+                            replaceHash('!/' + self.SelectedNodeId()[0]);
                             var viewNode = document.getElementById('edit-view');
                             ko.cleanNode(viewNode);
                             $(viewNode).replaceWith(data);
