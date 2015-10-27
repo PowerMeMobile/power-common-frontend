@@ -5,6 +5,7 @@
         var self = this;
 
         var baseOptions = {
+            buttons: [],
             lengthMenu: [[25, 50, 100], [25, 50, 100]],
             language: {
                 processing: '<div class="blocking"><i class="fa fa-spinner fa-spin fa-3x"></i></div>'
@@ -29,8 +30,6 @@
                 var filter = vm.MapToSave();
                 return JSON.stringify({ data: data, filter: filter });
             }
-
-            self.addExport(options, vm);
 
             return $.extend(true, options, custom);
         }
@@ -57,6 +56,8 @@
                     }
                 }]
             }];
+
+            return options;
         }
 
         this.linkTo = function (url, text, options) {
