@@ -20,7 +20,8 @@
             processing: true,
             ajax: {
                 type: 'POST',
-                contentType: 'application/json'
+                contentType: 'application/json',
+                error: null
             }
         }
 
@@ -83,6 +84,8 @@
         this.timeDate = function (data) {
             return data ? new moment(data).format(App.backend.LocalizationSettings.TimeDateFormat) : null;
         }
+
+        $.fn.dataTable.ext.errMode = 'throw';
 
         $.fn.dataTableExt.afnSortData['obsevable'] = function (oSettings, iColumn) {
             var query = oSettings.aoColumns[iColumn].data;

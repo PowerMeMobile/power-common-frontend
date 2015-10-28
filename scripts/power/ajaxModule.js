@@ -73,17 +73,19 @@
             });
         }
 
+        this.errorHandler = function (event, xhr, settings, thrownError) {
+            if (App.auth.isUnauthorizeResponse(xhr)) {
+                if (!self.options.ignoreAuthUrls.some(function (url) { return settings.url.indexOf(url) != -1 }))
+                    App.auth.loadInlineLogin()
+            } else if (xhr.status == 500 || xhr.status == 502 || xhr.status == 503 || xhr.status == 504) {
+                console.log("internal error");
+            } else {
+                console.log("unknoun error");
+            }
+        }
+
         function setupAuthAjaxHook() {
-            jQuery(globals.document).ajaxError(function (event, xhr, settings, thrownError) {
-                if (App.auth.isUnauthorizeResponse(xhr)) {
-                    if (!self.options.ignoreAuthUrls.some(function (url) { return settings.url.indexOf(url) != -1 }))
-                        App.auth.loadInlineLogin()
-                } else if (xhr.status == 500 || xhr.status == 502 || xhr.status == 503 || xhr.status == 504) {
-                    console.log("internal error");
-                } else {
-                    console.log("unknoun error");
-                }
-            });
+            jQuery(globals.document).ajaxError(self.errorHandler);
         }
     }
 
