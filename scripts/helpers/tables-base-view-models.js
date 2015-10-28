@@ -29,9 +29,21 @@
         var self = this;
 
         this.exportData = function (format) {
-            App.ajax.Get(router.export(), self, function (data) {
-                App.downloadsHelper.downloads(data.obj);
-            }, { filter: self.MapToSave(), format: format });
+            $('#main-content').block({
+                message: '<b style="font-size: 24px">' + LocalizationStrings.Exporting + '</b>'
+            });
+            $.ajax({
+                url: router.export(),
+                type: 'POST',
+                data: JSON.stringify({ filter: self.MapToSave(), format: format }),
+                contentType: "application/json",
+                timeout: 5000,
+                error: function (x, t, m) {
+                    if (t === "timeout") {
+                        bootbox.alert(LocalizationStrings.ExportBackground);
+                    }
+                }
+            }).always(function () { $('#main-content').unblock(); });;
         }
     }
 
