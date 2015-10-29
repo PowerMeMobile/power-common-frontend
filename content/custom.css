@@ -135,20 +135,6 @@
     margin-bottom: 1px;
 }
 
-/*Correct span displaying in IE*/
-.dropdown-menu.notification .label.label-info {
-    float: left;
-}
-
-.dropdown-menu.notification .label-warning {
-    float: left;
-}
-
-.dropdown-menu.notification .message {
-    padding: 2px;
-    width: 230px;
-}
-
 .tooltip {
     white-space: normal !important;
 }
