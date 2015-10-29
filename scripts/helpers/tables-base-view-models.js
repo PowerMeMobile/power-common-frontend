@@ -32,18 +32,40 @@
             $('#main-content').block({
                 message: '<b style="font-size: 24px">' + LocalizationStrings.Exporting + '</b>'
             });
+
+            var exportId; //notification comes before actual exportId
+            var activeNotifications = ko.observableArray().subscribeTo('changed.notifications', true);
+            activeNotifications.subscribe(function (newValue) {
+                setTimeout(function () {
+                    if (newValue && newValue[0]) {
+                        var notification = newValue[0];
+                        if (exportId && notification.CallbackUrl && notification.CallbackUrl.indexOf(exportId) != -1) {
+                            notification.callBack();
+                        }
+                    }
+                }, 2000);
+            });
+
             $.ajax({
                 url: router.export(),
                 type: 'POST',
                 data: JSON.stringify({ filter: self.MapToSave(), format: format }),
                 contentType: "application/json",
                 timeout: 5000,
+                success: function (data) {
+                    exportId = data.obj.path;
+                },
                 error: function (x, t, m) {
                     if (t === "timeout") {
                         bootbox.alert(LocalizationStrings.ExportBackground);
                     }
                 }
-            }).always(function () { $('#main-content').unblock(); });;
+            }).always(function () {
+                setTimeout(function () {
+                    activeNotifications.unsubscribeFrom("changed.notifications");
+                }, 2000);
+                $('#main-content').unblock();
+            });;
         }
     }
 

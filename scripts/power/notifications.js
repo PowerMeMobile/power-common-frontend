@@ -31,7 +31,7 @@
 function NotificationsViewModel() {
     var self = this;
 
-    this.notifications = ko.observableArray();
+    this.notifications = ko.observableArray().publishOn('changed.notifications');
     this.lastActiveNotifications = ko.pureComputed(function () {
         return self.notifications().slice(0, App.backend.Notifications ? App.backend.Notifications.ActiveNotificationsCount : 7);
     });
