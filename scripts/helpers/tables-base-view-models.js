@@ -53,7 +53,8 @@
                 contentType: "application/json",
                 timeout: 5000,
                 success: function (data) {
-                    exportId = data.obj.path;
+                    if (data.success)
+                        exportId = data.obj.path;
                 },
                 error: function (x, t, m) {
                     if (t === "timeout") {
