@@ -123,7 +123,18 @@
 
             if (obj.query && obj.value && obj.value() && obj.value().length) {
                 obj.initSelection = function (element, callback) {
-                    callback(obj.value().map(function (i) { return { id: i, text: i } }));
+                    var deffered = obj.query({ term: null, callback: function () { } });
+                    if (deffered && deffered.then) {
+                        deffered.then(function (data) {
+                            if (data.success && data.obj) {
+                                callback(obj.value().map(function (i) {
+                                    return { id: i, text: ko.utils.arrayFirst(data.obj, function (d) { return d.id == i; }).text };
+                                }));
+                            }
+                        });
+                    } else {
+                        callback(obj.value().map(function (i) { return { id: i, text: i } }));
+                    }
                 }
 
                 $(element).select2(obj);
@@ -152,13 +163,13 @@
                 allBindings = allBindingsAccessor(),
                 value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
 
-            if (obj.query) {
-                $(element).trigger('change');
-            } else {
-                if (typeof (value) !== 'undefined') {
+            if (typeof (value) !== 'undefined') {
+                if (obj.query && value != $(element).select2('val')) {
+                    $(element).trigger('change');
+                } else {
                     $(element).select2('val', value);
                 };
-            };
+            }
         }
     };
 
