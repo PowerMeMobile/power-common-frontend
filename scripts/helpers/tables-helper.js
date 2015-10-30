@@ -45,6 +45,7 @@
             options.buttons = [{
                 text: 'Export',
                 extend: 'collection',
+                background: false,
                 buttons: [{
                     text: 'Csv',
                     action: function (e, dt, node, config) {
