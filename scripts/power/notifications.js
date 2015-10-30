@@ -13,6 +13,9 @@
     this.IsReaded = ko.observable(model.IsReaded);
 
     this.callBack = function () {
+        if (self.CallbackUrl) {
+            document.location.href = self.CallbackUrl;
+        }
         $.ajax({
             url: notificationsModule.urlToRead,
             method: "POST",
@@ -22,9 +25,6 @@
                 notificationsViewModel.notifications.remove(function (el) { return el.Id == self.Id });
             }
         });
-        if (self.CallbackUrl) {
-            document.location.href = self.CallbackUrl;
-        }
     }
 }
 
