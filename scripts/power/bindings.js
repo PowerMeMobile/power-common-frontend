@@ -127,13 +127,13 @@
                     if (deffered && deffered.then) {
                         deffered.then(function (data) {
                             if (data.success && data.obj) {
-                                callback(obj.value().map(function (i) {
+                                callback(Array.isArray(obj.value()) ? obj.value().map(function (i) {
                                     return { id: i, text: ko.utils.arrayFirst(data.obj, function (d) { return d.id == i; }).text };
-                                }));
+                                }) : { id: obj.value(), text: ko.utils.arrayFirst(data.obj, function (d) { return d.id == obj.value(); }).text });
                             }
                         });
                     } else {
-                        callback(obj.value().map(function (i) { return { id: i, text: i } }));
+                        callback(Array.isArray(obj.value()) ? obj.value().map(function (i) { return { id: i, text: i } }) : { id: obj.value(), text: obj.value() });
                     }
                 }
 
