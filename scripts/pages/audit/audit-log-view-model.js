@@ -17,15 +17,15 @@
         var router = App.routers.auditLog
 
         this.loadTypes = function (query) {
-            App.ajax.Select2Data(router.itemTypes(), query);
+            return App.ajax.Select2Data(router.itemTypes(), query);
         }
 
         this.loadProperties = function (query) {
-            App.ajax.Select2Data(router.properties(), query);
+            return App.ajax.Select2Data(router.properties(), query);
         }
 
         this.loadAdmins = function (query) {
-            App.ajax.Select2Data(router.admins(), query);
+            return App.ajax.Select2Data(router.admins(), query);
         }
 
         this.tableOptions = function () {

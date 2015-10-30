@@ -18,15 +18,15 @@
         var router = App.routers.internalLogs;
 
         this.loadLoggers = function (query) {
-            App.ajax.Select2Data(router.loggers(), query);
+            return App.ajax.Select2Data(router.loggers(), query);
         }
 
         this.loadServers = function (query) {
-            App.ajax.Select2Data(router.servers(), query);
+            return App.ajax.Select2Data(router.servers(), query);
         }
 
         this.loadAdmins = function (query) {
-            App.ajax.Select2Data(router.admins(), query);
+            return App.ajax.Select2Data(router.admins(), query);
         }
 
         this.tableOptions = function () {
