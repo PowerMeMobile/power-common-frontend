@@ -2,6 +2,7 @@
     'use strict;'
 
     function RouterHelper() {
+        var self = this;
 
         this.getHashData = function () {
             var data = $.deparam(globals.location.hash.substr(App.routers.hash.length), true);
@@ -13,7 +14,14 @@
         }
 
         this.setHashData = function (data) {
-            globals.document.location.replace(App.routers.hash + $.param(data));
+            globals.document.location.replace(self.getDataUrl(data));
+        }
+
+        this.getDataUrl = function (data) {
+            if (data)
+                return App.routers.hash + $.param(data);
+            else
+                return '';
         }
     }
 
