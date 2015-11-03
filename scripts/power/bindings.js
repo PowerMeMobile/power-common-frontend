@@ -247,7 +247,7 @@
             var data = ko.utils.unwrapObservable(valueAccessor());
             var options = allBindingsAccessor().optionsFunction() || {};
             var type = allBindingsAccessor().chartType;
-            var chart = new xChart(type, data, '#' + element.id, options);
+            var chart = new xChart(type, data, element, options);
             $(element).data('float-chart', chart);
         },
         update: function (element, valueAccessor) {
