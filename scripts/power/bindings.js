@@ -163,8 +163,8 @@
                 allBindings = allBindingsAccessor(),
                 value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
 
-            if (typeof (value) !== 'undefined') {
-                if (obj.query && value != $(element).select2('val')) {
+            if (typeof (value) !== 'undefined' && value !== $(element).select2('val')) {
+                if (obj.query) {
                     $(element).trigger('change');
                 } else {
                     $(element).select2('val', value);
