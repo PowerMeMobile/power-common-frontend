@@ -86,6 +86,28 @@
             return data ? new moment(data).format(App.backend.LocalizationSettings.TimeDateFormat) : null;
         }
 
+        this.renderIf = function (args, data, condition) {
+            var meta = args[3];
+            if (condition()) {
+                if (data) {
+                    if (!meta.settings.aoColumns[meta.col].bVisible)
+                        meta.settings.oInstance.fnSetColumnVis(meta.col, 1, false);
+
+                    if (typeof data === 'function')
+                        return data();
+                    else
+                        return data;
+                }
+                return null;
+            }
+            else {
+                if (meta.settings.aoColumns[meta.col].bVisible)
+                    meta.settings.oInstance.fnSetColumnVis(meta.col, 0, false);
+
+                return null;
+            }
+        }
+
         $.fn.dataTable.ext.errMode = 'throw';
 
         $.fn.dataTableExt.afnSortData['obsevable'] = function (oSettings, iColumn) {

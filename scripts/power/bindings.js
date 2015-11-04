@@ -433,7 +433,7 @@
             ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
                 table.destroy();
             });
-        },
+        }
     };
 
     ko.bindingHandlers.replicate = {
