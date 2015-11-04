@@ -97,8 +97,9 @@
             var options = ko.utils.unwrapObservable(allBindingsAccessor().treeOptions) || {};
             $(element).jstree(options).on("changed.jstree", function (e, data) {
                 var observable = valueAccessor();
-                if (data && data.node && data.node.type == "Property")
-                    observable(data.selected);
+                if (data && data.node && data.node.type == "Property") {
+                    if (data.selected.length > 0) observable(data.selected[0]);
+                }
             });
 
             $(element).bind("select_node.jstree", function (e, data) {

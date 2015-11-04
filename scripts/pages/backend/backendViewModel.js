@@ -42,16 +42,16 @@
         }
 
         this.ReloadBackendTag = function (update) {
-            if (self.SelectedNodeId() && self.SelectedNodeId()[0]) {
+            if (self.SelectedNodeId()) {
                 self.BackendItem.BlockingStatus(new App.vms.Base.BlockingStatus(true));
                 $.ajax({
-                    url: App.routers.Backend.EditView(self.SelectedNodeId()[0]),
+                    url: App.routers.Backend.EditView(self.SelectedNodeId()),
                     data: { 'remoteReload': typeof update == 'boolean' && update },
                     type: 'POST',
                     success: function (data) {
                         var success = data.indexOf('edit-view') != -1;
                         if (success) {
-                            replaceHash('!/' + self.SelectedNodeId()[0]);
+                            replaceHash('!/' + self.SelectedNodeId());
                             var viewNode = document.getElementById('edit-view');
                             ko.cleanNode(viewNode);
                             $(viewNode).replaceWith(data);
