@@ -6,6 +6,8 @@
 
         var baseOptions = {
             buttons: [],
+            stateSave: true,
+            stateDuration: 60,
             lengthMenu: [[25, 50, 100], [25, 50, 100]],
             language: {
                 processing: '<div class="blocking"><i class="fa fa-spinner fa-spin fa-3x"></i></div>'
