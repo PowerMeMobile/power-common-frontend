@@ -123,6 +123,6 @@
         }
     }
 
-    App.TablesHelper = new TablesHelper();
+    App.ns('helpers').table = new TablesHelper();
 
 }(App, ko, jQuery));

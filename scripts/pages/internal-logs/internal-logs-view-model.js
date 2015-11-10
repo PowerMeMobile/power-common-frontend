@@ -30,7 +30,7 @@
         }
 
         this.tableOptions = function () {
-            return App.TablesHelper.composeServerOptions({
+            return App.helpers.table.composeServerOptions({
                 ajax: {
                     url: router.data(),
                 },
@@ -38,9 +38,9 @@
                 columns: [
                     {
                         data: 'date', render: function (data, type, obj) {
-                            return App.TablesHelper.linkTo(
+                            return App.helpers.table.linkTo(
                                 router.details(obj.id),
-                                App.TablesHelper.dateTime(data)
+                                App.helpers.table.dateTime(data)
                             );
                         }, name: 'Date'
                     },

@@ -29,19 +29,19 @@
         }
 
         this.tableOptions = function () {
-            return App.TablesHelper.composeServerOptions({
+            return App.helpers.table.composeServerOptions({
                 ajax: {
                     url: router.data(),
                 },
                 order: [[0, 'desc']],
                 columns: [
                     {
-                        data: 'date', render: App.TablesHelper.timeDate, name: 'Date'
+                        data: 'date', render: App.helpers.table.timeDate, name: 'Date'
                     },
                     { data: 'action', name: 'Action' },
                     {
                         data: 'itemType', render: function (data, type, obj) {
-                            return App.TablesHelper.linkTo(obj.url, data);
+                            return App.helpers.table.linkTo(obj.url, data);
                         }, name: 'ItemType'
                     },
                     { data: 'property', name: 'Property' },
