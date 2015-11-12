@@ -162,10 +162,11 @@
         update: function (element, valueAccessor, allBindingsAccessor) {
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor(),
-                value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
+                value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions),
+                forceTrigger = !!allBindingsAccessor().lazyOptions || !!allBindingsAccessor().value;
 
-            if (typeof (value) !== 'undefined' && ((value !== $(element).select2('val')) || !!allBindingsAccessor().lazyOptions)) {
-                if (obj.query || !!allBindingsAccessor().lazyOptions) {
+            if (typeof (value) !== 'undefined' && ((value !== $(element).select2('val')) || forceTrigger)) {
+                if (obj.query || forceTrigger) {
                     $(element).trigger('change');
                 } else {
                     $(element).select2('val', value);
