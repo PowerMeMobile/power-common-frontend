@@ -68,7 +68,7 @@
             return $("<a />",
                 $.extend(options, {
                     href: url,
-                    text: text
+                    text: App.utils.unescape(text)
                 }))[0].outerHTML;
         }
 
