@@ -4,7 +4,7 @@
     this.Id = model.Id;
     this.AdminId = model.AdminId;
     this.Type = model.Type;
-    this.Message = model.Message;
+    this.Message = ko.observable(model.Message).extend({ escaped: true });
     this.CallbackUrl = model.CallbackUrl;
     this.Date = model.Date;
     this.dateText = ko.computed(function () {
