@@ -22,43 +22,50 @@
 
     ko.bindingHandlers.datetimepicker = {
         init: function (element, valueAccessor, allBindingsAccessor) {
-            //convert string to moment datetime
             var value = ko.utils.unwrapObservable(valueAccessor());
             if (typeof value == 'string')
                 valueAccessor()(new moment(value));
-            //initialize datepicker with some optional options
+
             var options = allBindingsAccessor().datetimepickerOptions || {
-                format: App.backend.LocalizationSettings.DatetimePickerFormat
+                format: App.backend.LocalizationSettings.DatetimePickerFormat,
+                widgetPositioning: { horizontal: 'auto', vertical: 'bottom' }
             };
-            $(element).datetimepicker(options).on("dp.change", function (ev) {
-                var observable = valueAccessor();
-                if (typeof ev.date != 'undefined') {
-                    observable($(element).data("DateTimePicker").unset ? null : ev.date);
+
+            $(element).datetimepicker(options);
+
+            ko.utils.registerEventHandler(element, "dp.change", function (event) {
+                var value = valueAccessor();
+                if (ko.isObservable(value)) {
+                    value(event.date === false ? null : event.date);
                 }
             });
-            $(element).datetimepicker(options).on("dp.error", function (ev) {
-                var observable = valueAccessor();
-                observable(null);
+
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+                var picker = $(element).data("DateTimePicker");
+                if (picker) {
+                    picker.destroy();
+                }
             });
-            if (options && options.disabled) {
-                $(element).data("DateTimePicker").disable();
-            }
         },
-        update: function (element, valueAccessor) {
-            var value = ko.utils.unwrapObservable(valueAccessor());
-            if (!($(element).data("DateTimePicker").unset && value === null)) {
-                $(element).data("DateTimePicker").setDate(value);
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var picker = $(element).data("DateTimePicker");
+            if (picker) {
+                var date = ko.utils.unwrapObservable(valueAccessor());
+                picker.date(date);
             }
         }
     };
     ko.bindingHandlers.datepickerMinDate = {
         after: ['datetimepicker'],
-        update: function (element, valueAccessor) {
-            var currentDate = $(element).data("DateTimePicker").getDate();
-            var value = ko.utils.unwrapObservable(valueAccessor()),
-            current = $(element).data("DateTimePicker").setMinDate(value);
-            if (currentDate != null && currentDate < value) {
-                $(element).data("DateTimePicker").setDate(value);
+        update: function (element, valueAccessor, allBindings) {
+            var currentDate = $(element).data("DateTimePicker").date();
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            var offset = allBindings().datepickerMinDateOffset ? allBindings().datepickerMinDateOffset : null;
+
+            $(element).data("DateTimePicker").minDate(value);
+
+            if (currentDate != null && value != null && currentDate < value) {
+                $(element).data("DateTimePicker").date(value.add(offset));
             }
         }
     };
@@ -66,16 +73,14 @@
     ko.bindingHandlers.datepickerMaxDate = {
         after: ['datetimepicker'],
         update: function (element, valueAccessor) {
-            var currentDate = $(element).data("DateTimePicker").getDate();
+            var currentDate = $(element).data("DateTimePicker").date();
             var value = ko.utils.unwrapObservable(valueAccessor()),
-            current = $(element).data("DateTimePicker").setMaxDate(value);
+            current = $(element).data("DateTimePicker").maxDate(value);
             if (currentDate != null && currentDate > value) {
-                $(element).data("DateTimePicker").setDate(value);
+                $(element).data("DateTimePicker").date(value);
             }
-
         }
     };
-
 
     ko.bindingHandlers.jstree = {
         init: function (element, valueAccessor, allBindingsAccessor) {
