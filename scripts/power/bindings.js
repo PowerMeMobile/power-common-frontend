@@ -26,10 +26,10 @@
             if (typeof value == 'string')
                 valueAccessor()(new moment(value));
 
-            var options = allBindingsAccessor().datetimepickerOptions || {
+            var options = $.extend(true, {}, {
                 format: App.backend.LocalizationSettings.DatetimePickerFormat,
                 widgetPositioning: { horizontal: 'auto', vertical: 'bottom' }
-            };
+            }, allBindingsAccessor().datetimepickerOptions);
 
             $(element).datetimepicker(options);
 
