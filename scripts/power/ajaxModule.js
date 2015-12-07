@@ -61,7 +61,7 @@
                 contentType: "application/json",
                 type: type,
                 success: function (data) {
-                    vm.Alert(new App.vms.Base.AlertStatus(data.success, data.message));
+                    vm.Alert(new App.vms.Base.AlertStatus(data.success, App.utils.unescape(data.message)));
                     vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : data.success));
                     if (data.success) {
                         if (callback) callback.call(vm, data);
