@@ -39,7 +39,7 @@
                 setTimeout(function () {
                     if (newValue && newValue[0]) {
                         var notification = newValue[0];
-                        if (exportId && notification.CallbackUrl && notification.CallbackUrl.indexOf(exportId) != -1) {
+                        if (exportId && notification.CallbackUrl() && notification.CallbackUrl().indexOf(exportId) != -1) {
                             notification.callBack();
                         }
                     }

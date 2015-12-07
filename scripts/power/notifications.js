@@ -5,7 +5,7 @@
     this.AdminId = model.AdminId;
     this.Type = model.Type;
     this.Message = ko.observable(model.Message).extend({ escaped: true });
-    this.CallbackUrl = model.CallbackUrl;
+    this.CallbackUrl = ko.observable(model.CallbackUrl).extend({ escaped: true });
     this.Date = model.Date;
     this.dateText = ko.computed(function () {
         return moment(this.Date).from(notificationsViewModel.now());
@@ -13,8 +13,8 @@
     this.IsReaded = ko.observable(model.IsReaded);
 
     this.callBack = function () {
-        if (self.CallbackUrl) {
-            document.location.href = self.CallbackUrl;
+        if (self.CallbackUrl()) {
+            document.location.href = self.CallbackUrl();
         }
         $.ajax({
             url: notificationsModule.urlToRead,
