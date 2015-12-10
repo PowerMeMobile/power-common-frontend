@@ -477,4 +477,22 @@
             }
         }
     }
+
+    ko.bindingHandlers.flags = {
+        init: function (element, valueAccessor) {
+            $(element).change(function (ev) {
+                var value = ko.unwrap(valueAccessor());
+                if (ev.target.checked)
+                    valueAccessor()(value | element.value);
+                else
+                    valueAccessor()(value & ~element.value);
+            });
+        },
+        update: function (element, valueAccessor) {
+            var value = ko.unwrap(valueAccessor());
+            var checked = (value & element.value) !== 0;
+            if (checked != element.checked)
+                element.checked = checked;
+        }
+    };
 }
