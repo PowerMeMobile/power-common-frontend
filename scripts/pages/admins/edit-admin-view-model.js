@@ -19,6 +19,7 @@
         });
         this.Phone = ko.observable(model.Phone).extend({ digit: true });
         this.Role = ko.observable(model.Role).extend({ required: true });
+        this.Privileges = ko.observable(model.Privileges);
         this.ExternalId = model.ExternalId;
     }
 
