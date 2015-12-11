@@ -24,9 +24,12 @@
         var testRegexp = RegExp(source);
         var replaceRegexp = RegExp(source, 'g');
 
-        return function(string) {
-            string = string == null ? '' : '' + string;
-            return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+        return function (string) {
+            if (typeof string === 'string') {
+                return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+            } else {
+                return string;
+            }
         };
     };
 
