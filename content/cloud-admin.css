@@ -7979,6 +7979,7 @@ div[data-role="editor-toolbar"] {
   display: none;
   padding: 5px;
   position: absolute;
+  z-index: 1;
 }
 /* Easy pie chart */
 .piechart {
