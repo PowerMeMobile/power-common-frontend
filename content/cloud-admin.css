@@ -7980,6 +7980,7 @@ div[data-role="editor-toolbar"] {
   padding: 5px;
   position: absolute;
   z-index: 1;
+  pointer-events: none;
 }
 /* Easy pie chart */
 .piechart {
