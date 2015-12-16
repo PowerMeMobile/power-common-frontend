@@ -1,37 +1,53 @@
 ﻿(function (App, ko, $) {
     'use strict;'
 
-    function ChartHelper() {
-        var self = this;
-        var tooltip;
+    var defaultTooltipRenderer = function(x, y) {
+        return x + ' : ' + y;
+    };
 
-        var defaultTooltipRenderer = function (x, y) {
-            return x + ' : ' + y;
+    /**
+     * Compose function for show tooltip on mouseover event with custom text render.
+     *
+     * @param {function=} render Function for render tooltip text if not specified used @function defaultTooltipRenderer.
+     * @returns {function} Function for display tooltip on chart on mouseover event.
+     */
+    var composeDisplayTooltipFunc = function(render) {
+        render = render || defaultTooltipRenderer;
+
+        return function(data, i) {
+            var tooltip = App.helpers.charts.tooltip.getTooltipElement(),
+                pos = $(this).offset();
+
+            tooltip.text(render(data.x, data.y));
+            tooltip.css({
+                top: pos.top - 32, // Up tooltip on his hieght.
+                left: pos.left
+            });
+
+            tooltip.show();
         }
+    };
 
-        this.composeBarOptions = function (renderTooltip) {
-            if (!renderTooltip)
-                renderTooltip = defaultTooltipRenderer;
+    var defaultOptions = {
+        mouseover: composeDisplayTooltipFunc(),
+        mouseout: function(x) {
+            var tooltip = App.helpers.charts.tooltip.getTooltipElement();
 
-            return {
-                mouseover: function (d, i) {
-                    var pos = $(this).offset();
-                    $(tooltip).text(renderTooltip(d.x, d.y))
-                      .css({ top: pos.top - 32, left: pos.left })
-                      .show();
-                },
-                mouseout: function (x) {
-                    $(tooltip).hide();
-                }
-            }
+            tooltip.hide();
         }
+    };
 
-        $(document).ready(function () {
-            tooltip = $('<div id="chart-tooltip" class="ex-tooltip"></div>').appendTo(document.body);
-        });
-    }
+    var getDefaultOtipnsWithCustomTooltipTextRender = function(textRender) {
+        var optionsWithCustomRender = {
+            mouseover: composeDisplayTooltipFunc(textRender)
+        };
 
+        return $.extend(true, {}, defaultOptions, optionsWithCustomRender);
+    };
 
-    App.ns('helpers').chart = new ChartHelper();
+    var dateFormat = '%d.%m %H:%M';
 
+    App.ns('helpers.charts.xcharts').defaultOptions = defaultOptions;
+    App.ns('helpers.charts.xcharts').defaultOtipnsWithCustomTooltipTextRender = getDefaultOtipnsWithCustomTooltipTextRender;
+    App.ns('helpers.charts.xcharts').dateFormat = dateFormat;
 }(App, ko, jQuery));
