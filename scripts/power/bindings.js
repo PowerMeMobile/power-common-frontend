@@ -266,10 +266,13 @@
 
     ko.bindingHandlers.chart = {
         init: function (element, valueAccessor, allBindingsAccessor) {
-            var data = ko.utils.unwrapObservable(valueAccessor());
-            var options = allBindingsAccessor().chartOptions || {};
-            var ctx = element.getContext("2d");
-            var chart = new Chart(ctx).Pie(data, options);
+            var data = ko.utils.unwrapObservable(valueAccessor()),
+                chartOptions = allBindingsAccessor().chartOptions || {},
+                defaultChartOptions = App.helpers.charts.chartjsPie.defaultOptions,
+                options = $.extend(true, {}, defaultChartOptions, chartOptions),
+                ctx = element.getContext("2d"),
+                chart = new Chart(ctx).Pie(data, options);
+
             $(element).data('chart.js-chart', chart);
             $(element).data('chart.js-data', data);
         },
