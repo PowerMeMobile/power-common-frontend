@@ -18,7 +18,7 @@ var addAlertToForm = function (data, allertId) {
             $(alertId + ' .alert').removeClass('alert-success');
         }
 
-        $(alertId + ' p').text(data.message);
+        $(alertId + ' p').text(App.utils.unescape(data.message));
     } else if (data && data.success) {
         $('#' + allertId).children().remove();
     }
