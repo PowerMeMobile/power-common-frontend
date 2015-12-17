@@ -4,7 +4,7 @@
         var self = this;
 
         this.isAjax = false;
-        this.Message = ko.observable(model.Message);
+        this.Message = ko.observable(model.Message).extend({ escaped: true });
         this.MessageType = ko.observable(model.MessageType);
         this.MessageCssClass = ko.pureComputed(function () {
             if (self.MessageType() === 0 || self.MessageType() === "success")
