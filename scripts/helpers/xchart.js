@@ -37,7 +37,7 @@
         }
     };
 
-    var getDefaultOtipnsWithCustomTooltipTextRender = function(textRender) {
+    var getDefaultOptionsWithCustomTooltipTextRender = function(textRender) {
         var optionsWithCustomRender = {
             mouseover: composeDisplayTooltipFunc(textRender)
         };
@@ -48,6 +48,6 @@
     var dateFormat = '%d.%m %H:%M';
 
     App.ns('helpers.charts.xcharts').defaultOptions = defaultOptions;
-    App.ns('helpers.charts.xcharts').defaultOtipnsWithCustomTooltipTextRender = getDefaultOtipnsWithCustomTooltipTextRender;
+    App.ns('helpers.charts.xcharts').defaultOptionsWithCustomTooltipTextRender = getDefaultOptionsWithCustomTooltipTextRender;
     App.ns('helpers.charts.xcharts').dateFormat = dateFormat;
 }(App, ko, jQuery));
