@@ -25,7 +25,12 @@
 
     App.ns('vms.base').ServerTable = ServerTableViewModel;
 
-    function ServerExportViewModel(router) {
+    /**
+     * View model for server export.
+     *
+     * @param {string|function} url - The url to export action.
+     */
+    function ServerExportViewModel(url) {
         var self = this;
 
         this.exportData = function (format) {
@@ -47,7 +52,7 @@
             });
 
             $.ajax({
-                url: router.export(),
+                url: typeof url === 'function' ? url() : url,
                 type: 'POST',
                 data: JSON.stringify({ filter: self.MapToSave(), format: format }),
                 contentType: "application/json",
