@@ -1,11 +1,11 @@
 ﻿(function (App, jQuery, ko) {
     'use strict';
 
-    function BaseEditViewModel() {
+    function BaseEditViewModel(model) {
         var self = this;
 
         this.BlockingStatus = ko.observable();
-        this.Alert = ko.observable();
+        this.Alert = ko.observable((model && model.alert) ? model.alert : null);
 
         this.MapToSave = function () {
             return ko.mapping.toJSON(self, { ignore: self.ignoreOnSave });
