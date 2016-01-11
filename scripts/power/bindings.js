@@ -498,4 +498,86 @@
                 element.checked = checked;
         }
     };
+
+    /**
+     *
+     */
+    ko.bindingHandlers.optgroup = {
+        init: function(element, valueAccessor, allBindings, viewModel) {
+            // perform some checking of what we've been given to bind
+            if (element.tagName.toLowerCase() !== 'select') {
+                throw new Error('"optgroup" binding applies only to SELECT elements');
+            }
+
+            // Remove all existing <option>s.
+            while (element.firstChild) {
+                ko.removeNode(element.firstChild);
+            }
+
+            // Ensures that the binding processor doesn't try to bind the options
+            return { 'controlsDescendantBindings': true };
+        },
+        update: function (element, valueAccessor, allBindings) {
+            var value = ko.unwrap(valueAccessor()),
+                optionsCaption = ko.unwrap(allBindings.get('optionsCaption')),
+                keys = {
+                    label: 'label',
+                    options: 'options',
+                    text: 'name',
+                    value: 'id'
+                },
+                docfrag = document.createDocumentFragment();
+                groups;
+
+            if (Array.isArray(value)) {
+                groups = value;
+            } else {
+                groups = ko.unwrap(value.groups);
+                keys = $.extend({}, keys, value.keys || {});
+            }
+
+            // Remove all existing <option>s.
+            while (element.firstChild) {
+                ko.removeNode(element.firstChild);
+            }
+
+            if (optionsCaption) {
+                var optionsCaptionElement = document.createElement('option');
+
+                ko.utils.setTextContent(optionsCaptionElement, optionsCaption);
+                ko.selectExtensions.writeValue(optionsCaptionElement, null);
+
+                docfrag.appendChild(optionsCaptionElement);
+            }
+
+            for (var i = 0; i < groups.length; i++) {
+                var group = groups[i],
+                    label = group[keys.label],
+                    options = ko.unwrap(group[keys.options]),
+                    optgroupElement = document.createElement('optgroup');
+
+                if (options.length === 0) { // Skip painting optgroup if no options.
+                    continue;
+                }
+
+                optgroupElement.setAttribute('label', label);
+
+                for (var j = 0; j < options.length; j++) {
+                    var optionObject = ko.unwrap(options[j]),
+                        optionValue = ko.unwrap(optionObject[keys.value]),
+                        optionText = ko.unwrap(optionObject[keys.text]),
+                        optionElement = document.createElement('option');
+
+                    ko.utils.setTextContent(optionElement, optionText);
+                    ko.selectExtensions.writeValue(optionElement, optionValue);
+
+                    optgroupElement.appendChild(optionElement);
+                }
+
+                docfrag.appendChild(optgroupElement);
+            }
+
+            element.appendChild(docfrag);
+        }
+    }
 }
