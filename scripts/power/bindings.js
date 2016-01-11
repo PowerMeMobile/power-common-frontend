@@ -498,4 +498,111 @@
                 element.checked = checked;
         }
     };
+
+    /**
+     * Binding for grouping of options in select.
+     *
+     * Using with options for overriding property names in groups collection:
+     * <select data-bind="optgroup: {
+     *                                  groups: [groups collection  |  required; no default],
+     *                                  keys: {
+     *                                      label: [name of label property  |  default: 'label'],
+     *                                      options: [name of the collection containing the <option> elements  |  default: 'options'],
+     *                                      text: [name of the textual property  |  default: 'name'],
+     *                                      value: [name of the value property  |  default: 'id']
+     *                                  }
+     *                              }, value: ...>
+     * </select>
+     * or you can use groups as array:
+     * <select data-bind="optgroup: [{ label: 'bar', options: [{ id: 42, name: 'foo' }, ...]}, ...], value: ..."></select>
+     *
+     * It can also use `optionsCaption` binding.
+     */
+    ko.bindingHandlers.optgroup = {
+        init: function(element, valueAccessor, allBindings, viewModel) {
+            // perform some checking of what we've been given to bind
+            if (element.tagName.toLowerCase() !== 'select') {
+                throw new Error('"optgroup" binding applies only to SELECT elements');
+            }
+
+            // Remove all existing <option>s.
+            while (element.firstChild) {
+                ko.removeNode(element.firstChild);
+            }
+
+            // Ensures that the binding processor doesn't try to bind the options
+            return { 'controlsDescendantBindings': true };
+        },
+        update: function (element, valueAccessor, allBindings) {
+            var value = ko.unwrap(valueAccessor()),
+                optionsCaption = ko.unwrap(allBindings.get('optionsCaption')),
+                keys = {
+                    label: 'label',
+                    options: 'options',
+                    text: 'name',
+                    value: 'id'
+                },
+                docfrag = document.createDocumentFragment(),
+                lastInsertedGroups = $(element).data('lastInsertedGroups') || '',
+                groups;
+
+            if (Array.isArray(value)) {
+                groups = ko.mapping.toJS(value);
+            } else {
+                groups = ko.mapping.toJS(value.groups);
+                keys = $.extend({}, keys, value.keys || {});
+            }
+
+            var stringifiedGroupValue = JSON.stringify(groups, [keys.options, keys.value]);
+
+            if (lastInsertedGroups === stringifiedGroupValue) {
+                return;
+            } else { // Save stringified groups to data for next comparing for prevent update on each computed collection.
+                $(element).data('lastInsertedGroups', stringifiedGroupValue);
+            }
+
+            // Remove all existing <option>s.
+            while (element.firstChild) {
+                ko.removeNode(element.firstChild);
+            }
+
+            if (optionsCaption) {
+                var optionsCaptionElement = document.createElement('option');
+
+                ko.utils.setTextContent(optionsCaptionElement, optionsCaption);
+                ko.selectExtensions.writeValue(optionsCaptionElement, null);
+
+                docfrag.appendChild(optionsCaptionElement);
+            }
+
+            for (var i = 0; i < groups.length; i++) {
+                var group = groups[i],
+                    label = group[keys.label],
+                    options = group[keys.options],
+                    optgroupElement = document.createElement('optgroup');
+
+                if (options.length === 0) { // Skip painting optgroup if no options.
+                    continue;
+                }
+
+                optgroupElement.setAttribute('label', label);
+
+                for (var j = 0; j < options.length; j++) {
+                    var option = options[j],
+                        optionValue = option[keys.value],
+                        optionText = option[keys.text],
+                        optionElement = document.createElement('option');
+
+                    ko.utils.setTextContent(optionElement, optionText);
+                    ko.selectExtensions.writeValue(optionElement, optionValue);
+
+                    optgroupElement.appendChild(optionElement);
+                }
+
+                docfrag.appendChild(optgroupElement);
+            }
+
+            element.appendChild(docfrag);
+        }
+    }
 }
