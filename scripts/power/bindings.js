@@ -500,7 +500,23 @@
     };
 
     /**
+     * Binding for grouping of options in select.
      *
+     * Using with options for overriding property names in groups collection:
+     * <select data-bind="optgroup: {
+     *                                  groups: [groups collection  |  required; no default],
+     *                                  keys: {
+     *                                      label: [name of label property  |  default: 'label'],
+     *                                      options: [name of the collection containing the <option> elements  |  default: 'options'],
+     *                                      text: [name of the textual property  |  default: 'name'],
+     *                                      value: [name of the value property  |  default: 'id']
+     *                                  }
+     *                              }, value: ...>
+     * </select>
+     * or you can use groups as array:
+     * <select data-bind="optgroup: [{ label: 'bar', options: [{ id: 42, name: 'foo' }, ...]}, ...], value: ..."></select>
+     *
+     * It can also use `optionsCaption` binding.
      */
     ko.bindingHandlers.optgroup = {
         init: function(element, valueAccessor, allBindings, viewModel) {
