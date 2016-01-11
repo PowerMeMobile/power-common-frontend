@@ -526,14 +526,23 @@
                     text: 'name',
                     value: 'id'
                 },
-                docfrag = document.createDocumentFragment();
+                docfrag = document.createDocumentFragment(),
+                lastInsertedGroups = $(element).data('lastInsertedGroups') || '',
                 groups;
 
             if (Array.isArray(value)) {
-                groups = value;
+                groups = ko.mapping.toJS(value);
             } else {
-                groups = ko.unwrap(value.groups);
+                groups = ko.mapping.toJS(value.groups);
                 keys = $.extend({}, keys, value.keys || {});
+            }
+
+            var stringifiedGroupValue = JSON.stringify(groups, [keys.options, keys.value]);
+
+            if (lastInsertedGroups === stringifiedGroupValue) {
+                return;
+            } else { // Save stringified groups to data for next comparing for prevent update on each computed collection.
+                $(element).data('lastInsertedGroups', stringifiedGroupValue);
             }
 
             // Remove all existing <option>s.
@@ -553,7 +562,7 @@
             for (var i = 0; i < groups.length; i++) {
                 var group = groups[i],
                     label = group[keys.label],
-                    options = ko.unwrap(group[keys.options]),
+                    options = group[keys.options],
                     optgroupElement = document.createElement('optgroup');
 
                 if (options.length === 0) { // Skip painting optgroup if no options.
@@ -563,9 +572,9 @@
                 optgroupElement.setAttribute('label', label);
 
                 for (var j = 0; j < options.length; j++) {
-                    var optionObject = ko.unwrap(options[j]),
-                        optionValue = ko.unwrap(optionObject[keys.value]),
-                        optionText = ko.unwrap(optionObject[keys.text]),
+                    var option = options[j],
+                        optionValue = option[keys.value],
+                        optionText = option[keys.text],
                         optionElement = document.createElement('option');
 
                     ko.utils.setTextContent(optionElement, optionText);
