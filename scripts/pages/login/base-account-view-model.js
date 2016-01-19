@@ -1,5 +1,6 @@
-﻿(function (globals, App, jQuery) {
+﻿(function (App, ko) {
     'use strict';
+
     function BaseAccountViewModel(model) {
         var self = this;
 
@@ -43,8 +44,6 @@
         }
     }
 
-    globals.BaseAccountViewModel = BaseAccountViewModel;
-
     function BaseLoginViewModel(model) {
         var self = this;
 
@@ -65,6 +64,7 @@
         this.ShowCapsWarning = ko.observable(false);
     }
 
-    globals.BaseLoginViewModel = BaseLoginViewModel;
+    App.ns('vms.login').BaseAccount = BaseAccountViewModel;
+    App.ns('vms.login').BaseLogin = BaseLoginViewModel;
 
-}(this, App, jQuery));
+}(App, ko));

@@ -26,7 +26,7 @@
                         jQuery('body').append(data);
                         openModal();
                         setTimeout(function () {
-                            applyLoginPageBindings();
+                            App.vms.login.applyLoginPageBindings();
                         }, 50);
                     });
             } else {
