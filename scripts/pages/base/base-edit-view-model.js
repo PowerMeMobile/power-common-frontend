@@ -1,4 +1,4 @@
-﻿(function (App, jQuery, ko) {
+﻿(function (App, $, ko) {
     'use strict';
 
     function BaseEditViewModel(model) {
