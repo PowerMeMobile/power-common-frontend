@@ -238,7 +238,7 @@
 
     ko.bindingHandlers.easyPieChart = {
         init: function (element, valueAccessor, allBindingsAccessor) {
-            var options = allBindingsAccessor().options || {};
+            var options = allBindingsAccessor().easyPieChartOptions || {};
             options.lineWidth = options.lineWidth || 5;
             options.barColor = options.barColor || '#cf1e25';
             $(element).easyPieChart(options);
