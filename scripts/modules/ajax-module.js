@@ -55,30 +55,55 @@
             });
         }
 
-        this.AjaxInternal = function(url, vm, callback, type, data, skipStatus) {
+        this._sendEditableViewModel = function(url, vm, method, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
 
             if (typeof data === 'object') {
                 data = JSON.stringify(data);
             }
 
-            return $.ajax({
-                url: url,
-                data: data,
-                contentType: "application/json",
-                type: type,
-                success: function (data) {
-                    vm.Alert(new App.vms.Base.AlertStatus(data.success, App.utils.unescape(data.message)));
-                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : data.success));
-                    if (data.success) {
-                        if (callback) callback.call(vm, data);
-                    }
-                },
-                error: function () {
+            var result = this._send(url, data, method)
+                .then(function(data) {
+                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : true));
+                    vm.Alert(new App.vms.Base.AlertStatus(true, App.utils.unescape(data.message)));
+
+                    return data;
+                })
+                .catch(function(data) {
                     vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, false));
-                }
+
+                    if (data && data.message) {
+                        vm.Alert(new App.vms.Base.AlertStatus(false, App.utils.unescape(data.message)));
+                    }
+
+                    return data;
+                });
+
+            return result;
+        };
+
+        /**
+         * Internal method for send request to server and return psromise object.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object|string|Array} data - @see http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings field data.
+         * @param {string} method - The HTTP method to use for the request (e.g. "POST", "GET", "PUT" @see httpMethod).
+         * @returns {Object} The Promise with jquery ajax request.
+         */
+        this._send = function(url, data, method) {
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    url: url,
+                    data: data,
+                    contentType: 'application/json',
+                    method: method
+                }).done(function(data) {
+                    (data && data.success) ? resolve(data) : reject(data);
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    reject({ message: '' }); // Provide object with empty messagr for catch error in same way with unsuccess response.
+                });
             });
-        }
+        };
 
         this.errorHandler = function (event, xhr, settings, thrownError) {
             if (App.auth.isUnauthorizeResponse(xhr)) {
