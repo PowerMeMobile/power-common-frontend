@@ -26,11 +26,23 @@
             return self.AjaxInternal(url, vm, callback, 'POST', data, true);
         }
 
-        this.Save = function (url, vm, callback) {
+        /**
+         * Saving editable and validatable view model @see BaseEditViewModel and @see BaseValidatableViewModel.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object} vm - View model for save with extended by BaseEditViewModel and BaseValidatableViewModel.
+         * @returns {Promise} - Promise object.
+         */
+        this.save = function(url, vm) {
             if (vm.isValid()) {
-                self.AjaxInternal(url, vm, callback, 'POST', vm.MapToSave());
+                return this._sendEditableViewModel(url, vm, httpMethod.POST, vm.MapToSave());
             } else {
                 vm.errors.showAllMessages();
+
+                // Because vm is not valid return empty promise object wuth empty message on reject.
+                return new Promise(function(resolve, reject) {
+                    reject({ message: '' });
+                });
             }
         }
 
