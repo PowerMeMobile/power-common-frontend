@@ -1,6 +1,13 @@
 ﻿(function (globals, App, jQuery) {
     'use strict';
 
+    var httpMethod = {
+        POST: 'POST',
+        PUT: 'PUT',
+        GET: 'GET',
+        DELETE: 'DELETE'
+    };
+
     function AjaxModule() {
         var self = this;
 
