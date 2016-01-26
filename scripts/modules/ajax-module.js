@@ -73,10 +73,6 @@
         this._sendEditableViewModel = function(url, vm, method, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
 
-            if (typeof data === 'object') {
-                data = JSON.stringify(data);
-            }
-
             var result = this._send(url, data, method)
                 .then(function(data) {
                     vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : true));
@@ -106,6 +102,10 @@
          * @returns {Object} The Promise with jquery ajax request.
          */
         this._send = function(url, data, method) {
+            if (typeof data === 'object') {
+                data = JSON.stringify(data);
+            }
+
             return new Promise(function(resolve, reject) {
                 $.ajax({
                     url: url,
