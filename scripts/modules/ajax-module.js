@@ -22,9 +22,17 @@
             setupAuthAjaxHook();
         }
 
-        this.Get = function (url, vm, callback, data) {
-            return self.AjaxInternal(url, vm, callback, 'POST', data, true);
-        }
+        /**
+         * Loading some data for editable view model @see BaseEditViewModel.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object} vm - View model that load some data.
+         * @param {Object=} data - Optional data.
+         * @returns {Promise} - Promise object.
+         */
+        this.load = function(url, vm, data) {
+            return self._sendEditableViewModel(url, vm, httpMethod.POST, vm.MapToSave(), true);
+        };
 
         /**
          * Saving editable and validatable view model @see BaseEditViewModel and @see BaseValidatableViewModel.
