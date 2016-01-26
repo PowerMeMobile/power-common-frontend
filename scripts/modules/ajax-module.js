@@ -15,7 +15,7 @@
             ignoreAuthUrls: []
         }
 
-        this.init = function (options) {
+        this.init = function(options) {
             for (var option in this.options)
                 this.options[option] = options && options[option] !== undefined ? options[option] : this.options[option];
 
@@ -144,16 +144,16 @@
             return this._send(url, data, method);
         };
 
-        this.errorHandler = function (event, xhr, settings, thrownError) {
+        this.errorHandler = function(event, xhr, settings, thrownError) {
             if (App.auth.isUnauthorizeResponse(xhr)) {
-                if (!self.options.ignoreAuthUrls.some(function (url) { return settings.url.indexOf(url) != -1 }))
+                if (!self.options.ignoreAuthUrls.some(function(url) { return settings.url.indexOf(url) != -1 }))
                     App.auth.loadInlineLogin()
             } else if (xhr.status == 500 || xhr.status == 502 || xhr.status == 503 || xhr.status == 504) {
                 console.log("internal error");
             } else {
                 console.log("unknoun error");
             }
-        }
+        };
 
         function setupAuthAjaxHook() {
             $(globals.document).ajaxError(self.errorHandler);
