@@ -35,6 +35,18 @@
         };
 
         /**
+         * Changing data for editable view model @see BaseEditViewModel.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object} vm - View model that changed.
+         * @param {Object} data - data for change.
+         * @returns {Promise} - Promise object.
+         */
+        this.change = function(url, vm, data) {
+            return self._sendEditableViewModel(url, vm, httpMethod.POST, data, true);
+        };
+
+        /**
          * Saving editable and validatable view model @see BaseEditViewModel and @see BaseValidatableViewModel.
          *
          * @param {string} url - A string containing the URL to which the request is sent.
