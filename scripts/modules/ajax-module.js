@@ -65,23 +65,6 @@
             return this._sendEditableViewModel(url, vm, httpMethod.DELETE);
         };
 
-        this.Select2Data = function (url, query) {
-            return $.ajax({
-                url: url,
-                data: { startWith: query.term },
-                type: 'POST',
-                success: function (data) {
-                    if (data.success) {
-                        query.callback({
-                            results: data.obj
-                        });
-                    } else {
-                        alert(LocalizationStrings.InternalServerError);
-                    }
-                }
-            });
-        }
-
         this._sendEditableViewModel = function(url, vm, method, data, skipStatus) {
             vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
 
@@ -129,6 +112,22 @@
                 }).fail(function(jqXHR, textStatus, errorThrown) {
                     reject({ message: '' }); // Provide object with empty messagr for catch error in same way with unsuccess response.
                 });
+            });
+        };
+
+        /**
+        * Use for loading data into `select2`.
+        *
+        * @param {string} url - A string containing the URL to which the request is sent.
+        * @param {Object} query - @see http://select2.github.io/select2/#documentation
+        */
+        this.Select2Data = function(url, query) {
+            return this._send(url, { startWith: query.term }, httpMethod.POST).then(function(data) {
+                query.callback({
+                    results: data.obj
+                });
+            }).catch(function(data) {
+                console.log('Internal server error');
             });
         };
 
