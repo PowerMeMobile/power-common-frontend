@@ -39,10 +39,6 @@
         var openModal = function () {
             jQuery('#inline-login-page').modal('show');
         };
-
-        this.isUnauthorizeResponse = function (xhr) {
-            return xhr.status == 403 || xhr.status == 401;
-        }
     }
 
     App.auth = new AuthModule();

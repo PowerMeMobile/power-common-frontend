@@ -44,7 +44,7 @@
                     self.connect();
                 },
                 error: function (jqXHR, textStatus) {
-                    if (!App.auth.isUnauthorizeResponse(jqXHR)) {
+                    if (!App.ajax.isUnauthorizeResponse(jqXHR)) {
                         if (invalidRequestCount < self.invalidRequestMaxCount) {
                             invalidRequestCount++;
                             self.connect();
