@@ -31,7 +31,7 @@
          * @returns {Promise} - Promise object.
          */
         this.load = function(url, vm, data) {
-            return self._sendEditableViewModel(url, vm, httpMethod.POST, vm.MapToSave(), true);
+            return self._sendEditableViewModel(url, vm, httpMethod.POST, data, true);
         };
 
         /**
