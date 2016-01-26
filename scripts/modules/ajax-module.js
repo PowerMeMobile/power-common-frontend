@@ -52,11 +52,18 @@
                     reject({ message: '' });
                 });
             }
-        }
+        };
 
-        this.Delete = function (url, vm, callback) {
-            self.AjaxInternal(url, vm, callback, 'DELETE');
-        }
+        /**
+         * Deleting editable view model.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object} vm - View model that load some data.
+         * @returns {Promise} - Promise object.
+         */
+        this.delete = function(url, vm) {
+            return this._sendEditableViewModel(url, vm, httpMethod.DELETE);
+        };
 
         this.Select2Data = function (url, query) {
             return $.ajax({
