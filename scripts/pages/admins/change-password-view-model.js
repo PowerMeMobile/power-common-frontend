@@ -13,11 +13,12 @@
         App.vms.Base.BaseValidatableViewModel.call(this);
 
         this.save = function () {
-            App.ajax.Save(router.changePassword(), self, function () {
-                self.oldPassword(null);
-                self.newPassword(null);
-                self.errors.showAllMessages(false);
-            });
+            App.ajax.save(router.changePassword(), self)
+                .then(function() {
+                    self.oldPassword(null);
+                    self.newPassword(null);
+                    self.errors.showAllMessages(false);
+                });
         }
     }
 

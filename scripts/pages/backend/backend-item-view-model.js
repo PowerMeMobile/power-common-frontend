@@ -13,7 +13,7 @@
         }
 
         this.Save = function () {
-            App.ajax.Save(App.routers.Backend.Save(), self);
+            App.ajax.save(App.routers.Backend.Save(), self);
 
             return false;
         }
