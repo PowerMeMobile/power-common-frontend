@@ -127,7 +127,7 @@
             var obj = valueAccessor(),
                 allBindings = allBindingsAccessor();
 
-            if (obj.query && obj.value && obj.value() && obj.value().length) {
+            if (obj.query && obj.value && obj.value() && obj.value().length) { //doesn't work with int id, only string
                 obj.initSelection = function (element, callback) {
                     var deffered = obj.query({ term: null, callback: function () { } });
                     if (deffered && deffered.then) {

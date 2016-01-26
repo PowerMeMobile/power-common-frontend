@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <!--<link href="../../../../Vendors/select2/dist/css/select2.css" rel="stylesheet" />-->
+    <link href="../../../../Vendors/select2/select2.css" rel="stylesheet" />
+    <link href="../../../../node_modules/mocha/mocha.css" rel="stylesheet" />
+    <style>
+        .cont {
+            display: inline-block;
+            padding: 3px;
+        }
+        .cont.highligth {
+            background-color: rgba(0, 148, 255, 0.53);
+        }
+    </style>
+</head>
+<body>
+    <!-- array - value -->
+    <div class="cont" id="simple-select">
+        <select data-bind="value: val, options: data, select2: {}"></select>
+    </div>
+    <div class="cont highligth" id="simple-select-with-optionsCaption">
+        <select data-bind="value: val, optionsCaption: 'Choose', options: data, select2: {}"></select>
+    </div>
+    <div class="cont" id="simple-select-with-predefinded">
+        <select data-bind="value: val, select2: {}">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div class="cont" id="select-with-predefinded-valueAllowUnset-empty">
+        <select data-bind="value: val, select2: { allowClear: true }, valueAllowUnset: true" data-placeholder="Not selected">
+            <option></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div class="cont" id="select-with-predefinded-valueAllowUnset">
+        <select data-bind="value: val, select2: { allowClear: true }, valueAllowUnset: true" data-placeholder="Choose">
+            <option></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div class="cont" id="select-to-object-array">
+        <select data-bind="value: val, options: data, optionsValue: 'id', optionsText: 'title', select2: {}"></select>
+    </div>
+    <!-- array - multi values -->
+    <div class="cont" id="multiple-select-plain-array">
+        <select multiple data-bind="selectedOptions: val, options: data, select2: { allowClear: true }" data-placeholder="Choose"></select>
+    </div>
+    <div class="cont" id="multiple-select-plain-array-empty">
+        <select multiple data-bind="selectedOptions: val, options: data, select2: { allowClear: true }" data-placeholder="Choose"></select>
+    </div>
+    <!-- query -->
+    <div class="cont" id="query-select-empty">
+        <input type="hidden" data-bind="select2: {value: val, query: load, allowClear: true}" data-placeholder="Choose" />
+    </div>
+    <div class="cont" id="query-select-single-val">
+        <input role="search" type="hidden" data-bind="select2: {value: val, query: load, allowClear: true}" data-placeholder="Choose" />
+    </div>
+    <div class="cont" id="query-select-multi-val">
+        <input role="search" type="hidden" data-bind="select2: {value: val, query: load, multiple: true, allowClear: true}" data-placeholder="Choose" />
+    </div>
+    <div class="cont" id="select-multi-val-changed">
+        <select multiple data-bind="selectedOptions: val, options: data, select2: { allowClear: true }" data-placeholder="Choose" ></select>
+    </div>
+
+    <div id="mocha"></div>
+    <!-- SCRIPTS -->
+    <script src="../../../../Vendors/jquery/dist/jquery.js"></script>
+    <script src="../../../../Vendors/knockout/dist/knockout.debug.js"></script>
+    <script src="../../../../Vendors/knockout-mapping/knockout.mapping.js"></script>
+    <script src="../../../../Vendors/knockout-validation/dist/knockout.validation.js"></script>
+    <!--<script src="../../../../Vendors/select2/dist/js/select2.js"></script>-->
+    <script src="../../../../Vendors/select2/select2.js"></script>
+    <script src="../../../../node_modules/mocha/mocha.js" rel="stylesheet"></script>
+    <script src="../../../../node_modules/chai/chai.js" rel="stylesheet"></script>
+    <script src="../../../../node_modules/chai-as-promised/lib/chai-as-promised.js" rel="stylesheet"></script>
+    <script src="../../knockout-custom/bindings.js"></script>
+    <script>
+        mocha.setup('bdd');
+        mocha.reporter('html');
+    </script>
+    <script src="tests.js"></script>
+    <script>
+        mocha.run();
+    </script>
+    <script>
+        //just highligth selector according test code
+        $('#mocha').mouseover((ev) => {
+            if (ev.target.nodeName == 'H2') {
+                var id = /ko.applyBindings\(.+\,\s*\$\('(#.+)'\)\[0]/.exec($(ev.target).siblings('pre').find('code').text())[1];
+                if (!$(id).hasClass('highligth')) {
+                    $('.cont.highligth').removeClass('highligth');
+                    $(id).addClass('highligth');
+                }
+            }
+        })
+    </script>
+</body>
+</html>
