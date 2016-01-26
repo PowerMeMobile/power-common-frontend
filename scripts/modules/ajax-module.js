@@ -1,4 +1,4 @@
-﻿(function (globals, App, $) {
+﻿(function(globals, App, $, undefined) {
     'use strict';
 
     var httpMethod = {
