@@ -1,4 +1,4 @@
-﻿(function (globals, App, jQuery) {
+﻿(function (globals, App, $) {
     'use strict';
 
     var httpMethod = {
@@ -156,7 +156,7 @@
         }
 
         function setupAuthAjaxHook() {
-            jQuery(globals.document).ajaxError(self.errorHandler);
+            $(globals.document).ajaxError(self.errorHandler);
         }
     }
 
