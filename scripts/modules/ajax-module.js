@@ -150,14 +150,27 @@
         };
 
         this.errorHandler = function(event, xhr, settings, thrownError) {
-            if (App.auth.isUnauthorizeResponse(xhr)) {
+            var status = xhr.status;
+
+            if (self.isUnauthorizeResponse(status)) {
+                // TODO: reduce dependence on third-party modules.
                 App.auth.loadInlineLogin();
-            } else if (xhr.status == 500 || xhr.status == 502 || xhr.status == 503 || xhr.status == 504) {
+            } else if (status === 500 || status === 502 || status === 503 || status === 504) {
                 console.log("internal error");
             } else {
                 console.log("unknoun error");
             }
         };
+
+        /**
+         * Verification of belonging to the unauthorized(401) or forbiden(403) statuses.
+         *
+         * @param {number} responseStatus - Respone status value.
+         * @returns {boolean}
+         */
+        this.isUnauthorizeResponse = function(responseStatus) {
+            return responseStatus === 403 || responseStatus === 401;
+        }
 
         function setupAuthAjaxHook() {
             $(globals.document).ajaxError(self.errorHandler);
