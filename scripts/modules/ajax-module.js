@@ -131,6 +131,19 @@
             });
         };
 
+        /**
+         * Wrapper method on internal method for send data to the server.
+         * Use instead `$.ajax()` method in application.
+         *
+         * @param {string} url - A string containing the URL to which the request is sent.
+         * @param {Object|string|Array} data - @see http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings field data.
+         * @param {string} method - The HTTP method to use for the request (e.g. "POST", "GET", "PUT" @see httpMethod).
+         * @returns {Object} The Promise with jquery ajax request.
+         */
+        this.send = function(url, data, method) {
+            return this._send(url, data, method);
+        };
+
         this.errorHandler = function (event, xhr, settings, thrownError) {
             if (App.auth.isUnauthorizeResponse(xhr)) {
                 if (!self.options.ignoreAuthUrls.some(function (url) { return settings.url.indexOf(url) != -1 }))
