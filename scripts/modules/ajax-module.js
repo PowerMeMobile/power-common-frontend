@@ -150,15 +150,10 @@
         };
 
         this.errorHandler = function(event, xhr, settings, thrownError) {
-            var status = xhr.status;
-
-            if (self.isUnauthorizeResponse(status)) {
-                // TODO: reduce dependence on third-party modules.
-                App.auth.loadInlineLogin();
-            } else if (status === 500 || status === 502 || status === 503 || status === 504) {
-                console.log("internal error");
+            if (self.isUnauthorizeResponse(xhr.status)) {
+                App.auth.loadInlineLogin(); // TODO: reduce dependence on third-party modules.
             } else {
-                console.log("unknoun error");
+                console.log('Network error: {0} {1}'.format(xhr.status, xhr.textStatus));
             }
         };
 
