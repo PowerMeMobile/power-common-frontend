@@ -4,14 +4,14 @@
     function BaseEditableViewModel(model) {
         var self = this;
 
-        this.BlockingStatus = ko.observable();
-        this.Alert = ko.observable((model && model.alert) ? model.alert : null);
+        this.blockingStatus = ko.observable();
+        this.alert = ko.observable((model && model.alert) ? model.alert : null);
 
         this.MapToSave = function () {
             return ko.mapping.toJSON(self, { ignore: self.ignoreOnSave });
         }
 
-        this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
+        this.ignoreOnSave = ['ignoreOnSave', 'blockingStatus', 'alert'];
     }
 
     function BaseCollapsibleViewModel() {

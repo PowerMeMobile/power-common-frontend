@@ -69,20 +69,20 @@
         };
 
         this._sendEditableViewModel = function(url, vm, method, data, skipStatus) {
-            vm.BlockingStatus(new App.vms.base.BlockingStatus(true));
+            vm.blockingStatus(new App.vms.base.BlockingStatus(true));
 
             var result = this._send(url, data, method)
                 .then(function(data) {
-                    vm.BlockingStatus(new App.vms.base.BlockingStatus(false, skipStatus ? null : true));
-                    vm.Alert(new App.vms.base.AlertStatus(true, App.utils.unescape(data.message)));
+                    vm.blockingStatus(new App.vms.base.BlockingStatus(false, skipStatus ? null : true));
+                    vm.alert(new App.vms.base.AlertStatus(true, App.utils.unescape(data.message)));
 
                     return data;
                 })
                 .catch(function(data) {
-                    vm.BlockingStatus(new App.vms.base.BlockingStatus(false, false));
+                    vm.blockingStatus(new App.vms.base.BlockingStatus(false, false));
 
                     if (data && data.message) {
-                        vm.Alert(new App.vms.base.AlertStatus(false, App.utils.unescape(data.message)));
+                        vm.alert(new App.vms.base.AlertStatus(false, App.utils.unescape(data.message)));
                     }
 
                     return Promise.reject(data);

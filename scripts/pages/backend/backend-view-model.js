@@ -43,7 +43,7 @@
 
         this.ReloadBackendTag = function (update) {
             if (self.SelectedNodeId()) {
-                self.BackendItem.BlockingStatus(new App.vms.base.BlockingStatus(true));
+                self.BackendItem.blockingStatus(new App.vms.base.BlockingStatus(true));
                 $.ajax({
                     url: App.routers.Backend.EditView(self.SelectedNodeId()),
                     data: { 'remoteReload': typeof update == 'boolean' && update },
@@ -56,11 +56,11 @@
                             ko.cleanNode(viewNode);
                             $(viewNode).replaceWith(data);
                         }
-                        self.BackendItem.Alert(new App.vms.base.AlertStatus(success, success ? null : LocalizationStrings.InternalError));
-                        self.BackendItem.BlockingStatus(new App.vms.base.BlockingStatus(false, null));
+                        self.BackendItem.alert(new App.vms.base.AlertStatus(success, success ? null : LocalizationStrings.InternalError));
+                        self.BackendItem.blockingStatus(new App.vms.base.BlockingStatus(false, null));
                     },
                     error: function () {
-                        self.BackendItem.BlockingStatus(new App.vms.base.BlockingStatus(false, false));
+                        self.BackendItem.blockingStatus(new App.vms.base.BlockingStatus(false, false));
                     }
                 });
             }
