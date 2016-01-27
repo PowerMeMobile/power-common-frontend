@@ -8,7 +8,7 @@
         this.Id = ko.observable(id);
         this.Value = ko.observable().extend({ escaped: true });
 
-        this.MapToSave = function () {
+        this.mapToSave = function () {
             return JSON.stringify({ id: self.Id(), value: ko.mapping.toJSON(self.Value) });
         }
 

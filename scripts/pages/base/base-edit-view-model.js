@@ -7,7 +7,7 @@
         this.blockingStatus = ko.observable();
         this.alert = ko.observable((model && model.alert) ? model.alert : null);
 
-        this.MapToSave = function () {
+        this.mapToSave = function () {
             return ko.mapping.toJSON(self, { ignore: self.ignoreOnSave });
         }
 

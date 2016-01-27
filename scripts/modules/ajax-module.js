@@ -49,7 +49,7 @@
          */
         this.save = function(url, vm) {
             if (vm.isValid()) {
-                return this._sendEditableViewModel(url, vm, httpMethod.POST, vm.MapToSave());
+                return this._sendEditableViewModel(url, vm, httpMethod.POST, vm.mapToSave());
             } else {
                 vm.errors.showAllMessages();
 
