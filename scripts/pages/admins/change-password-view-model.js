@@ -4,13 +4,13 @@
     function ChangePasswordViewModel(model, router) {
         var self = this;
 
-        App.vms.Base.BaseEditViewModel.call(this);
+        App.vms.base.Editable.call(this);
 
         this.adminId = model.adminId;
         this.oldPassword = ko.observable(model.oldPassword).extend({ required: true });
         this.newPassword = ko.observable(model.newPassword).extend({ required: true });
 
-        App.vms.Base.BaseValidatableViewModel.call(this);
+        App.vms.base.Validatable.call(this);
 
         this.save = function () {
             App.ajax.save(router.changePassword(), self)
