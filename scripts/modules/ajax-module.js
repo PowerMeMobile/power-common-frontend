@@ -44,7 +44,8 @@
          *
          * @param {string} url - A string containing the URL to which the request is sent.
          * @param {Object} vm - View model for save with extended by BaseEditViewModel and BaseValidatableViewModel.
-         * @returns {Promise} - Promise object.
+         * @returns {Promise} - For valid view model return rejected or resolved Promise object.
+         *                      For invalid view model return empty Promise object. Important `catch` or `then` never calls!
          */
         this.save = function(url, vm) {
             if (vm.isValid()) {
@@ -52,10 +53,7 @@
             } else {
                 vm.errors.showAllMessages();
 
-                // Because vm is not valid return empty promise object wuth empty message on reject.
-                return new Promise(function(resolve, reject) {
-                    reject({ message: '' });
-                });
+                return new Promise(function(resolve, reject) { });
             }
         };
 
@@ -87,7 +85,7 @@
                         vm.Alert(new App.vms.Base.AlertStatus(false, App.utils.unescape(data.message)));
                     }
 
-                    return data;
+                    return Promise.reject(data);
                 });
 
             return result;
@@ -132,7 +130,7 @@
                     results: data.obj
                 });
             }).catch(function(data) {
-                console.log('Internal server error');
+                return Promise.reject(data);
             });
         };
 
