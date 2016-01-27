@@ -415,7 +415,7 @@
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var load = valueAccessor().options.load;
             var oldValue = ko.utils.unwrapObservable(valueAccessor());
-            load().done(function (data) {
+            load().then(function (data) {
                 valueAccessor().options(data.obj);
                 if (ko.utils.unwrapObservable(valueAccessor()) != oldValue)
                     valueAccessor()(oldValue);
