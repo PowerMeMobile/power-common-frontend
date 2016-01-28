@@ -4,7 +4,7 @@
     function EditAdminViewModel(model, options) {
         var self = this;
 
-        App.vms.Base.BaseEditViewModel.call(this);
+        App.vms.base.Editable.call(this);
 
         this.Id = model.Id;
         this.Name = ko.observable(model.Name).extend({

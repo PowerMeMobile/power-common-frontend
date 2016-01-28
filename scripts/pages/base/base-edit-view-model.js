@@ -1,20 +1,20 @@
 ﻿(function (App, $, ko) {
     'use strict';
 
-    function BaseEditViewModel(model) {
+    function BaseEditableViewModel(model) {
         var self = this;
 
-        this.BlockingStatus = ko.observable();
-        this.Alert = ko.observable((model && model.alert) ? model.alert : null);
+        this.blockingStatus = ko.observable();
+        this.alert = ko.observable((model && model.alert) ? model.alert : null);
 
-        this.MapToSave = function () {
+        this.mapToSave = function () {
             return ko.mapping.toJSON(self, { ignore: self.ignoreOnSave });
         }
 
-        this.ignoreOnSave = ['ignoreOnSave', 'BlockingStatus', 'Alert'];
+        this.ignoreOnSave = ['ignoreOnSave', 'blockingStatus', 'alert'];
     }
 
-    function BaseBoxViewModel() {
+    function BaseCollapsibleViewModel() {
         var self = this;
 
         this.isCollapsed = ko.observable(false);
@@ -54,10 +54,10 @@
         }
     }
 
-    App.ns('vms.Base').BlockingStatus = BlockingStatus;
-    App.ns('vms.Base').AlertStatus = AlertStatus;
-    App.ns('vms.Base').BaseEditViewModel = BaseEditViewModel;
-    App.ns('vms.Base').BaseValidatableViewModel = BaseValidatableViewModel;
-    App.ns('vms.Base').BaseBoxViewModel = BaseBoxViewModel;
+    App.ns('vms.base').BlockingStatus = BlockingStatus;
+    App.ns('vms.base').AlertStatus = AlertStatus;
+    App.ns('vms.base').Editable = BaseEditableViewModel;
+    App.ns('vms.base').Validatable = BaseValidatableViewModel;
+    App.ns('vms.base').Collapsible = BaseCollapsibleViewModel;
 
 }(App, jQuery, ko));

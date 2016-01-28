@@ -4,7 +4,7 @@
     function ServerTableViewModel(model) {
         var self = this;
 
-        this.MapToSave = function () {
+        this.mapToSave = function () {
             return JSON.parse(ko.mapping.toJSON(self, { ignore: self.ignoreOnSave }));
         }
 
@@ -19,7 +19,7 @@
         }
 
         ko.postbox.subscribe('search', function () {
-            App.routers.setHashData(self.MapToSave());
+            App.routers.setHashData(self.mapToSave());
         });
     }
 
@@ -54,7 +54,7 @@
             $.ajax({
                 url: typeof url === 'function' ? url() : url,
                 type: 'POST',
-                data: JSON.stringify({ filter: self.MapToSave(), format: format }),
+                data: JSON.stringify({ filter: self.mapToSave(), format: format }),
                 contentType: "application/json",
                 timeout: 5000,
                 success: function (data) {

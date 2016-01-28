@@ -30,7 +30,7 @@
         this.composeServerOptions = function (custom, vm) {
             var options = $.extend(true, {}, baseOptions, serverOptions);
             options.ajax.data = function (data, settings) {
-                var filter = vm.MapToSave();
+                var filter = vm.mapToSave();
                 return JSON.stringify({ data: data, filter: filter });
             }
 

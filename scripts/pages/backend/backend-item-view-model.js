@@ -3,12 +3,12 @@
 
     function BackendItemViewModel(id) {
         var self = this;
-        App.vms.Base.BaseEditViewModel.call(this);
+        App.vms.base.Editable.call(this);
 
         this.Id = ko.observable(id);
         this.Value = ko.observable().extend({ escaped: true });
 
-        this.MapToSave = function () {
+        this.mapToSave = function () {
             return JSON.stringify({ id: self.Id(), value: ko.mapping.toJSON(self.Value) });
         }
 
@@ -18,7 +18,7 @@
             return false;
         }
 
-        App.vms.Base.BaseValidatableViewModel.call(this);
+        App.vms.base.Validatable.call(this);
     }
 
 

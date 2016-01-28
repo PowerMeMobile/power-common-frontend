@@ -16,7 +16,7 @@
         };
 
         /**
-         * Loading some data for editable view model @see BaseEditViewModel.
+         * Loading some data for editable view model @see Editable view model.
          *
          * @param {string} url - A string containing the URL to which the request is sent.
          * @param {Object} vm - View model that load some data.
@@ -28,7 +28,7 @@
         };
 
         /**
-         * Changing data for editable view model @see BaseEditViewModel.
+         * Changing data for editable view model @see Editable view model.
          *
          * @param {string} url - A string containing the URL to which the request is sent.
          * @param {Object} vm - View model that changed.
@@ -40,16 +40,16 @@
         };
 
         /**
-         * Saving editable and validatable view model @see BaseEditViewModel and @see BaseValidatableViewModel.
+         * Saving editable and validatable view model @see Editable and @see Editable view models.
          *
          * @param {string} url - A string containing the URL to which the request is sent.
-         * @param {Object} vm - View model for save with extended by BaseEditViewModel and BaseValidatableViewModel.
+         * @param {Object} vm - View model for save with extended by Editable and Editable view models.
          * @returns {Promise} - For valid view model return rejected or resolved Promise object.
          *                      For invalid view model return empty Promise object. Important `catch` or `then` never calls!
          */
         this.save = function(url, vm) {
             if (vm.isValid()) {
-                return this._sendEditableViewModel(url, vm, httpMethod.POST, vm.MapToSave());
+                return this._sendEditableViewModel(url, vm, httpMethod.POST, vm.mapToSave());
             } else {
                 vm.errors.showAllMessages();
 
@@ -69,20 +69,20 @@
         };
 
         this._sendEditableViewModel = function(url, vm, method, data, skipStatus) {
-            vm.BlockingStatus(new App.vms.Base.BlockingStatus(true));
+            vm.blockingStatus(new App.vms.base.BlockingStatus(true));
 
             var result = this._send(url, data, method)
                 .then(function(data) {
-                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, skipStatus ? null : true));
-                    vm.Alert(new App.vms.Base.AlertStatus(true, App.utils.unescape(data.message)));
+                    vm.blockingStatus(new App.vms.base.BlockingStatus(false, skipStatus ? null : true));
+                    vm.alert(new App.vms.base.AlertStatus(true, App.utils.unescape(data.message)));
 
                     return data;
                 })
                 .catch(function(data) {
-                    vm.BlockingStatus(new App.vms.Base.BlockingStatus(false, false));
+                    vm.blockingStatus(new App.vms.base.BlockingStatus(false, false));
 
                     if (data && data.message) {
-                        vm.Alert(new App.vms.Base.AlertStatus(false, App.utils.unescape(data.message)));
+                        vm.alert(new App.vms.base.AlertStatus(false, App.utils.unescape(data.message)));
                     }
 
                     return Promise.reject(data);
