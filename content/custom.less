@@ -119,3 +119,21 @@
 input.select2-input {
     font-size: 14px !important;
 }
+
+// Wrapp elements with class `checkbox-inline` and remove for the second and further `margin-left: 10px`.
+.checkbox-inline-group {
+    margin-left: -10px;
+
+    .checkbox-inline:first-child {
+        margin-left: 10px;
+    }
+}
+
+// Wrapp elements with class `radio-inline` and remove for the second and further `margin-left: 10px`.
+.radio-inline-group {
+    margin-left: -10px;
+
+    .radio-inline:first-child {
+        margin-left: 10px;
+    }
+}

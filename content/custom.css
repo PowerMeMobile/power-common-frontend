@@ -102,3 +102,15 @@ body {
 input.select2-input {
   font-size: 14px !important;
 }
+.checkbox-inline-group {
+  margin-left: -10px;
+}
+.checkbox-inline-group .checkbox-inline:first-child {
+  margin-left: 10px;
+}
+.radio-inline-group {
+  margin-left: -10px;
+}
+.radio-inline-group .radio-inline:first-child {
+  margin-left: 10px;
+}
