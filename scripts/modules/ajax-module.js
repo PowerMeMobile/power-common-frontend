@@ -151,7 +151,7 @@
             if (self.isUnauthorizeResponse(xhr.status)) {
                 App.auth.loadInlineLogin(); // TODO: reduce dependence on third-party modules.
             } else {
-                console.log('Network error: {0} {1}'.format(xhr.status, xhr.textStatus));
+                console.log('Network error: {0} {1}'.format(xhr.status, xhr.statusText));
             }
         };
 
