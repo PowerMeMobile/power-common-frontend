@@ -113,7 +113,7 @@
                 }).done(function(data) {
                     (data && data.success) ? resolve(data) : reject(data);
                 }).fail(function(jqXHR, textStatus, errorThrown) {
-                    reject({ message: '' }); // Provide object with empty messagr for catch error in same way with unsuccess response.
+                    reject({ message: '' }); // Provide object with empty message for catch error in same way with unsuccess response.
                 });
             });
         };
@@ -129,6 +129,7 @@
                 query.callback({
                     results: data.obj
                 });
+                return data;
             }).catch(function(data) {
                 return Promise.reject(data);
             });
