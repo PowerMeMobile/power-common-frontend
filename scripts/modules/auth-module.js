@@ -1,4 +1,4 @@
-﻿(function (globals, App, jQuery) {
+﻿(function (globals, App, $) {
     'use strict';
 
     function AuthModule() {
@@ -14,30 +14,35 @@
                 this.options[option] = options && options[option] !== undefined ? options[option] : this.options[option];
 
             self.User = user;
+            ko.postbox.subscribe(App.events.login.bus, function (ev) {
+                if (ev === App.events.login.values.signOut) {
+                    self.loadInlineLogin();
+                }
+            });
         }
 
         this.User = null;
 
-        this.loadInlineLogin = function (response) {
+        this.loadInlineLogin = function () {
             var self = this;
-            if (!jQuery('#inline-login-page').length) {
-                jQuery.get(self.options.urlToLoadDialog, null,
+            if (!$('#inline-login-page').length) {
+                $.get(self.options.urlToLoadDialog, null,
                     function (data) {
-                        jQuery('body').append(data);
+                        $('body').append(data);
                         openModal();
                         setTimeout(function () {
                             App.vms.login.applyLoginPageBindings();
                         }, 50);
                     });
             } else {
-                if (!jQuery('#inline-login-page').hasClass('in')) {
+                if (!$('#inline-login-page').hasClass('in')) {
                     openModal();
                 }
             }
         }
 
         var openModal = function () {
-            jQuery('#inline-login-page').modal('show');
+            $('#inline-login-page').modal('show');
         };
     }
 

@@ -18,6 +18,16 @@ var App = function () {
         skipError: false
     };
 
+    this.events = {
+        login: {
+            bus: 'LOGIN',
+            values: {
+                signIn: 'SIGNIN',
+                signOut: 'SIGNOUT'
+            }
+        }
+    }
+
     this.sidebar = { fullCollpase: false }
 
     /*-----------------------------------------------------------------------------------*/
@@ -685,7 +695,8 @@ var App = function () {
         vms: this.vms,
         routers: this.routers,
         sidebar: this.sidebar,
-        block: this.block
+        block: this.block,
+        events: this.events
     };
 }();
 

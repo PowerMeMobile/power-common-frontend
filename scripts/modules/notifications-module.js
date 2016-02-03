@@ -18,17 +18,34 @@
         var invalidRequestCount = 0,
             invalidRequestSleepsCount = 0;
 
+
+        function reconnect() {
+            self.reload();
+            self.connect();
+        }
+
         this.init = function (options) {
             for (var option in defaultOptions)
                 self[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
+
+            ko.postbox.subscribe(App.events.login.bus, function (ev) {
+                if (ev === App.events.login.values.signOut) {
+                    self.disconnect();
+                } else if (ev === App.events.login.values.signIn) {
+                    reconnect();
+                }
+            });
+
+            reconnect();
         }
 
         this.addNotification = function (notification) {
             notificationsViewModel.notifications.unshift(notification);
         }
 
+        var pollRequest;
         this.connect = function () {
-            $.ajax({
+            pollRequest = $.ajax({
                 url: self.urlToWait,
                 cache: false,
                 global: false,
@@ -44,7 +61,7 @@
                     self.connect();
                 },
                 error: function (jqXHR, textStatus) {
-                    if (!App.ajax.isUnauthorizeResponse(jqXHR)) {
+                    if (!App.ajax.isUnauthorizeResponse(jqXHR.status)) {
                         if (invalidRequestCount < self.invalidRequestMaxCount) {
                             invalidRequestCount++;
                             self.connect();
@@ -57,34 +74,18 @@
                                 setTimeout(self.connect, self.defaultLongTimeout);
                             }
                         }
-                    } else {
-                        setTimeout(self.connect, self.defaultLongTimeout * 2);
                     }
                 }
             });
         }
 
-        this.loadLastNotifications = function () {
-            $.ajax({
-                url: self.urlToLoad,
-                cache: false,
-                success: function (data, s) {
-                    if (data) {
-                        ko.utils.arrayPushAll(notificationsViewModel.notifications, data.map(function (el) {
-                            return new NotificationViewModel(el);
-                        }));
-                    }
-                },
-                error: function (jqXHR, textStatus) {
-                    notificationsViewModel.errorMessage("Error loading data from server");
-                },
-                complete: function () {
-                    notificationsViewModel.isLoading(false);
-                }
-            });
+        this.disconnect = function () {
+            if (pollRequest)
+                pollRequest.abort();
         }
 
         this.reload = function () {
+            notificationsViewModel.isLoading(true);
             $.ajax({
                 url: self.urlToLoad,
                 cache: false,
@@ -104,8 +105,6 @@
             });
         }
     }
-
-
 
     App.notifications = new NotificationsModule();
 
