@@ -14,10 +14,8 @@
                 this.options[option] = options && options[option] !== undefined ? options[option] : this.options[option];
 
             self.User = user;
-            ko.postbox.subscribe(App.events.login.bus, function (ev) {
-                if (ev === App.events.login.values.signOut) {
-                    self.loadInlineLogin();
-                }
+            ko.postbox.subscribe(App.events.login.signOut, function (ev) {
+                self.loadInlineLogin();
             });
         }
 

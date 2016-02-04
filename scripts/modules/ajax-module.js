@@ -150,7 +150,7 @@
 
         this.errorHandler = function(event, xhr, settings, thrownError) {
             if (self.isUnauthorizeResponse(xhr.status)) {
-                ko.postbox.publish(App.events.login.bus, App.events.login.values.signOut);
+                ko.postbox.publish(App.events.login.signOut);
             } else {
                 console.log('Network error: {0} {1}'.format(xhr.status, xhr.statusText));
             }

@@ -33,22 +33,10 @@
     function ServerExportViewModel(url) {
         var self = this;
 
+        var exportId; //notification comes before actual exportId
         this.exportData = function (format) {
             $('#main-content').block({
                 message: '<b style="font-size: 24px">' + LocalizationStrings.Exporting + '</b>'
-            });
-
-            var exportId; //notification comes before actual exportId
-            var activeNotifications = ko.observableArray().subscribeTo('changed.notifications', true);
-            activeNotifications.subscribe(function (newValue) {
-                setTimeout(function () {
-                    if (newValue && newValue[0]) {
-                        var notification = newValue[0];
-                        if (exportId && notification.CallbackUrl() && notification.CallbackUrl().indexOf(exportId) != -1) {
-                            notification.callBack();
-                        }
-                    }
-                }, 2000);
             });
 
             $.ajax({
@@ -67,12 +55,18 @@
                     }
                 }
             }).always(function () {
-                setTimeout(function () {
-                    activeNotifications.unsubscribeFrom("changed.notifications");
-                }, 2000);
                 $('#main-content').unblock();
-            });;
+            });
         }
+
+        ko.postbox.subscribe(App.events.notifications.received, function (notification) {
+            setTimeout(function () {
+                if (exportId && notification.callbackUrl() && notification.callbackUrl().indexOf(exportId) != -1) {
+                    notification.callBack();
+                    exportId = null;
+                }
+            }, 500);
+        });
     }
 
     App.ns('vms.base').ServerExport = ServerExportViewModel;

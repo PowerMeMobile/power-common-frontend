@@ -32,7 +32,7 @@
                                 if (data.obj.admin && App.auth.User.Id != data.obj.admin.id) {
                                     document.location.reload(true);
                                 } else {
-                                    ko.postbox.publish(App.events.login.bus, App.events.login.values.signIn);
+                                    ko.postbox.publish(App.events.login.signIn);
                                 }
                             }
                         }

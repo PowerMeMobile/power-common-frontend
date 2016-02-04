@@ -20,11 +20,13 @@ var App = function () {
 
     this.events = {
         login: {
-            bus: 'LOGIN',
-            values: {
-                signIn: 'SIGNIN',
-                signOut: 'SIGNOUT'
-            }
+            signIn: 'LOGIN.SIGNIN',
+            signOut: 'LOGIN.SIGNOUT'
+        },
+        notifications: {
+            received: 'NOTIFICATIONS.NEW',
+            readed: 'NOTIFICATIONS.READ',
+            reconnected: 'NOTIFICATIONS.RECONNECT'
         }
     }
 
