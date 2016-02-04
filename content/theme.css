@@ -208,7 +208,7 @@
 li.loading {
   text-align: center;
 }
-li.loading img {
+li.loading i {
   vertical-align: central;
   margin: 20px auto;
 }
