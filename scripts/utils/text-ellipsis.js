@@ -18,5 +18,12 @@
         }
     };
 
+    // Extend `String` prototype with ellipsis functionality.
+    if (!String.prototype.ellipsis) {
+        String.prototype.ellipsis = function() {
+            return ellipsis(this, arguments[0]);
+        };
+    }
+
     app.ns('utils').ellipsis = ellipsis;
 }(App));
