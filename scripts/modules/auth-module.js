@@ -13,13 +13,13 @@
             for (var option in this.options)
                 this.options[option] = options && options[option] !== undefined ? options[option] : this.options[option];
 
-            self.User = user;
+            self.user = user;
             ko.postbox.subscribe(App.events.login.signOut, function (ev) {
                 self.loadInlineLogin();
             });
         }
 
-        this.User = null;
+        this.user = null;
 
         this.loadInlineLogin = function () {
             var self = this;

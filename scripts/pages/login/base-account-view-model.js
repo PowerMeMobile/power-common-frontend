@@ -29,7 +29,7 @@
                             }
                             if (data.success && !(data.obj && data.obj.message && data.obj.messageType === 'success')) {
                                 $('#inline-login-page').modal('hide');
-                                if (data.obj.admin && App.auth.User.Id != data.obj.admin.id) {
+                                if (data.obj.admin && App.auth.user.id != data.obj.admin.id) {
                                     document.location.reload(true);
                                 } else {
                                     ko.postbox.publish(App.events.login.signIn);
