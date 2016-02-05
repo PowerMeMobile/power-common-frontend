@@ -14,23 +14,19 @@
 
         var invalidRequestCount = 0;
 
-        function reconnect() {
-            self.connect();
-        }
-
         this.init = function (options) {
             for (var option in defaultOptions)
                 self[option] = options && options[option] !== undefined ? options[option] : defaultOptions[option];
 
             ko.postbox.subscribe(App.events.login.signIn, function () {
-                reconnect();
+                self.connect();
             });
 
             ko.postbox.subscribe(App.events.login.signOut, function () {
-                reconnect();
+                self.disconnect();
             });
 
-            reconnect();
+            self.connect();
         }
 
         var connectXhr;
