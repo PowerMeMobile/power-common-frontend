@@ -9,7 +9,13 @@
      * @returns {string} - The cutted text with dots;
      */
     var ellipsis = function(text, length) {
-        return text.length > length ? text.substring(0, length) + '...' : text;
+        text = text || '';
+
+        if (text && text.length > length) {
+            return text.substring(0, length) + '...';
+        } else {
+            return text;
+        }
     };
 
     app.ns('utils').ellipsis = ellipsis;
