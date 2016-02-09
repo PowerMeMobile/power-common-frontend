@@ -1,0 +1,18 @@
+{
+  "name": "power-common-frontend",
+  "homepage": "https://github.com/PowerMeMobile/power-common-frontend",
+  "authors": [
+    "PowerMeMobile"
+  ],
+  "description": "Shared frontend components for Power platforms",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
