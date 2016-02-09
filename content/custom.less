@@ -1,0 +1,139 @@
+﻿body {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.bootstrap-datetimepicker-widget {
+    &.dropdown-menu {
+        background: none repeat scroll 0 0 #FFFFFF;
+    }
+
+    .timepicker table td span {
+        width: 54px;
+    }
+
+    .picker-switch a[data-action] {
+        padding: 0;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border: 1px solid transparent;
+    }
+
+    li a {
+        background-color: white;
+    }
+
+    .separator {
+        border: none !important;
+    }
+}
+
+.div-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+}
+
+.jumptarget {
+    content: "";
+    display: block;
+    height: 80px; /* fixed header height*/
+    margin: -80px 0 0; /* negative fixed header height */
+    z-index: 0;
+    float: right;
+}
+
+#customer-header-table tr td:first-child {
+    font-weight: bold;
+}
+
+.box > .box-body.inline {
+    padding-bottom: 0;
+}
+
+.toolbox .form-inline {
+    margin-bottom: -15px;
+}
+
+.form-group.boxed {
+    margin-bottom: 15px;
+    margin-right: 10px;
+
+    > input {
+        width: 270px;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+
+    > .date {
+        width: 270px;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+
+    > select, input[type="hidden"], .select2-container {
+        width: 100%;
+        min-width: 270px;
+    }
+}
+
+.box .toolbox-tabbed {
+    position: relative;
+    margin: -10px;
+    top: -27px;
+    border-bottom: 1px solid #C4C4C4;
+    padding: 5px;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
+
+.box-title-button {
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.margin-bottom-1 {
+    margin-bottom: 1px;
+}
+
+.tooltip {
+    white-space: normal !important;
+}
+
+.disabled-opacity {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+.select2-container .select2-choice .select2-chosen,
+input.select2-input {
+    font-size: 14px !important;
+}
+
+// Wrapp elements with class `checkbox-inline` and remove for the second and further `margin-left: 10px`.
+.checkbox-inline-group {
+    margin-left: -10px;
+
+    .checkbox-inline:first-child {
+        margin-left: 10px;
+    }
+}
+
+// Wrapp elements with class `radio-inline` and remove for the second and further `margin-left: 10px`.
+.radio-inline-group {
+    margin-left: -10px;
+
+    .radio-inline:first-child {
+        margin-left: 10px;
+    }
+}
