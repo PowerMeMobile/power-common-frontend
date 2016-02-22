@@ -2,7 +2,7 @@
     'use strict;'
 
     function NotificationsRouter(routers) {
-        var baseUrl = function() { return routers.baseUrl + 'Notifications/'; };
+        var baseUrl = function() { return routers.root + 'Notifications/'; };
 
         this.index = function() { return baseUrl() + 'Index'; };
         this.markAllRead = function() { return baseUrl() + 'MarkAllAsRead'; };
