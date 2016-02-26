@@ -1,0 +1,14 @@
+{
+  "name": "power-common-frontend",
+  "version": "1.0.1",
+  "description": "Shared frontend components for Power platforms",
+  "repository": {
+    "url": "https://github.com/PowerMeMobile/power-common-frontend"
+  },
+  "private": true,
+  "devDependencies": {
+    "mocha": "2.3.4",
+    "chai": "3.4.1",
+    "chai-as-promised": "5.2.0"
+  }
+}
