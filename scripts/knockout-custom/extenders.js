@@ -6,26 +6,17 @@
     }
 
     ko.extenders.escaped = function(target, options) {
-        var options = options || {},
-            onlyif = options.onlyif;
-
-        var result = ko.pureComputed({
+        var escapedComputed = ko.pureComputed({
             read: function() {
-                return app.utils.unescape(target());
+                return target();
             },
             write: function(newValue) {
-                var currentValue = target(),
-                    escapedValue = app.utils.escape(app.utils.unescape(newValue));
-
-                if (currentValue !== escapedValue) {
-                    target(escapedValue);
-                }
+                target(app.utils.unescape(newValue));
             }
         });
 
-        result(target());
+        escapedComputed(target());
 
-        //return the new computed observable
-        return result;
+        return escapedComputed;
     };
 }(App, ko));
