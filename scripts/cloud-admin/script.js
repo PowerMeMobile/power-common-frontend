@@ -28,9 +28,11 @@ var App = function () {
             readed: 'NOTIFICATIONS.READ',
             reconnected: 'NOTIFICATIONS.RECONNECT'
         }
-    }
+    };
+    
+    this.backend = typeof _backend !== "undefined"  ? _backend : {};
 
-    this.sidebar = { fullCollpase: false }
+    this.sidebar = { fullCollpase: false };
 
     /*-----------------------------------------------------------------------------------*/
     /*	To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
@@ -657,7 +659,7 @@ var App = function () {
             });
         },
 
-        backend: _backend,
+        backend: this.backend,
 
         //Set page
         setPage: function (name) {
