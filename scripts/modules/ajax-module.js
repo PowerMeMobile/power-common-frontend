@@ -172,5 +172,6 @@
     }
 
     App.ajax = new AjaxModule();
+    App.ns('enums').httpMethod = httpMethod;
 
 }(this, App, jQuery));
