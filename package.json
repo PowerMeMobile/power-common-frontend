@@ -7,10 +7,16 @@
   },
   "private": true,
   "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-open": "2.0.0",
     "jshint":"2.9.1",
     "mocha": "2.3.4",
     "chai": "3.4.1",
     "chai-as-promised": "5.2.0"
+  },
+  "scripts": {
+    "install": "bower install",
+    "test": "gulp test"
   },
   "jshintConfig":{
       "esversion": 6
