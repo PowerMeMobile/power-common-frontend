@@ -2,7 +2,7 @@
 node_modules
 
 #Bower
-bower_modules
+Vendors
 
 #Typings
 typings
