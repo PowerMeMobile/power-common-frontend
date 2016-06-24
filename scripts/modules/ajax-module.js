@@ -113,7 +113,7 @@
                 }).done(function(data) {
                     (data && data.success) ? resolve(data) : reject(data);
                 }).fail(function(jqXHR, textStatus, errorThrown) {
-                    reject({ message: '' }); // Provide object with empty message for catch error in same way with unsuccess response.
+                    reject({ message: jqXHR.statusText }); // Provide object with empty message for catch error in same way with unsuccess response.
                 });
             });
         };
